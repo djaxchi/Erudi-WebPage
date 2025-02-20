@@ -10,6 +10,9 @@ export default {
         'neon-dk-purple-1': '0 0px 220px 0px #826AED', 
         'neon-purple-2': '0 0px 220px 5px #8300E0', 
       },
+      fontFamily: {
+        nunito: ['Nunito', 'sans-serif'],
+      },
     },
   },
   plugins: [],

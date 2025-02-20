@@ -16,9 +16,9 @@ import React from 'react';
 
 const Navbar: React.FC = () => {
 return (
-    <nav className="fixed top-4 left-4 right-4 max-w-6xl mx-auto bg-gradient-to-r from-purple-500 to-purple-400 rounded-full px-6 py-3 flex items-center justify-between text-white shadow-neon-dk-purple-1 ">
+    <nav className="fixed top-7 left-4 right-4 h-[4.5rem] max-w mx-10 bg-gradient-to-r from-[#826AED] to-[#8300E0] rounded-full px-6 py-3 flex items-center justify-between text-white shadow-neon-dk-purple-1 ">
     {/* Logo/Brand */}
-    <div className="text-xl font-semibold">
+    <div className="text-3xl font-semibold">
         Hireo
     </div>
     
@@ -28,7 +28,7 @@ return (
         <a
             key={item.label}
             href={item.href}
-            className={`text-sm ${
+            className={`text-xl ${
             item.isButton
                 ? 'bg-white text-purple-500 px-4 py-1 rounded-full'
                 : 'hover:text-purple-100'
@@ -42,7 +42,7 @@ return (
     {/* Right Section */}
     <div>
         <button 
-        className="bg-white text-purple-500 px-4 py-1 rounded-full text-sm hover:bg-purple-50 transition-colors"
+        className="bg-white text-purple-500 px-4 py-1 rounded-full text-xl hover:bg-purple-50 transition-colors"
         onClick={() => console.log('Documents clicked')}
         >
         Mes Documents
