@@ -26,9 +26,17 @@ export default {
             opacity: '1',
           },
         },
+        
+      breathe: {
+        '0%, 100%': { transform: 'scale(1)' },
+        '50%': { transform: 'scale(1.2)' },
+      },
       },
       animation: {
         slideFromLine: 'slideFromLine 0.6s ease-out forwards',
+      },
+      animation: {
+        breathe: 'breathe 2s infinite ease-in-out',
       },
     },
   },
