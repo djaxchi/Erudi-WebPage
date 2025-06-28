@@ -1,9 +1,9 @@
 {
-  "name": "hireo",
+  "name": "erudi",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://djaxchi.github.io/",
+  "homepage": "https://djaxchi.github.io/Erudi",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
