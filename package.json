@@ -6,11 +6,11 @@
   "homepage": "https://djaxchi.github.io/Erudi-WebPage",
   "scripts": {
     "dev": "vite",
-   "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-   "predeploy": "npm run build",
-   "deploy":   "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "framer-motion": "^12.18.1",
@@ -23,7 +23,7 @@
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/react": "^18.3.18",
-    "@types-react-dom": "^18.3.5",
+    "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",
