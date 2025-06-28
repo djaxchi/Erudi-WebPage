@@ -7,9 +7,12 @@ export default {
     extend: {
       // Existing extended utilities
       boxShadow: {
-        'neon-purple-3': '0 0px 220px -5px #8300E0', 
-        'neon-dk-purple-1': '0 0px 220px 0px #826AED', 
-        'neon-purple-2': '0 0px 220px 5px #8300E0', 
+        // faint glow
+        'neon-emerald-3': '0 0 110px -25px #00C17C',
+        // solid outline glow
+        'neon-dk-emerald-1': '0 0 110px 0px #006F52',
+        // stronger bloom
+        'neon-emerald-2': '0 0 110px -25px #00C17C',
       },
       fontFamily: {
         nunito: ['Nunito', 'sans-serif'],

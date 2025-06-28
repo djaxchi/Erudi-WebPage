@@ -1,7 +1,10 @@
 /* styles.css */
+html, body {
+  background: rgba(0, 0, 0, 0.15);
+}
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #141414, #3b0075);
+  background: rgba(0, 0, 0, 0.15);
   color: #fff;
   margin: 0;
 }
