@@ -1,0 +1,42 @@
+/* Performance optimizations for floating particles */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Optimize image loading transitions */
+.optimized-image {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.optimized-image.loading {
+  opacity: 0;
+}
+
+.optimized-image.loaded {
+  opacity: 1;
+}
+
+/* Hardware acceleration for smooth animations */
+.motion-component {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Optimize backdrop blur performance */
+.backdrop-blur-optimized {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform: translateZ(0);
+}
