@@ -1,5 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { preloadImages } from '../utils/imageOptimization';
+
+// Optimized Image Component for the logo
+const OptimizedImage: React.FC<{
+  src: string;
+  alt: string;
+  className?: string;
+  priority?: boolean;
+}> = memo(({ src, alt, className = "", priority = false }) => {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+      onError={(e) => {
+        const target = e.target as HTMLImageElement;
+        target.style.display = 'none';
+      }}
+    />
+  );
+});
+
+OptimizedImage.displayName = 'OptimizedImage';
+
+
 
 interface NavItem {
   label: string;
@@ -12,13 +40,18 @@ interface NavbarProps {
 
 // New site structure
 const navItems: NavItem[] = [
-  { label: 'Download',    href: '/download' },
-  { label: 'About',       href: '/about' },
-  { label: 'Contact Us',  href: '/contact' },
+  { label: 'Download',    href: '/Erudi/download' },
+  { label: 'About',       href: '/Erudi/about' },
+  { label: 'Contact Us',  href: '/Erudi/contact' },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Preload logo for instant loading
+  useEffect(() => {
+    preloadImages(['/Erudi/images/erudi-logo.png']).catch(console.warn);
+  }, []);
 
   // Fermer le menu mobile lors du changement de route ou redimensionnement
   useEffect(() => {
@@ -66,11 +99,18 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
   }, [isOpen]);
 
   return (
-    <nav className="fixed top-7 left-4 right-4 mx-10 rounded-2xl bg-[#041915]/80 backdrop-blur-xl border border-white/10 shadow-lg z-50">
+    <nav className="fixed top-7 left-4 right-4 mx-10 rounded-2xl bg-[#041915]/800 backdrop-blur-xl border border-white/10 shadow-lg z-50">
       <div className="relative z-10 px-6 py-3 flex items-center justify-between h-[4.5rem]">
         {/* Logo */}
         <div className="text-3xl font-semibold text-white cursor-pointer">
-          <a href="/">erudi</a>
+          <Link to="/Erudi">
+          <OptimizedImage 
+            src="/Erudi/images/erudi-logo.png" 
+            alt="Erudi Logo" 
+            className="h-16 w-auto" 
+            priority={true}
+          />
+          </Link>
         </div>
 
         {/* Desktop links */}
@@ -78,9 +118,9 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
           {navItems.map((item) => {
             const isActive = activePage === item.href;
             return (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.href}
                 className={`text-xl transition cursor-pointer ${
                   isActive
                     ? 'text-emerald-400 px-4 py-1 rounded-xl font-semibold shadow-sm hover:text-[#e6f2ed] hover:bg-emerald-400/60'
@@ -88,7 +128,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
                 }`}
               >
                 {item.label}
-              </a>
+              </Link>
             );
           })}
         </div>
@@ -115,8 +155,8 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
             const isActive = activePage === item.href;
             return (
               <li key={item.label}>
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   onClick={() => setIsOpen(false)}
                   className={`
                     block w-full text-left text-lg py-2 px-2 rounded-lg
@@ -128,7 +168,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
                   `}
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             );
           })}

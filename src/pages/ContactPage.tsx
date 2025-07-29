@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Briefcase, Send, CheckCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
-
-// Intersection Observer hook & AnimatedSection
 import { AnimatedSection } from '../assets/animatedSection';
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  company: string;
+  reason: string;
+  message: string;
+}
+
+const INITIAL_CONTACT_FORM_DATA: ContactFormData = {
+  name: '',
+  email: '',
+  company: '',
+  reason: '',
+  message: ''
+};
+
+// TODO: Replace with actual Google Apps Script URL for contact form
+const CONTACT_GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYoZEv3cOw6HWhKhFxaSY6TPnaKF72yr9WfJUxquroxW2J3elrJP-SGfAeiGcGQ4hizA/exec';
 
 const contactReasons = [
   { 
@@ -28,23 +45,58 @@ const contactReasons = [
 ];
 
 const ContactPage: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    reason: '',
-    message: ''
-  });
-  const [isSubmitted] = useState(false);
-  const [isSubmitting] = useState(false);
+  const [formData, setFormData] = useState<ContactFormData>(INITIAL_CONTACT_FORM_DATA);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  };
+  }, []);
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('company', formData.company);
+      formDataToSend.append('reason', formData.reason);
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('timestamp', new Date().toISOString());
+      formDataToSend.append('type', 'contact'); // Distinguish from waitlist submissions
+      
+      const response = await fetch(CONTACT_GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData(INITIAL_CONTACT_FORM_DATA); // Reset form
+      } else {
+        throw new Error('Failed to submit contact form');
+      }
+      
+    } catch (err) {
+      setError('Failed to send message. Please try again or email us directly.');
+      console.error('Contact form submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [formData]);
 
   return (
     <motion.div
@@ -53,7 +105,7 @@ const ContactPage: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="relative min-h-screen bg-black text-white overflow-hidden"
     >
-      <Navbar activePage="/contact" />
+      <Navbar activePage="/Erudi/contact" />
 
       {/* Radial gradient & noise */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -101,7 +153,7 @@ const ContactPage: React.FC = () => {
             <div className="max-w-2xl mx-auto">
               <div className="bg-[#272727]/20 backdrop-blur-lg rounded-2xl p-8 shadow-lg border border-white/10">
                 {!isSubmitted ? (
-                  <div className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Name and Email Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -189,6 +241,13 @@ const ContactPage: React.FC = () => {
                       />
                     </div>
 
+                    {/* Error Message */}
+                    {error && (
+                      <div className="text-red-400 text-sm text-center bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-2">
+                        {error}
+                      </div>
+                    )}
+
                     {/* Submit Button */}
                     <div className="pt-4">
                       <button
@@ -209,7 +268,7 @@ const ContactPage: React.FC = () => {
                         )}
                       </button>
                     </div>
-                  </div>
+                  </form>
                 ) : (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -218,9 +277,15 @@ const ContactPage: React.FC = () => {
                   >
                     <CheckCircle className="h-16 w-16 text-emerald-400 mx-auto mb-4" />
                     <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
-                    <p className="text-gray-300">
+                    <p className="text-gray-300 mb-6">
                       Thanks for reaching out. We'll get back to you within 24 hours.
                     </p>
+                    <button
+                      onClick={() => setIsSubmitted(false)}
+                      className="text-emerald-400 hover:text-emerald-300 transition-colors"
+                    >
+                      Send another message
+                    </button>
                   </motion.div>
                 )}
               </div>
@@ -234,13 +299,21 @@ const ContactPage: React.FC = () => {
                 Prefer email? Reach us directly at
               </p>
               <a 
-                href="mailto:hello@erudi.ai" 
+                href="mailto:erudipro@gmail.com" 
                 className="text-emerald-400 hover:text-emerald-300 text-xl font-medium transition"
               >
-                hello@erudi.ai
+                erudipro@gmail.com
               </a>
             </div>
           </AnimatedSection>
+
+          {/* Footer */}
+          <footer className="mt-20">
+            <div className="text-center text-gray-400 py-8 rounded-lg">
+              <p className="text-sm">© 2025 Erudi. All rights reserved.</p>
+              <p className="text-xs mt-2">Made with ❤️ by the Erudi Team</p>
+            </div>
+          </footer>
         </div>
       </main>
     </motion.div>
