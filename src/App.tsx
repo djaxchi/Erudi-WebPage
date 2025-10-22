@@ -1,6 +1,6 @@
 // App.tsx
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
@@ -16,8 +16,11 @@ const App: React.FC = () => {
     preloadImages(CRITICAL_IMAGES).catch(console.warn);
   }, []);
 
+  // Get base path dynamically
+  const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // Remove trailing slash
+
   return (
-  <BrowserRouter>
+  <BrowserRouter basename={base}>
     {/* Global animated orb that appears on all pages */}
     <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
       <AnimatedOrb />
@@ -26,42 +29,28 @@ const App: React.FC = () => {
     <Routes>
       <Route
         path="/"
-        element={<Navigate to="/Erudi" replace />}
+        element={
+          <>
+            <Navbar activePage="/" />
+            <LandingPage />
+          </>
+        }
       />
       <Route
-      path="/Erudi"
-      element={
-        <>
-        <Navbar activePage="/Erudi" />
-        <LandingPage />
-        </>
-      }
+        path="/download"
+        element={<DownloadPage />}
       />
       <Route
-      path="/Erudi/download"
-      element={<DownloadPage />}
+        path="/about"
+        element={<AboutPage />}
       />
       <Route
-      path="/Erudi/about"
-      element={
-        <>
-        <Navbar activePage="/Erudi/about" />
-        <AboutPage />
-        </>
-      }
+        path="/contact"
+        element={<ContactPage />}
       />
       <Route
-      path="/Erudi/contact"
-      element={
-        <>
-        <Navbar activePage="/Erudi/contact" />
-        <ContactPage />
-        </>
-      }
-      />
-      <Route
-      path="/Erudi/waitlist"
-      element={<WaitlistPage />}
+        path="/waitlist"
+        element={<WaitlistPage />}
       />
     </Routes>
   </BrowserRouter>

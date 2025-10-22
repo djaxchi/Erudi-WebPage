@@ -76,7 +76,7 @@ const WaitlistPage: React.FC = () => {
         animate={{ opacity: 1 }}
         className="relative  min-h-screen bg-black text-white overflow-hidden"
       >
-        <Navbar activePage="/Erudi/download" />
+        <Navbar activePage="/waitlist" />
 
         {/* Background gradients */}
         <div className="absolute inset-0 pointer-events-none" style={{
@@ -96,7 +96,7 @@ const WaitlistPage: React.FC = () => {
               We'll notify you as soon as Erudi is ready. Get ready to transform your data into powerful AI models!
             </p>
             <Link
-              to="/Erudi"
+              to="/"
               className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition"
             >
               <ArrowLeft className="h-5 w-5" />
@@ -114,7 +114,7 @@ const WaitlistPage: React.FC = () => {
       animate={{ opacity: 1 }}
       className="relative min-h-screen bg-black text-white overflow-hidden"
     >
-      <Navbar activePage="/Erudi/download" />
+      <Navbar activePage="/waitlist" />
 
       {/* Background gradients */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -223,7 +223,7 @@ const WaitlistPage: React.FC = () => {
 
           <div className="text-center mt-4">
             <Link
-              to="/Erudi"
+              to="/"
               className="text-gray-400 hover:text-white transition inline-flex items-center space-x-1 text-sm"
             >
               <ArrowLeft className="h-4 w-4" />

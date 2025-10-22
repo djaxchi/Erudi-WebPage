@@ -2,6 +2,7 @@ import React, { useState, useEffect, memo } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { preloadImages } from '../utils/imageOptimization';
+import { getAssetPath } from '../utils/assetPath';
 
 // Optimized Image Component for the logo
 const OptimizedImage: React.FC<{
@@ -39,19 +40,22 @@ interface NavbarProps {
 }
 
 // New site structure
-const navItems: NavItem[] = [
-  { label: 'Home',        href: '/Erudi' },
-  { label: 'Download',    href: '/Erudi/download' },
-  { label: 'About',       href: '/Erudi/about' },
-  { label: 'Contact Us',  href: '/Erudi/contact' },
-];
+const getNavItems = (): NavItem[] => {
+  return [
+    { label: 'Home',        href: '/' },
+    { label: 'Download',    href: '/download' },
+    { label: 'About',       href: '/about' },
+    { label: 'Contact Us',  href: '/contact' },
+  ];
+};
 
 const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navItems = getNavItems();
 
   // Preload logo for instant loading
   useEffect(() => {
-    preloadImages(['/Erudi/images/erudi-logo.png']).catch(console.warn);
+    preloadImages([getAssetPath('/Erudi/images/erudi-logo.png')]).catch(console.warn);
   }, []);
 
   // Fermer le menu mobile lors du changement de route ou redimensionnement
@@ -104,9 +108,9 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
       <div className="relative z-10 px-6 py-3 flex items-center justify-between h-[4.5rem]">
         {/* Logo */}
         <div className="text-3xl font-semibold text-white cursor-pointer">
-          <Link to="/Erudi">
+          <Link to={navItems[0].href}>
           <OptimizedImage 
-            src="/Erudi/images/erudi-logo.png" 
+            src={getAssetPath('/Erudi/images/erudi-logo.png')}
             alt="Erudi Logo" 
             className="h-16 w-auto" 
             priority={true}

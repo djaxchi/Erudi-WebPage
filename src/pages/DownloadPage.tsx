@@ -12,13 +12,13 @@ const DownloadPage: React.FC = () => {
   }, []);
 
   const handleMacDownload = () => {
-    // Download the DMG file using the correct base URL path
-    try {
-      window.location.href = '/Erudi/erudi-Installer.dmg';
-    } catch (error) {
-      // Fallback: open in new tab if direct download fails
-      window.open('/Erudi/erudi-Installer.dmg', '_blank');
-    }
+    // Create a proper download link with the download attribute
+    const link = document.createElement('a');
+    link.href = `${import.meta.env.BASE_URL}erudi-Installer.dmg`;
+    link.download = 'erudi-Installer.dmg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -28,7 +28,7 @@ const DownloadPage: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="relative min-h-screen bg-[#050a0f] text-white overflow-hidden"
     >
-      <Navbar activePage="/Erudi/download" />
+      <Navbar activePage="/download" />
       
       {/* Animated grid background */}
       <div className="grid-background" />
@@ -199,13 +199,13 @@ const DownloadPage: React.FC = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link 
-                    to="/Erudi/about"
+                    to="/about"
                     className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-bold transition-all duration-300 shadow-[0_0_30px_rgba(0,193,124,0.3)] hover:shadow-[0_0_50px_rgba(0,193,124,0.5)] hover:-translate-y-0.5"
                   >
                     Learn More
                   </Link>
                   <Link 
-                    to="/Erudi/contact"
+                    to="/contact"
                     className="inline-block bg-transparent border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-black px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-bold transition-all duration-300 hover:-translate-y-0.5"
                   >
                     Contact Support

@@ -41,7 +41,7 @@ const LandingPage: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="relative min-h-screen bg-[#050a0f] text-white overflow-hidden"
     >
-      <Navbar activePage="/Erudi" />
+      <Navbar activePage="/" />
       
       {/* Animated grid background */}
       <div className="grid-background" />
@@ -178,7 +178,7 @@ const LandingPage: React.FC = () => {
                   className="pt-2 sm:pt-4 flex sm:justify-center lg:justify-start"
                 >
                   <Link 
-                    to="/Erudi/download"
+                    to="/download"
                     className="inline-block w-full sm:w-auto text-center bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-8 sm:px-10 md:px-12 py-4 sm:py-5 rounded-xl sm:rounded-2xl text-lg sm:text-xl font-bold transition-all duration-300 shadow-[0_0_40px_rgba(0,193,124,0.4)] hover:shadow-[0_0_60px_rgba(0,193,124,0.6)] hover:-translate-y-0.5"
                   >
                     Get Early Access →

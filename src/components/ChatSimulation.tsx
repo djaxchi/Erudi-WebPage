@@ -233,7 +233,7 @@ export const ChatSimulation: React.FC = () => {
             Try Erudi to experience this AI interaction...
           </div>
           <Link 
-            to="/Erudi/download"
+            to="/download"
             className="w-11 h-11 bg-gradient-to-br from-emerald-400 to-emerald-600 hover:from-emerald-300 hover:to-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_0_30px_rgba(16,185,129,0.6),0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_40px_rgba(16,185,129,0.8),0_0_20px_rgba(16,185,129,0.6)] flex-shrink-0 hover:scale-105"
           >
             <svg 

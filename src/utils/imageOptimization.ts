@@ -1,4 +1,5 @@
 // Image optimization utilities for better performance
+import { getAssetPath } from './assetPath';
 
 // Preload critical images
 export const preloadImage = (src: string): Promise<void> => {
@@ -17,17 +18,16 @@ export const preloadImages = (srcs: string[]): Promise<void[]> => {
 
 // Critical images that should be preloaded
 export const CRITICAL_IMAGES = [
-    '/Erudi/images/erudi-logo.png',
-
-  '/Erudi/images/youssefL.png',
-  '/Erudi/images/YoussefC.png',
-  '/Erudi/images/djalil.png',
-  '/Erudi/images/rayan.png',
-  '/Erudi/images/sami.png',
-  '/Erudi/images/nabil.png',
-  '/Erudi/images/about-us-image-1.png',
-  '/Erudi/images/about-us-image-2.png',
-  '/Erudi/images/about-us-image-3.png',
+  getAssetPath('/Erudi/images/erudi-logo.png'),
+  getAssetPath('/Erudi/images/youssefL.png'),
+  getAssetPath('/Erudi/images/YoussefC.png'),
+  getAssetPath('/Erudi/images/djalil.png'),
+  getAssetPath('/Erudi/images/rayan.png'),
+  getAssetPath('/Erudi/images/sami.png'),
+  getAssetPath('/Erudi/images/nabil.png'),
+  getAssetPath('/Erudi/images/about-us-image-1.png'),
+  getAssetPath('/Erudi/images/about-us-image-2.png'),
+  getAssetPath('/Erudi/images/about-us-image-3.png'),
 ];
 
 // Generate responsive image URLs based on screen size

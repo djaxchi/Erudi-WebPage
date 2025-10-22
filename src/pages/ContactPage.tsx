@@ -117,7 +117,7 @@ const ContactPage: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="relative min-h-screen bg-[#050a0f] text-white overflow-hidden"
     >
-      <Navbar activePage="/Erudi/contact" />
+      <Navbar activePage="/contact" />
 
       {/* Animated grid background */}
       <div className="grid-background" />

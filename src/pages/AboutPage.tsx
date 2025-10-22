@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { AnimatedSection } from '../assets/animatedSection';
 import { preloadImages } from '../utils/imageOptimization';
+import { getAssetPath } from '../utils/assetPath';
 import { Cpu, Shield, Zap, Users, Award } from 'lucide-react';
 import '../styles/performance.css';
 
@@ -35,9 +36,9 @@ const AboutPage: React.FC = () => {
   // Preload critical images
   useEffect(() => {
     const criticalImages = [
-      '/Erudi/images/djalil.png',
-      '/Erudi/images/rayan.png',
-      '/Erudi/images/sami.png',
+      getAssetPath('/Erudi/images/djalil.png'),
+      getAssetPath('/Erudi/images/rayan.png'),
+      getAssetPath('/Erudi/images/sami.png'),
     ];
     preloadImages(criticalImages).catch(console.warn);
   }, []);
@@ -120,7 +121,7 @@ const AboutPage: React.FC = () => {
     {
       name: 'Djalil Chikhi',
       role: 'CEO',
-      img: '/Erudi/images/djalil.png',
+      img: getAssetPath('/Erudi/images/djalil.png'),
       bio: 'Leads the team and drives product vision.',
       skills: ['Product Strategy', 'AI Research'],
       linkedin: 'https://linkedin.com/in/djalil-chikhi'
@@ -128,7 +129,7 @@ const AboutPage: React.FC = () => {
     {
       name: 'Rayan Hanader',
       role: 'Chief AI Scientist',
-      img: '/Erudi/images/rayan.png',
+      img: getAssetPath('/Erudi/images/rayan.png'),
       bio: 'Develops and optimizes machine learning tasks.',
       skills: ['Deep Learning', 'Model Optimization'],
       linkedin: 'https://linkedin.com/in/rayanhanader'
@@ -136,7 +137,7 @@ const AboutPage: React.FC = () => {
     {
       name: 'Sami Taider',
       role: 'Application Architect',
-      img: '/Erudi/images/sami.png',
+      img: getAssetPath('/Erudi/images/sami.png'),
       bio: 'Implements user interfaces and integrates APIs.',
       skills: ['React', 'Node.js', 'System Design'],
       linkedin: 'https://linkedin.com/in/sami-taider'
@@ -144,7 +145,7 @@ const AboutPage: React.FC = () => {
     {
       name: 'Youssef Chaouki',
       role: 'Data Engineer',
-      img: '/Erudi/images/YoussefC.png',
+      img: getAssetPath('/Erudi/images/YoussefC.png'),
       bio: 'Designs and maintains dataset cleaning pipelines.',
       skills: ['Data Processing', 'Pipeline Architecture'],
       linkedin: 'https://linkedin.com/in/youssef-chaouki'
@@ -152,7 +153,7 @@ const AboutPage: React.FC = () => {
     {
       name: 'Youssef Laatar',
       role: 'Infrastructure Engineer',
-      img: '/Erudi/images/youssefL.png',
+      img: getAssetPath('/Erudi/images/youssefL.png'),
       bio: 'Works on computational resources and optimization.',
       skills: ['Infrastructure', 'System Optimization'],
       linkedin: 'https://linkedin.com/in/youssef-laatar'
@@ -160,7 +161,7 @@ const AboutPage: React.FC = () => {
     {
       name: 'Mathieu Jarry',
       role: 'Commercial Lead',
-      img: '/Erudi/images/mathieu.png',
+      img: getAssetPath('/Erudi/images/mathieu.png'),
       bio: 'Handles business and commercial strategies.',
       skills: ['Business Strategy', 'Sales'],
       linkedin: 'https://linkedin.com/in/mathieu-jarry-a086b6334'
@@ -174,7 +175,7 @@ const AboutPage: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="relative min-h-screen bg-[#050a0f] text-white overflow-hidden"
     >
-      <Navbar activePage="/Erudi/about" />
+      <Navbar activePage="/about" />
 
       {/* Animated grid background */}
       <div className="grid-background" />
@@ -249,7 +250,7 @@ const AboutPage: React.FC = () => {
                   className="pt-4"
                 >
                   <Link
-                    to="/Erudi/download"
+                    to="/download"
                     className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-10 py-4 rounded-2xl text-lg font-bold transition-all duration-300 shadow-[0_0_40px_rgba(0,193,124,0.4)] hover:shadow-[0_0_60px_rgba(0,193,124,0.6)]"
                   >
                     Get Early Access
@@ -266,7 +267,7 @@ const AboutPage: React.FC = () => {
                 className="hidden lg:block"
               >
                 <OptimizedImage
-                  src="/Erudi/images/about-us-image-1.png"
+                  src={getAssetPath('/Erudi/images/about-us-image-1.png')}
                   alt="Democratizing AI Training"
                   className="w-full h-auto rounded-3xl shadow-2xl"
                   priority={true}
@@ -469,7 +470,7 @@ const AboutPage: React.FC = () => {
                     Join our beta program and be among the first to experience the future of AI training.
                   </p>
                   <Link
-                    to="/Erudi/download"
+                    to="/download"
                     className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-8 py-3 rounded-xl text-base font-bold transition-all duration-300"
                   >
                     Get Early Access
@@ -577,13 +578,13 @@ const AboutPage: React.FC = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
-                    to="/Erudi/download"
+                    to="/download"
                     className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-10 py-4 rounded-2xl text-lg font-bold transition-all duration-300 shadow-[0_0_40px_rgba(0,193,124,0.5)] hover:shadow-[0_0_60px_rgba(0,193,124,0.7)]"
                   >
                     Get Early Access
                   </Link>
                   <Link
-                    to="/Erudi/contact"
+                    to="/contact"
                     className="inline-block bg-transparent hover:bg-emerald-950/30 text-white px-10 py-4 rounded-2xl text-lg font-bold border-2 border-emerald-600/40 hover:border-emerald-500/60 transition-all duration-300"
                   >
                     Contact Sales
