@@ -14,6 +14,8 @@ dist
 dist-ssr
 *.local
 
+public/erudi-installer.dmg
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
