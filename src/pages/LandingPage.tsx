@@ -31,7 +31,7 @@ const features = [
 
 const CTAButton: React.FC<{ className?: string }> = ({ className = "" }) => (
   <Link 
-    to="/Erudi/waitlist"
+    to="/Erudi/download"
     className={`bg-[#272727] hover:bg-emerald-700 text-white px-8 py-4 rounded-[20px] text-2xl font-medium transition-colors shadow-neon-emerald-2 inline-block ${className}`}
   >
     Try For Free

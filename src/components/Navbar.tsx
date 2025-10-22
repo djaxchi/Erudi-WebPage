@@ -40,6 +40,7 @@ interface NavbarProps {
 
 // New site structure
 const navItems: NavItem[] = [
+  { label: 'Home',        href: '/Erudi' },
   { label: 'Download',    href: '/Erudi/download' },
   { label: 'About',       href: '/Erudi/about' },
   { label: 'Contact Us',  href: '/Erudi/contact' },

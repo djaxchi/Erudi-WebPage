@@ -61,7 +61,7 @@ const FloatingParticles: React.FC = memo(() => {
 FloatingParticles.displayName = 'FloatingParticles';
 
 const CTAButton: React.FC = memo(() => (
-  <Link to="/Erudi/waitlist">
+  <Link to="/Erudi/download">
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -111,37 +111,43 @@ const AboutPage: React.FC = () => {
       name: 'Djalil Chikhi', 
       role: 'Team Lead', 
       img: '/Erudi/images/djalil.png', 
-      bio: 'Leads the team and drives product vision.' 
+      bio: 'Leads the team and drives product vision.',
+      linkedin: 'https://linkedin.com/in/djalil-chikhi' 
     },
     { 
       name: 'Rayan Hanader', 
       role: 'AI Engineer', 
       img: '/Erudi/images/rayan.png', 
-      bio: 'Develops and optimizes machine learning tasks.' 
+      bio: 'Develops and optimizes machine learning tasks.',
+      linkedin: 'https://linkedin.com/in/rayanhanader'
     },
     { 
       name: 'Sami Taider', 
       role: 'Full Stack Engineer', 
       img: '/Erudi/images/sami.png', 
-      bio: 'Implements user interfaces and integrates APIs.' 
+      bio: 'Implements user interfaces and integrates APIs.',
+      linkedin: 'https://linkedin.com/in/sami-taider'
     },
     { 
       name: 'Youssef Chaouki', 
       role: 'Data Engineer', 
       img: '/Erudi/images/YoussefC.png', 
-      bio: 'Designs and maintains dataset cleaning pipelines.' 
+      bio: 'Designs and maintains dataset cleaning pipelines.',
+      linkedin: 'https://linkedin.com/in/youssef-chaouki'
     },
     { 
-      name: 'Nabil Dakoune', 
-      role: 'DevOps Specialist', 
-      img: '/Erudi/images/nabil.png', 
-      bio: 'Ensures smooth deployment and development.' 
+      name: 'Mathieu Jarry', 
+      role: 'Commercial Lead', 
+      img: '/Erudi/images/mathieu.png', 
+      bio: 'Handles business development and commercial strategies.',
+      linkedin: 'https://linkedin.com/in/mathieu-jarry-a086b6334'
     },
     { 
       name: 'Youssef Laatar', 
       role: 'Infrastructure Engineer', 
       img: '/Erudi/images/youssefL.png', 
-      bio: 'Works on computational resources and their optimization.' 
+      bio: 'Works on computational resources and their optimization.',
+      linkedin: 'https://linkedin.com/in/youssef-laatar'
     },
   ], []);
 
@@ -269,19 +275,28 @@ const AboutPage: React.FC = () => {
                 <h2 className="text-4xl lg:text-5xl font-extrabold text-emerald-400">Meet The Team</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-24 mx-8">
-                {team.map((p: { name: string; role: string; img: string; bio: string }, i: number) => (
+                {team.map((p: { name: string; role: string; img: string; bio: string; linkedin: string }, i: number) => (
                   <AnimatedSection key={i} delay={200 + i*100}>
-                    <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center">
+                    <div 
+                      className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center cursor-pointer hover:bg-white/20 transition-all duration-300 group"
+                      onClick={() => window.open(p.linkedin, '_blank')}
+                    >
                         <div className="w-48 h-48 -mt-28 mb-4 bg-white/5 backdrop-blur-md rounded-full overflow-hidden flex items-center justify-center mx-auto">
                         <OptimizedImage 
                           src={p.img} 
                           alt={`Photo of ${p.name}`} 
-                          className="object-cover transform scale-110 hover:scale-125 transition-all duration-300 w-full h-full" 
+                          className="object-cover transform scale-110 group-hover:scale-125 transition-all duration-300 w-full h-full" 
                         />
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-1">{p.name}</h3>
+                      <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-300 transition-colors">{p.name}</h3>
                       <p className="text-emerald-300 text-sm mb-2">{p.role}</p>
-                      <p className="text-gray-200 text-sm leading-relaxed">{p.bio}</p>
+                      <p className="text-gray-200 text-sm leading-relaxed mb-3">{p.bio}</p>
+                      <div className="flex justify-center items-center text-blue-400 group-hover:text-blue-300 transition-colors">
+                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-xs">View LinkedIn</span>
+                      </div>
                     </div>
                   </AnimatedSection>
                 ))}

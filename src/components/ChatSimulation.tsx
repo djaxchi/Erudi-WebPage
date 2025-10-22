@@ -231,7 +231,7 @@ export const ChatSimulation: React.FC = () => {
           </div>
           <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
             <Link 
-                  to="/Erudi/waitlist"
+                  to="/Erudi/download"
                 >
                 <svg 
                     className="w-4 h-4 text-white" 

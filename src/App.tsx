@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import WaitlistPage from './pages/WaitlistPage';
+import DownloadPage from './pages/DownloadPage';
 import { preloadImages, CRITICAL_IMAGES } from './utils/imageOptimization';
 
 const App: React.FC = () => {
@@ -25,19 +26,14 @@ const App: React.FC = () => {
       path="/Erudi"
       element={
         <>
-        <Navbar activePage="/Erudi/download" />
+        <Navbar activePage="/Erudi" />
         <LandingPage />
         </>
       }
       />
       <Route
       path="/Erudi/download"
-      element={
-        <>
-        <Navbar activePage="/Erudi/download" />
-        <LandingPage />
-        </>
-      }
+      element={<DownloadPage />}
       />
       <Route
       path="/Erudi/about"
