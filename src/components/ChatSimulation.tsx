@@ -155,18 +155,21 @@ export const ChatSimulation: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-md mx-auto h-[400px] bg-[#1a1a1a]/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden flex flex-col">
+    <div className="w-full max-w-2xl mx-auto h-[500px] lg:h-[665px] flex flex-col bg-gradient-to-b from-[#0a1f1a]/95 via-[#082018]/95 to-[#051510]/95 backdrop-blur-2xl rounded-3xl border border-emerald-500/60 overflow-clip shadow-[0_0_100px_rgba(16,185,129,0.5),0_0_50px_rgba(16,185,129,0.3),0_0_25px_rgba(16,185,129,0.2),inset_0_1px_1px_rgba(16,185,129,0.1)]">
       {/* Chat Header */}
-      <div className="px-4 py-3 bg-[#272727]/50 border-b border-gray-800 flex items-center space-x-3">
-        <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-        <span className="text-white font-medium">Erudi AI Assistant</span>
+      <div className="px-6 py-4 bg-gradient-to-r from-emerald-950/50 via-emerald-900/30 to-emerald-950/50 border-b border-emerald-500/40 flex items-center justify-between backdrop-blur-sm">
+        <div className="flex items-center space-x-3">
+          <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_20px_rgba(52,211,153,1),0_0_10px_rgba(52,211,153,0.8)]"></div>
+          <span className="text-white font-bold text-base tracking-wide">Erudi AI Assistant</span>
+        </div>
+        <span className="text-xs text-emerald-200/80 bg-emerald-800/30 px-3 py-1.5 rounded-full border border-emerald-500/40 shadow-sm">Simulated Chat</span>
       </div>
 
       {/* Chat Messages */}
       <div 
         ref={chatContainerRef} 
         onScroll={handleScroll}
-        className="flex-1 p-4 overflow-y-auto space-y-4"
+        className="flex-1 min-h-0 p-6 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-emerald-500/50 scrollbar-track-emerald-950/20 bg-[#051510]"
       >
         <AnimatePresence mode="popLayout">
           {messages.map((message) => (
@@ -178,22 +181,22 @@ export const ChatSimulation: React.FC = () => {
               transition={{ duration: 0.3 }}
               className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`flex items-start space-x-2 max-w-[80%] ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+              <div className={`flex items-start space-x-3 max-w-[85%] ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                   message.type === 'user' 
-                    ? 'bg-emerald-600' 
-                    : 'bg-gray-700'
+                    ? 'bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_0_20px_rgba(16,185,129,0.5)]' 
+                    : 'bg-gradient-to-br from-emerald-900/80 to-emerald-950/80 border border-emerald-600/40'
                 }`}>
                   {message.type === 'user' ? (
-                    <User className="w-4 h-4 text-white" />
+                    <User className="w-5 h-5 text-white" />
                   ) : (
-                    <Bot className="w-4 h-4 text-emerald-400" />
+                    <Bot className="w-5 h-5 text-emerald-300" />
                   )}
                 </div>
-                <div className={`rounded-2xl px-4 py-2 ${
+                <div className={`rounded-2xl px-5 py-3 ${
                   message.type === 'user'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-[#272727]/80 text-gray-100'
+                    ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-[0_4px_20px_rgba(16,185,129,0.3)]'
+                    : 'bg-[#0a1612]/90 text-gray-100 border border-emerald-700/30 backdrop-blur-sm'
                 }`}>
                   <p className="text-sm leading-relaxed">{message.content}</p>
                 </div>
@@ -208,14 +211,14 @@ export const ChatSimulation: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               className="flex justify-start"
             >
-              <div className="flex items-start space-x-2 max-w-[80%]">
-                <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-4 h-4 text-emerald-400" />
+              <div className="flex items-start space-x-3 max-w-[85%]">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-900/80 to-emerald-950/80 border border-emerald-600/40 flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-5 h-5 text-emerald-300" />
                 </div>
-                <div className="bg-[#272727]/80 text-gray-100 rounded-2xl px-4 py-2">
+                <div className="bg-[#0a1612]/90 text-gray-100 border border-emerald-700/30 backdrop-blur-sm rounded-2xl px-5 py-3">
                   <p className="text-sm leading-relaxed">
                     {streamingText}
-                    <span className="inline-block w-2 h-4 bg-emerald-400 ml-1 animate-pulse"></span>
+                    <span className="inline-block w-1.5 h-4 bg-emerald-400 ml-1 animate-pulse rounded-sm shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
                   </p>
                 </div>
               </div>
@@ -224,25 +227,24 @@ export const ChatSimulation: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      <div className="px-4 py-3 bg-[#272727]/30 border-t border-gray-800">
-        <div className="flex items-center space-x-2">
-          <div className="flex-1 bg-[#1a1a1a]/50 rounded-full px-4 py-2 text-gray-500 text-sm">
+      <div className="px-6 py-4 bg-gradient-to-r from-emerald-950/50 via-emerald-900/30 to-emerald-950/50 border-t border-emerald-500/40 backdrop-blur-sm">
+        <div className="flex items-center space-x-3">
+          <div className="flex-1 bg-[#0a0a0a]/80 border border-emerald-700/50 rounded-2xl px-5 py-3 text-gray-400 text-sm backdrop-blur-sm shadow-inner">
             Try Erudi to experience this AI interaction...
           </div>
-          <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
-            <Link 
-                  to="/Erudi/download"
-                >
-                <svg 
-                    className="w-4 h-4 text-white" 
-                    fill="currentColor" 
-                    viewBox="0 0 20 20" 
-                    style={{ transform: 'rotate(90deg)' }}
-                >
-                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                </svg>
-                </Link>
-          </div>
+          <Link 
+            to="/Erudi/download"
+            className="w-11 h-11 bg-gradient-to-br from-emerald-400 to-emerald-600 hover:from-emerald-300 hover:to-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_0_30px_rgba(16,185,129,0.6),0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_40px_rgba(16,185,129,0.8),0_0_20px_rgba(16,185,129,0.6)] flex-shrink-0 hover:scale-105"
+          >
+            <svg 
+              className="w-5 h-5 text-white" 
+              fill="currentColor" 
+              viewBox="0 0 20 20" 
+              style={{ transform: 'rotate(90deg)' }}
+            >
+              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+            </svg>
+          </Link>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import ContactPage from './pages/ContactPage';
 import WaitlistPage from './pages/WaitlistPage';
 import DownloadPage from './pages/DownloadPage';
 import { preloadImages, CRITICAL_IMAGES } from './utils/imageOptimization';
+import { AnimatedOrb } from './components/AnimatedOrb';
 
 const App: React.FC = () => {
   // Preload critical images on app startup
@@ -17,6 +18,11 @@ const App: React.FC = () => {
 
   return (
   <BrowserRouter>
+    {/* Global animated orb that appears on all pages */}
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+      <AnimatedOrb />
+    </div>
+    
     <Routes>
       <Route
         path="/"

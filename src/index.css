@@ -5,12 +5,55 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: black;
+  background-color: #050a0f;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes gridFlicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 1; }
+  20% { opacity: 1; }
+  30% { opacity: 1; }
+  40% { opacity: 1; }
+  50% { opacity: 1; }
+  60% { opacity: 1; }
+  70% { opacity: 1; }
+  80% { opacity: 1; }
+  90% { opacity: 1; }
+}
+
+.grid-background {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(0, 193, 124, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 193, 124, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridFlicker 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Custom scrollbar styling */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(0, 193, 124, 0.2);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 193, 124, 0.3);
 }
 
 a {
@@ -28,7 +71,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: black;
+  background-color: #050a0f;
 }
 
 h1 {
