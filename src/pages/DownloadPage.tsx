@@ -11,15 +11,51 @@ const DownloadPage: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+
+const sendGoogleSheetLog = (platform: string) => {
+  try {
+    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxEia0AtGBLpiAyRiX8VnJJA1-mpIHAUUkET5ACebl8GpxJ8BiO_apHUJsj947uFnWWNw/exec';
+
+    const userAgent = navigator.userAgent;
+    const timestamp = new Date().toISOString();
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const language = navigator.language;
+    const screenResolution = `${window.screen.width}x${window.screen.height}`;
+    const viewport = `${window.innerWidth}x${window.innerHeight}`;
+
+    // Build FormData (simple POST -> no preflight)
+    const form = new FormData();
+    form.append('timestamp', timestamp);
+    form.append('platform', platform);
+    form.append('os', userAgent.includes('Mac') ? 'macOS' : userAgent.includes('Win') ? 'Windows' : 'Other');
+    form.append('browser', navigator.userAgent);
+    form.append('screenResolution', screenResolution);
+    form.append('viewport', viewport);
+    form.append('language', language);
+    form.append('timezone', timezone);
+    form.append('userAgent', userAgent);
+
+    // navigator.sendBeacon sends a small POST without preflight and doesn't expose the response
+    const ok = navigator.sendBeacon(googleScriptUrl, form);
+    if (!ok) console.warn('sendBeacon returned false (may have failed to queue the request)');
+    else console.log('Google Sheet log queued with sendBeacon');
+  } catch (err) {
+    console.error('Failed to log to Google Sheet (sendBeacon):', err);
+  }
+};
+
   const handleMacDownload = () => {
-    // Create a proper download link with the download attribute
-    const link = document.createElement('a');
-    link.href = `${import.meta.env.BASE_URL}erudi-Installer.dmg`;
-    link.download = 'erudi-Installer.dmg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // fire-and-forget logging
+  sendGoogleSheetLog('macOS');
+
+  // trigger download
+  const link = document.createElement('a');
+  link.href = `${import.meta.env.BASE_URL}erudi-Installer.dmg`;
+  link.download = 'erudi-Installer.dmg';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   return (
     <motion.div
