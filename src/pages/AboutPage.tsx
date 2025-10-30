@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import { AnimatedSection } from '../assets/animatedSection';
 import { preloadImages } from '../utils/imageOptimization';
 import { getAssetPath } from '../utils/assetPath';
-import { Cpu, Shield, Zap, Users, Award } from 'lucide-react';
+import { Cpu, Shield, Zap, Users, Award, Monitor, Apple } from 'lucide-react';
 import '../styles/performance.css';
 
 // Optimized Image Component
@@ -96,6 +96,12 @@ const AboutPage: React.FC = () => {
       badge: 'Lightweight',
       description: "Google's efficient model for resource-constrained environments",
       params: '2B parameters'
+    },
+    {
+      name: 'Gemma 4B',
+      badge: 'Balanced',
+      description: "Google's versatile model offering excellent performance-to-resource ratio",
+      params: '4B parameters'
     },
     {
       name: 'Gemma 7B',
@@ -193,7 +199,7 @@ const AboutPage: React.FC = () => {
 
           {/* Hero Section */}
           <AnimatedSection delay={100}>
-            <div className="text-center mb-20 mt-12">
+            <div className="text-center mb-20 mt-32 sm:mt-20 md:mt-20">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
                 About <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">Erudi</span>
               </h1>
@@ -432,36 +438,54 @@ const AboutPage: React.FC = () => {
                   <h2 className="text-4xl font-bold text-white mb-4">System Requirements</h2>
                   <p className="text-gray-300 text-lg">Optimized for modern hardware with GPU acceleration</p>
                 </motion.div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  <div className="space-y-4">
-                    {[
-                      { label: 'NVIDIA GPU with ≥8 GB VRAM (CUDA 12.x)' },
-                      { label: '8 GB RAM recommended' },
-                    ].map((req, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Windows Requirements */}
+                  <div className="bg-gradient-to-br from-blue-500/5 to-blue-600/5 border border-blue-500/20 rounded-2xl p-6">
+                    <div className="flex items-center gap-3 mb-6">
+                      <Monitor className="w-8 h-8 text-blue-400" />
+                      <h3 className="text-xl font-bold text-white">Windows Requirements</h3>
+                    </div>
+                    <div className="space-y-4">
+                      {[
+                        { label: 'NVIDIA GPU with ≥8 GB VRAM (CUDA 12.x)' },
+                        { label: 'Windows 10+' },
+                        { label: '8 GB RAM recommended' },
+                        { label: 'Disk space: ~15 GB for model weights and cache' },
+                      ].map((req, idx) => (
+                        <div key={idx} className="flex items-start gap-3">
+                          <div className="w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg className="w-3 h-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <span className="text-gray-200 text-sm">{req.label}</span>
                         </div>
-                        <span className="text-gray-200">{req.label}</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                  <div className="space-y-4">
-                    {[
-                      { label: 'Windows 10+ / macOS 12+ / Linux (x86_64)' },
-                      { label: 'Disk space: ~15 GB for model weights and cache' },
-                    ].map((req, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
+
+                  {/* Mac Requirements */}
+                  <div className="bg-gradient-to-br from-gray-500/5 to-gray-600/5 border border-gray-500/20 rounded-2xl p-6">
+                    <div className="flex items-center gap-3 mb-6">
+                      <Apple className="w-8 h-8 text-gray-400" />
+                      <h3 className="text-xl font-bold text-white">Mac Requirements</h3>
+                    </div>
+                    <div className="space-y-4">
+                      {[
+                        { label: 'Apple Silicon (M1/M2/M3/M4)' },
+                        { label: '8 GB RAM recommended' },
+                        { label: 'Disk space: ~10 GB for model weights and cache' },
+                      ].map((req, idx) => (
+                        <div key={idx} className="flex items-start gap-3">
+                          <div className="w-5 h-5 rounded-full bg-gray-500/20 border border-gray-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <span className="text-gray-200 text-sm">{req.label}</span>
                         </div>
-                        <span className="text-gray-200">{req.label}</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="mt-10 p-6 bg-white/[0.05] border border-white/5 rounded-2xl">

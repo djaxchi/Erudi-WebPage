@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Download, MonitorSpeaker, Apple, Monitor, Sparkles } from 'lucide-react';
+import { Download, Apple, Sparkles, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { AnimatedSection } from '../assets/animatedSection';
@@ -80,7 +80,7 @@ const sendGoogleSheetLog = (platform: string) => {
       <main className="relative z-10 mx-auto mt-8 sm:pt-8 md:pt-12 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
-          <div className="mt-8 sm:mt-12 md:mt-16 mb-12 sm:mb-16 md:mb-20">
+          <div className="mt-32 sm:mt-20 md:mt-20 mb-12 sm:mb-16 md:mb-20">
             <AnimatedSection delay={100}>
               <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center">
                 {/* Badge */}
@@ -171,7 +171,7 @@ const sendGoogleSheetLog = (platform: string) => {
                       Download for Mac
                     </h3>
                     <p className="text-emerald-50 text-sm sm:text-base mb-3 sm:mb-4">
-                      Compatible with macOS 11.0 or later
+                      Compatible with M chips, older versions coming soon.
                     </p>
                     <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/15 border border-white/20">
                       <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -181,38 +181,36 @@ const sendGoogleSheetLog = (platform: string) => {
                 </div>
               </motion.button>
 
-              {/* Windows Download Button (Disabled) */}
-              <motion.div
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                className="relative h-full bg-gradient-to-br from-white/[0.05] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 opacity-60 cursor-not-allowed"
-              >
-                <div className="flex items-start gap-4 sm:gap-5">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gray-500/10 border border-gray-500/20 flex items-center justify-center flex-shrink-0">
-                    <Monitor className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-gray-400" />
-                  </div>
-                  <div className="text-left flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-300 mb-2 sm:mb-3">
-                      Download for Windows
-                    </h3>
-                    <p className="text-gray-400 text-sm sm:text-base mb-3 sm:mb-4">
-                      Coming Soon - In Active Development
-                    </p>
-                    <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gray-600/20 border border-gray-600/30">
-                      <MonitorSpeaker className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" />
-                      <span className="text-xs sm:text-sm font-medium text-gray-500">In Development</span>
+              {/* Windows Waitlist Button */}
+              <Link to="/waitlist">
+                <motion.div
+                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group h-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-[0_0_40px_rgba(59,130,246,0.4)] hover:shadow-[0_0_60px_rgba(59,130,246,0.6)] transition-all duration-300 border border-blue-400/30 cursor-pointer"
+                >
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <Users className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+                    </div>
+                    <div className="text-left flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">
+                        Join Waitlist for Windows
+                      </h3>
+                      <p className="text-blue-50 text-sm sm:text-base mb-3 sm:mb-4">
+                        Get notified when Windows version is available
+                      </p>
+                      <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/15 border border-white/20">
+                        <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <span className="text-xs sm:text-sm font-medium">Join Waitlist</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {/* Coming Soon Badge */}
-                <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
-                  <span className="inline-block px-3 py-1.5 rounded-full bg-gray-600/30 border border-gray-500/30 text-gray-300 text-xs font-semibold">
-                    Coming Soon
-                  </span>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             </div>
           </AnimatedSection>
 

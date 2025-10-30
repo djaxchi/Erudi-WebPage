@@ -134,7 +134,7 @@ const ContactPage: React.FC = () => {
         <div className="max-w-5xl mx-auto">
           
           {/* Header */}
-          <div className="mt-12 sm:mt-12 md:mt-16 mb-12 sm:mb-16 md:mb-20">
+          <div className="mt-32 sm:mt-20 md:mt-20 mb-12 sm:mb-16 md:mb-20">
             <AnimatedSection delay={100}>
               <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center">
                 {/* Badge */}

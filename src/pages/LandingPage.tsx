@@ -57,7 +57,7 @@ const LandingPage: React.FC = () => {
       <main className="relative z-10 mx-auto mt-8 sm:pt-8 md:pt-12 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
-          <div className="mt-8 sm:mt-12 md:mt-16 mb-12 sm:mb-16 md:mb-20">
+          <div className="mt-32 sm:mt-20 md:mt-20 mb-12 sm:mb-16 md:mb-20">
             <AnimatedSection delay={100}>
               <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left">
                 {/* Badge */}
