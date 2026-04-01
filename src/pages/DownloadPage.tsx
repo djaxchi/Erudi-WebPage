@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Apple, Sparkles, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import PageLayout from '../components/PageLayout';
+import Footer from '../components/Footer';
 import { AnimatedSection } from '../assets/animatedSection';
 
 const DownloadPage: React.FC = () => {
@@ -58,26 +59,7 @@ const sendGoogleSheetLog = (platform: string) => {
 };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="relative min-h-screen bg-[#050a0f] text-white overflow-hidden"
-    >
-      <Navbar activePage="/download" />
-      
-      {/* Animated grid background */}
-      <div className="grid-background" />
-
-      {/* Radial gradient backgrounds for depth */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-0" 
-        style={{
-          background: 'radial-gradient(circle at 30% 20%, rgba(16, 35, 56, 0.6), transparent 40%), radial-gradient(circle at 70% 60%, rgba(0, 193, 124, 0.08), transparent 50%), radial-gradient(circle at 50% 100%, rgba(10, 25, 40, 0.5), transparent 60%)',
-        }} 
-      />
-
-      <main className="relative z-10 mx-auto mt-8 sm:pt-8 md:pt-12 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-8 lg:px-12">
+    <PageLayout activePage="/download">
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <div className="mt-32 sm:mt-20 md:mt-20 mb-12 sm:mb-16 md:mb-20">
@@ -105,7 +87,7 @@ const sendGoogleSheetLog = (platform: string) => {
                 >
                   Download <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">Erudi</span>
                 </motion.h1>
-                
+
                 {/* Description */}
                 <motion.p
                   initial={{ opacity: 0, y: 30 }}
@@ -139,7 +121,7 @@ const sendGoogleSheetLog = (platform: string) => {
                       Beta Version Available
                     </h3>
                     <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                      This beta version gives you early access to Erudi's core features while we 
+                      This beta version gives you early access to Erudi's core features while we
                       continue to refine and improve the experience. Your feedback is invaluable to us.
                     </p>
                   </div>
@@ -228,17 +210,17 @@ const sendGoogleSheetLog = (platform: string) => {
                   Need Help Getting Started?
                 </h3>
                 <p className="text-gray-300 text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto">
-                  Check out our documentation or get in touch with our team if you need assistance 
+                  Check out our documentation or get in touch with our team if you need assistance
                   with installation or have any questions about the beta version.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link 
+                  <Link
                     to="/about"
                     className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-bold transition-all duration-300 shadow-[0_0_30px_rgba(0,193,124,0.3)] hover:shadow-[0_0_50px_rgba(0,193,124,0.5)] hover:-translate-y-0.5"
                   >
                     Learn More
                   </Link>
-                  <Link 
+                  <Link
                     to="/contact"
                     className="inline-block bg-transparent border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-black px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-bold transition-all duration-300 hover:-translate-y-0.5"
                   >
@@ -249,16 +231,9 @@ const sendGoogleSheetLog = (platform: string) => {
             </motion.div>
           </AnimatedSection>
 
-          {/* Footer */}
-          <AnimatedSection delay={500}>
-            <footer className="text-center text-gray-400 py-8 sm:py-10 md:py-12 mt-16 sm:mt-24 md:mt-32 border-t border-emerald-800/20">
-              <p className="text-xs sm:text-sm">© 2025 Erudi. All rights reserved.</p>
-              <p className="text-xs mt-2">Made with ❤️ by the Erudi Team</p>
-            </footer>
-          </AnimatedSection>
+          <Footer delay={500} />
         </div>
-      </main>
-    </motion.div>
+    </PageLayout>
   );
 };
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import PageLayout from '../components/PageLayout';
+import Footer from '../components/Footer';
 
 interface FormData {
   email: string;
@@ -49,7 +50,7 @@ const WaitlistPage: React.FC = () => {
       formDataToSend.append('company', formData.company);
       formDataToSend.append('useCase', formData.useCase);
       formDataToSend.append('timestamp', new Date().toISOString());
-      
+
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         body: formDataToSend,
@@ -60,7 +61,7 @@ const WaitlistPage: React.FC = () => {
       } else {
         throw new Error('Failed to submit');
       }
-      
+
     } catch (err) {
       setError('Something went wrong. Please try again.');
       console.error('Submission error:', err);
@@ -71,19 +72,8 @@ const WaitlistPage: React.FC = () => {
 
   if (isSubmitted) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="relative  min-h-screen bg-black text-white overflow-hidden"
-      >
-        <Navbar activePage="/waitlist" />
-
-        {/* Background gradients */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(circle at top left, rgba(0,193,124,0.15), transparent 70%), radial-gradient(circle at bottom right, rgba(0,193,124,0.1), transparent 60%)',
-        }} />
-
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+      <PageLayout activePage="/waitlist">
+        <div className="flex items-center justify-center min-h-[70vh] px-4">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -104,24 +94,13 @@ const WaitlistPage: React.FC = () => {
             </Link>
           </motion.div>
         </div>
-      </motion.div>
+      </PageLayout>
     );
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="relative min-h-screen bg-black text-white overflow-hidden"
-    >
-      <Navbar activePage="/waitlist" />
-
-      {/* Background gradients */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(circle at top left, rgba(0,193,124,0.15), transparent 70%), radial-gradient(circle at bottom right, rgba(0,193,124,0.1), transparent 60%)',
-      }} />
-
-      <div className="relative mt-16 w-full z-10 flex items-center justify-center min-h-screen px-4 py-12">
+    <PageLayout activePage="/waitlist">
+      <div className="mt-16 w-full flex items-center justify-center min-h-[70vh] px-4 py-12">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -233,15 +212,9 @@ const WaitlistPage: React.FC = () => {
 
         </motion.div>
       </div>
-      
-      {/* Footer */}
-      <footer className="mt-20">
-        <div className=" text-center text-gray-400 py-6 rounded-lg">
-          <p className="text-sm">© 2025 Erudi. All rights reserved.</p>
-          <p className="text-xs mt-2">Made with ❤️ by the Erudi Team</p>
-        </div>
-      </footer>
-    </motion.div>
+
+      <Footer />
+    </PageLayout>
   );
 };
 

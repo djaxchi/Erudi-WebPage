@@ -1,7 +1,8 @@
 import React, { memo, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import PageLayout from '../components/PageLayout';
+import Footer from '../components/Footer';
 import { AnimatedSection } from '../assets/animatedSection';
 import { preloadImages } from '../utils/imageOptimization';
 import { getAssetPath } from '../utils/assetPath';
@@ -175,26 +176,7 @@ const AboutPage: React.FC = () => {
   ], []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="relative min-h-screen bg-[#050a0f] text-white overflow-hidden"
-    >
-      <Navbar activePage="/about" />
-
-      {/* Animated grid background */}
-      <div className="grid-background" />
-
-      {/* Radial gradient backgrounds */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          background: 'radial-gradient(circle at 30% 20%, rgba(16, 35, 56, 0.6), transparent 40%), radial-gradient(circle at 70% 60%, rgba(0, 193, 124, 0.08), transparent 50%), radial-gradient(circle at 50% 100%, rgba(10, 25, 40, 0.5), transparent 60%)',
-        }}
-      />
-
-      <div className="relative z-10 mx-auto mt-8 pt-20 pb-20 px-4 sm:px-6 md:px-8 lg:px-12">
+    <PageLayout activePage="/about" mainClassName="pt-20">
         <div className="max-w-7xl mx-auto">
 
           {/* Hero Section */}
@@ -618,14 +600,9 @@ const AboutPage: React.FC = () => {
             </div>
           </AnimatedSection>
 
-          {/* Footer */}
-          <footer className="text-center text-gray-400 py-12 border-t border-emerald-800/20">
-            <p className="text-sm">© 2025 Erudi. All rights reserved.</p>
-            <p className="text-xs mt-2">Made with ❤️ by the Erudi Team</p>
-          </footer>
+          <Footer delay={800} />
         </div>
-      </div>
-    </motion.div>
+    </PageLayout>
   );
 };
 

@@ -10,12 +10,12 @@ interface ChatMessage {
   timestamp: number;
 }
 
-interface ChatScenario {
+export interface ChatScenario {
   userMessage: string;
   aiResponse: string;
 }
 
-const CHAT_SCENARIOS: readonly ChatScenario[] = [
+const DEFAULT_SCENARIOS: readonly ChatScenario[] = [
   {
     userMessage: "Help me train a model on my customer support emails",
     aiResponse: "I'll help you create a custom support AI! First, let me analyze your email data and clean it automatically. Then we'll fine-tune a model that understands your company's support style and common issues."
@@ -40,7 +40,18 @@ const SCROLL_RESET_TIMEOUT = 3000; // 3 seconds
 const TYPING_SPEED_BASE = 20;
 const TYPING_SPEED_VARIANCE = 30;
 
-export const ChatSimulation: React.FC = () => {
+interface ChatSimulationProps {
+  scenarios?: readonly ChatScenario[];
+  footerLink?: string;
+  footerText?: string;
+}
+
+export const ChatSimulation: React.FC<ChatSimulationProps> = ({
+  scenarios,
+  footerLink = '/download',
+  footerText = 'Try Erudi to experience this AI interaction...',
+}) => {
+  const activeScenarios = scenarios ?? DEFAULT_SCENARIOS;
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentScenario, setCurrentScenario] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -120,7 +131,7 @@ export const ChatSimulation: React.FC = () => {
       if (isRunningScenarioRef.current) return;
       
       isRunningScenarioRef.current = true;
-      const scenario = CHAT_SCENARIOS[currentScenario];
+      const scenario = activeScenarios[currentScenario];
       
       if (currentScenario === 0 && !hasStarted) {
         setMessages([]);
@@ -143,7 +154,7 @@ export const ChatSimulation: React.FC = () => {
   // Scenario cycling effect
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentScenario(prev => (prev + 1) % CHAT_SCENARIOS.length);
+      setCurrentScenario(prev => (prev + 1) % activeScenarios.length);
     }, SCENARIO_INTERVAL);
 
     return () => {
@@ -230,10 +241,10 @@ export const ChatSimulation: React.FC = () => {
       <div className="px-6 py-4 bg-gradient-to-r from-emerald-950/50 via-emerald-900/30 to-emerald-950/50 border-t border-emerald-500/40 backdrop-blur-sm">
         <div className="flex items-center space-x-3">
           <div className="flex-1 bg-[#0a0a0a]/80 border border-emerald-700/50 rounded-2xl px-5 py-3 text-gray-400 text-sm backdrop-blur-sm shadow-inner">
-            Try Erudi to experience this AI interaction...
+            {footerText}
           </div>
-          <Link 
-            to="/download"
+          <Link
+            to={footerLink}
             className="w-11 h-11 bg-gradient-to-br from-emerald-400 to-emerald-600 hover:from-emerald-300 hover:to-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_0_30px_rgba(16,185,129,0.6),0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_40px_rgba(16,185,129,0.8),0_0_20px_rgba(16,185,129,0.6)] flex-shrink-0 hover:scale-105"
           >
             <svg 

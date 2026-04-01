@@ -21,7 +21,7 @@ export default {
       keyframes: {
         slideFromLine: {
           '0%': {
-            transform: 'translateY(100%)', 
+            transform: 'translateY(100%)',
             opacity: '0',
           },
           '100%': {
@@ -29,17 +29,19 @@ export default {
             opacity: '1',
           },
         },
-        
-      breathe: {
-        '0%, 100%': { transform: 'scale(1)' },
-        '50%': { transform: 'scale(1.2)' },
-      },
+        breathe: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.2)' },
+        },
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         slideFromLine: 'slideFromLine 0.6s ease-out forwards',
-      },
-      animation: {
         breathe: 'breathe 2s infinite ease-in-out',
+        scroll: 'scroll 30s linear infinite',
       },
     },
   },

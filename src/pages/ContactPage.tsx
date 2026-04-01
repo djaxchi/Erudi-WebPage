@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Briefcase, Send, CheckCircle, Sparkles } from 'lucide-react';
-import Navbar from '../components/Navbar';
+import PageLayout from '../components/PageLayout';
+import Footer from '../components/Footer';
 import { AnimatedSection } from '../assets/animatedSection';
 
 interface ContactFormData {
@@ -111,26 +112,7 @@ const ContactPage: React.FC = () => {
   }, [formData]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="relative min-h-screen bg-[#050a0f] text-white overflow-hidden"
-    >
-      <Navbar activePage="/contact" />
-
-      {/* Animated grid background */}
-      <div className="grid-background" />
-
-      {/* Radial gradient backgrounds for depth */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-0" 
-        style={{
-          background: 'radial-gradient(circle at 30% 20%, rgba(16, 35, 56, 0.6), transparent 40%), radial-gradient(circle at 70% 60%, rgba(0, 193, 124, 0.08), transparent 50%), radial-gradient(circle at 50% 100%, rgba(10, 25, 40, 0.5), transparent 60%)',
-        }} 
-      />
-
-      <main className="relative z-10 mx-auto mt-8 sm:pt-8 md:pt-12 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-8 lg:px-12">
+    <PageLayout activePage="/contact">
         <div className="max-w-5xl mx-auto">
           
           {/* Header */}
@@ -389,16 +371,9 @@ const ContactPage: React.FC = () => {
             </motion.div>
           </AnimatedSection>
 
-          {/* Footer */}
-          <AnimatedSection delay={700}>
-            <footer className="text-center text-gray-400 py-8 sm:py-10 md:py-12 mt-16 sm:mt-24 md:mt-32 border-t border-emerald-800/20">
-              <p className="text-xs sm:text-sm">© 2025 Erudi. All rights reserved.</p>
-              <p className="text-xs mt-2">Made with ❤️ by the Erudi Team</p>
-            </footer>
-          </AnimatedSection>
+          <Footer />
         </div>
-      </main>
-    </motion.div>
+    </PageLayout>
   );
 };
 

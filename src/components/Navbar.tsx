@@ -42,10 +42,9 @@ interface NavbarProps {
 // New site structure
 const getNavItems = (): NavItem[] => {
   return [
-    { label: 'Home',        href: '/' },
-    { label: 'Download',    href: '/download' },
-    { label: 'About',       href: '/about' },
-    { label: 'Contact Us',  href: '/contact' },
+    { label: 'Home',            href: '/' },
+    { label: 'Erudi Desktop',   href: '/desktop' },
+    { label: 'Contact Us',      href: '/contact' },
   ];
 };
 
