@@ -1,6 +1,6 @@
 // App.tsx
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LandingPage from './pages/LandingPage';
 import TeamPage from './pages/TeamPage';
@@ -10,6 +10,16 @@ import DownloadPage from './pages/DownloadPage';
 import { preloadImages, CRITICAL_IMAGES } from './utils/imageOptimization';
 import { AnimatedOrb } from './components/AnimatedOrb';
 import { LanguageProvider } from './i18n/LanguageContext';
+
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 const App: React.FC = () => {
   // Preload critical images on app startup
@@ -23,6 +33,8 @@ const App: React.FC = () => {
   return (
   <LanguageProvider>
   <BrowserRouter basename={base}>
+    <ScrollToTop />
+
     {/* Global animated orb that appears on all pages */}
     <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
       <AnimatedOrb />

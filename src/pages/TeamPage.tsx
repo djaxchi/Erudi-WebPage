@@ -54,6 +54,7 @@ const TeamPage: React.FC = () => {
       name: 'Djalil Chikhi',
       role: 'CEO',
       img: getAssetPath('/Erudi/images/djalil.png'),
+      imgPosition: 'center top',
       bio: t('team.member.0.bio'),
       skills: [t('team.member.0.skill.0'), t('team.member.0.skill.1')],
       linkedin: 'https://linkedin.com/in/djalil-chikhi'
