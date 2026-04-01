@@ -38,22 +38,13 @@
   z-index: 1;
 }
 
-/* Custom scrollbar styling */
-.scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
+/* Hide scrollbar while keeping scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(0, 193, 124, 0.2);
-  border-radius: 3px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 193, 124, 0.3);
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 a {

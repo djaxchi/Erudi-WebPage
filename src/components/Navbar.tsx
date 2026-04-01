@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { preloadImages } from '../utils/imageOptimization';
 import { getAssetPath } from '../utils/assetPath';
+import { useLanguage } from '../i18n/LanguageContext';
 
 // Optimized Image Component for the logo
 const OptimizedImage: React.FC<{
@@ -40,17 +41,19 @@ interface NavbarProps {
 }
 
 // New site structure
-const getNavItems = (): NavItem[] => {
+const getNavItems = (t: (key: string) => string): NavItem[] => {
   return [
-    { label: 'Home',            href: '/' },
-    { label: 'Erudi Desktop',   href: '/desktop' },
-    { label: 'Contact Us',      href: '/contact' },
+    { label: t('nav.home'),    href: '/' },
+    { label: t('nav.desktop'), href: '/desktop' },
+    { label: t('nav.team'),    href: '/team' },
+    { label: t('nav.contact'), href: '/contact' },
   ];
 };
 
 const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const navItems = getNavItems();
+  const { lang, setLang, t } = useLanguage();
+  const navItems = getNavItems(t);
 
   // Preload logo for instant loading
   useEffect(() => {
@@ -71,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
 
     // Écouter les changements de taille d'écran
     window.addEventListener('resize', handleResize);
-    
+
     // Écouter les changements d'URL (pour les SPAs)
     window.addEventListener('popstate', handleRouteChange);
 
@@ -87,7 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       const navbar = document.querySelector('nav');
-      
+
       if (navbar && !navbar.contains(target) && isOpen) {
         setIsOpen(false);
       }
@@ -108,22 +111,22 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
         {/* Logo */}
         <div className="text-3xl font-semibold text-white cursor-pointer">
           <Link to={navItems[0].href}>
-          <OptimizedImage 
+          <OptimizedImage
             src={getAssetPath('/Erudi/images/erudi-logo.png')}
-            alt="Erudi Logo" 
-            className="h-16 w-auto" 
+            alt="Erudi Logo"
+            className="h-16 w-auto"
             priority={true}
           />
           </Link>
         </div>
 
-        {/* Desktop links */}
+        {/* Desktop links + lang toggle */}
         <div className="hidden md:flex items-center space-x-8 text-white">
           {navItems.map((item) => {
             const isActive = activePage === item.href;
             return (
               <Link
-                key={item.label}
+                key={item.href}
                 to={item.href}
                 className={`text-xl transition cursor-pointer ${
                   isActive
@@ -135,6 +138,31 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
               </Link>
             );
           })}
+
+          {/* Language toggle — desktop */}
+          <div className="flex items-center gap-1 border border-white/15 rounded-xl px-1 py-1">
+            <button
+              onClick={() => setLang('fr')}
+              className={`text-sm font-semibold px-2.5 py-1 rounded-lg transition-all duration-200 ${
+                lang === 'fr'
+                  ? 'text-emerald-400 bg-emerald-400/15'
+                  : 'text-white/50 hover:text-white/80'
+              }`}
+            >
+              FR
+            </button>
+            <span className="text-white/20 text-xs">|</span>
+            <button
+              onClick={() => setLang('en')}
+              className={`text-sm font-semibold px-2.5 py-1 rounded-lg transition-all duration-200 ${
+                lang === 'en'
+                  ? 'text-emerald-400 bg-emerald-400/15'
+                  : 'text-white/50 hover:text-white/80'
+              }`}
+            >
+              EN
+            </button>
+          </div>
         </div>
 
         {/* Mobile Hamburger */}
@@ -151,21 +179,21 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
       {/* Mobile menu */}
       <div
         className={`md:hidden bg-[#041915]/95 backdrop-blur-xl border-t border-white/10 transition-all duration-300 ease-in-out overflow-hidden ${
-          isOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <ul className="flex flex-col px-6 py-4 space-y-4 text-white">
           {navItems.map((item) => {
             const isActive = activePage === item.href;
             return (
-              <li key={item.label}>
+              <li key={item.href}>
                 <Link
                   to={item.href}
                   onClick={() => setIsOpen(false)}
                   className={`
                     block w-full text-left text-lg py-2 px-2 rounded-lg
                     transition-all duration-200
-                    ${isActive 
+                    ${isActive
                       ? 'text-emerald-400 bg-emerald-400/10 border border-emerald-400/30'
                       : 'hover:text-emerald-300 hover:bg-white/5'
                     }
@@ -176,6 +204,32 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
               </li>
             );
           })}
+
+          {/* Language toggle — mobile */}
+          <li>
+            <div className="flex items-center gap-2 pt-1">
+              <button
+                onClick={() => { setLang('fr'); setIsOpen(false); }}
+                className={`text-sm font-semibold px-3 py-1.5 rounded-lg border transition-all duration-200 ${
+                  lang === 'fr'
+                    ? 'text-emerald-400 border-emerald-400/40 bg-emerald-400/10'
+                    : 'text-white/50 border-white/10 hover:text-white/80'
+                }`}
+              >
+                FR
+              </button>
+              <button
+                onClick={() => { setLang('en'); setIsOpen(false); }}
+                className={`text-sm font-semibold px-3 py-1.5 rounded-lg border transition-all duration-200 ${
+                  lang === 'en'
+                    ? 'text-emerald-400 border-emerald-400/40 bg-emerald-400/10'
+                    : 'text-white/50 border-white/10 hover:text-white/80'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+          </li>
         </ul>
       </div>
     </nav>

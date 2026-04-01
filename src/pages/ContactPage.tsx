@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Briefcase, Send, CheckCircle, Sparkles } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import Footer from '../components/Footer';
 import { AnimatedSection } from '../assets/animatedSection';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ContactFormData {
   name: string;
@@ -24,33 +25,19 @@ const INITIAL_CONTACT_FORM_DATA: ContactFormData = {
 // TODO: Replace with actual Google Apps Script URL for contact form
 const CONTACT_GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYoZEv3cOw6HWhKhFxaSY6TPnaKF72yr9WfJUxquroxW2J3elrJP-SGfAeiGcGQ4hizA/exec';
 
-const contactReasons = [
-  { 
-    icon: MessageSquare, 
-    title: 'General Info', 
-    desc: 'Questions about Erudi and how it works',
-    value: 'general'
-  },
-  { 
-    icon: Briefcase, 
-    title: 'Business Inquiry', 
-    desc: 'Partnership opportunities and enterprise solutions',
-    value: 'business'
-  },
-  { 
-    icon: Mail, 
-    title: 'Support & Advice', 
-    desc: 'Technical help and guidance',
-    value: 'support'
-  },
-];
-
 const ContactPage: React.FC = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<ContactFormData>(INITIAL_CONTACT_FORM_DATA);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const formRef = useRef<HTMLDivElement>(null);
+
+  const contactReasons = useMemo(() => [
+    { icon: MessageSquare, title: t('contact.reason.0.title'), desc: t('contact.reason.0.desc'), value: 'general' },
+    { icon: Briefcase,     title: t('contact.reason.1.title'), desc: t('contact.reason.1.desc'), value: 'business' },
+    { icon: Mail,          title: t('contact.reason.2.title'), desc: t('contact.reason.2.desc'), value: 'support' },
+  ], [t]);
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -90,7 +77,7 @@ const ContactPage: React.FC = () => {
       formDataToSend.append('message', formData.message);
       formDataToSend.append('timestamp', new Date().toISOString());
       formDataToSend.append('type', 'contact'); // Distinguish from waitlist submissions
-      
+
       const response = await fetch(CONTACT_GOOGLE_SCRIPT_URL, {
         method: 'POST',
         body: formDataToSend,
@@ -102,19 +89,19 @@ const ContactPage: React.FC = () => {
       } else {
         throw new Error('Failed to submit contact form');
       }
-      
+
     } catch (err) {
-      setError('Failed to send message. Please try again or email us directly.');
+      setError(t('contact.form.error'));
       console.error('Contact form submission error:', err);
     } finally {
       setIsSubmitting(false);
     }
-  }, [formData]);
+  }, [formData, t]);
 
   return (
     <PageLayout activePage="/contact">
         <div className="max-w-5xl mx-auto">
-          
+
           {/* Header */}
           <div className="mt-32 sm:mt-20 md:mt-20 mb-12 sm:mb-16 md:mb-20">
             <AnimatedSection delay={100}>
@@ -128,7 +115,7 @@ const ContactPage: React.FC = () => {
                   className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 backdrop-blur-sm"
                 >
                   <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
-                  <span className="text-xs sm:text-sm text-emerald-300 font-medium">We're Here to Help</span>
+                  <span className="text-xs sm:text-sm text-emerald-300 font-medium">{t('contact.badge')}</span>
                 </motion.div>
 
                 {/* Main heading */}
@@ -139,9 +126,9 @@ const ContactPage: React.FC = () => {
                   transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight"
                 >
-                  Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">Touch</span>
+                  {t('contact.heading1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">{t('contact.heading2')}</span>
                 </motion.h1>
-                
+
                 {/* Description */}
                 <motion.p
                   initial={{ opacity: 0, y: 30 }}
@@ -150,7 +137,7 @@ const ContactPage: React.FC = () => {
                   transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                   className="text-white/90 text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed"
                 >
-                  Have questions about Erudi? Need technical advice? <span className="font-bold text-white">We'd love to hear from you.</span>
+                  {t('contact.sub')} <span className="font-bold text-white">{t('contact.sub.bold')}</span>
                 </motion.p>
               </div>
             </AnimatedSection>
@@ -161,7 +148,7 @@ const ContactPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               {contactReasons.map(({ icon: Icon, title, desc, value }, index) => (
                 <motion.button
-                  key={title}
+                  key={value}
                   onClick={() => handleReasonClick(value)}
                   initial={{ opacity: 0, y: 40, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -178,16 +165,16 @@ const ContactPage: React.FC = () => {
                         <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-emerald-400" />
                       </div>
                     </div>
-                    
+
                     {/* Title */}
                     <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">{title}</h3>
-                    
+
                     {/* Description */}
                     <p className="text-gray-300 text-sm leading-relaxed">{desc}</p>
 
                     {/* Click hint */}
                     <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-xs text-emerald-400 font-semibold">Click to select →</span>
+                      <span className="text-xs text-emerald-400 font-semibold">{t('contact.reason.click')}</span>
                     </div>
                   </div>
                 </motion.button>
@@ -211,7 +198,7 @@ const ContactPage: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-white mb-2">
-                          Name *
+                          {t('contact.form.name')}
                         </label>
                         <input
                           type="text"
@@ -221,12 +208,12 @@ const ContactPage: React.FC = () => {
                           value={formData.name}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
-                          placeholder="Your name"
+                          placeholder={t('contact.form.name.placeholder')}
                         />
                       </div>
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
-                          Email *
+                          {t('contact.form.email')}
                         </label>
                         <input
                           type="email"
@@ -236,7 +223,7 @@ const ContactPage: React.FC = () => {
                           value={formData.email}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
-                          placeholder="your@email.com"
+                          placeholder={t('contact.form.email.placeholder')}
                         />
                       </div>
                     </div>
@@ -244,7 +231,7 @@ const ContactPage: React.FC = () => {
                     {/* Company */}
                     <div>
                       <label htmlFor="company" className="block text-sm font-medium text-white mb-2">
-                        Company
+                        {t('contact.form.company')}
                       </label>
                       <input
                         type="text"
@@ -253,14 +240,14 @@ const ContactPage: React.FC = () => {
                         value={formData.company}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
-                        placeholder="Your company (optional)"
+                        placeholder={t('contact.form.company.placeholder')}
                       />
                     </div>
 
                     {/* Reason */}
                     <div>
                       <label htmlFor="reason" className="block text-sm font-medium text-white mb-2">
-                        What can we help you with? *
+                        {t('contact.form.reason')}
                       </label>
                       <select
                         id="reason"
@@ -270,17 +257,17 @@ const ContactPage: React.FC = () => {
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
                       >
-                        <option value="" className="bg-[#050a0f]">Select a reason</option>
-                        <option value="general" className="bg-[#050a0f]">General Information</option>
-                        <option value="business" className="bg-[#050a0f]">Business Inquiry</option>
-                        <option value="support" className="bg-[#050a0f]">Support & Advice</option>
+                        <option value="" className="bg-[#050a0f]">{t('contact.form.reason.placeholder')}</option>
+                        <option value="general" className="bg-[#050a0f]">{t('contact.form.reason.general')}</option>
+                        <option value="business" className="bg-[#050a0f]">{t('contact.form.reason.business')}</option>
+                        <option value="support" className="bg-[#050a0f]">{t('contact.form.reason.support')}</option>
                       </select>
                     </div>
 
                     {/* Message */}
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-white mb-2">
-                        Message *
+                        {t('contact.form.message')}
                       </label>
                       <textarea
                         id="message"
@@ -290,7 +277,7 @@ const ContactPage: React.FC = () => {
                         value={formData.message}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition resize-none"
-                        placeholder="Tell us more about your needs, questions, or how we can help..."
+                        placeholder={t('contact.form.message.placeholder')}
                       />
                     </div>
 
@@ -311,12 +298,12 @@ const ContactPage: React.FC = () => {
                         {isSubmitting ? (
                           <>
                             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                            <span>Sending...</span>
+                            <span>{t('contact.form.sending')}</span>
                           </>
                         ) : (
                           <>
                             <Send className="h-5 w-5" />
-                            <span>Send Message</span>
+                            <span>{t('contact.form.send')}</span>
                           </>
                         )}
                       </button>
@@ -331,15 +318,15 @@ const ContactPage: React.FC = () => {
                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 sm:mb-6">
                       <CheckCircle className="h-8 w-8 sm:h-10 sm:w-10 text-emerald-400" />
                     </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Message Sent!</h3>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">{t('contact.success.heading')}</h3>
                     <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed max-w-md mx-auto">
-                      Thanks for reaching out. We'll get back to you within 24 hours.
+                      {t('contact.success.sub')}
                     </p>
                     <button
                       onClick={() => setIsSubmitted(false)}
                       className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
                     >
-                      Send another message →
+                      {t('contact.success.again')}
                     </button>
                   </motion.div>
                 )}
@@ -358,10 +345,10 @@ const ContactPage: React.FC = () => {
             >
               <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-2xl mx-auto hover:border-emerald-500/30 transition-all duration-300">
                 <p className="text-gray-300 text-base sm:text-lg mb-3 sm:mb-4">
-                  Prefer email? Reach us directly at
+                  {t('contact.email.label')}
                 </p>
-                <a 
-                  href="mailto:erudipro@gmail.com" 
+                <a
+                  href="mailto:erudipro@gmail.com"
                   className="text-emerald-400 hover:text-emerald-300 text-xl sm:text-2xl font-bold transition inline-flex items-center gap-2"
                 >
                   <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
