@@ -129,7 +129,7 @@ const AboutPage: React.FC = () => {
                 About <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">Erudi Desktop</span>
               </h1>
               <p className="text-xl sm:text-2xl text-gray-300 max-w-4xl mx-auto">
-                The no-code desktop app for <span className="text-emerald-400 font-semibold">local AI fine-tuning</span> — private, powerful, and built for everyone.
+                The no-code desktop app for <span className="text-emerald-400 font-semibold">local AI fine-tuning</span>. Private, powerful, and built for everyone.
               </p>
             </div>
           </AnimatedSection>

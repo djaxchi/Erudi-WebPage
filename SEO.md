@@ -1,4 +1,4 @@
-# Erudi Website — SEO Guide
+# Erudi Website - SEO Guide
 
 This document is the single source of truth for how SEO works on the Erudi site. Read it before touching anything that affects metadata, routing, or the build. Keep it up to date when you change the SEO setup.
 
@@ -7,12 +7,12 @@ This document is the single source of truth for how SEO works on the Erudi site.
 ## 1. Principles (the basis we work from)
 
 1. **Every route is independent.** Each page owns a unique `<title>`, meta description, canonical URL, Open Graph + Twitter tags, and (where relevant) JSON-LD. No two pages share a title or description.
-2. **Tags are baked into static HTML at build time.** The site is a Vite + React SPA, but we prerender each route to a real static `.html` file so non-JS crawlers (LinkedIn, Facebook, X/Twitter, Slack) get correct per-page link previews — not just Googlebot.
+2. **Tags are baked into static HTML at build time.** The site is a Vite + React SPA, but we prerender each route to a real static `.html` file so non-JS crawlers (LinkedIn, Facebook, X/Twitter, Slack) get correct per-page link previews - not just Googlebot.
 3. **One canonical domain:** `https://www.erudi.app`. All canonical/OG/sitemap URLs use it. Defined once as `SITE_URL` in `src/components/Seo.tsx`.
 4. **`index.html` is static-only.** It holds invariant head elements (charset, viewport, favicon, manifest, fonts, theme-color) plus a fallback `<title>`. All variable, per-page SEO is owned by the `<Seo>` component via `react-helmet-async`. Do **not** put page-specific meta back into `index.html`.
-5. **Two distinct products — keep their SEO separate.**
-   - **Erudi (B2B)** — bespoke, turnkey AI consulting for SMEs/mid-market. Home `/`.
-   - **Erudi Desktop** — free, open-source, no-code *local* LLM fine-tuning desktop app. `/desktop`, `/download`.
+5. **Two distinct products - keep their SEO separate.**
+   - **Erudi (B2B)** - bespoke, turnkey AI consulting for SMEs/mid-market. Home `/`.
+   - **Erudi Desktop** - free, open-source, no-code *local* LLM fine-tuning desktop app. `/desktop`, `/download`.
 
 ---
 
@@ -59,13 +59,13 @@ Upload dist/ to Hostinger (Apache, domain root https://www.erudi.app/)
 
 | Prop | Type | Required | Notes |
 |------|------|----------|-------|
-| `title` | string | ✅ | Aim ~50–60 chars. Shown in tab + search result + OG/Twitter title. |
-| `description` | string | ✅ | Aim ~150–160 chars. Used for meta description + OG/Twitter description. |
+| `title` | string | ✅ | Aim ~50-60 chars. Shown in tab + search result + OG/Twitter title. |
+| `description` | string | ✅ | Aim ~150-160 chars. Used for meta description + OG/Twitter description. |
 | `path` | string | ✅ | Route path with leading slash, e.g. `"/desktop"`. Use `"/"` for home. Builds canonical + `og:url`. |
-| `image` | string | — | Path or absolute URL to the social image. Defaults to `/og-image.png`. Relative paths are absolute-ized against `SITE_URL`. |
-| `type` | `'website' \| 'article'` | — | Defaults to `website`. |
-| `noindex` | boolean | — | `true` emits `robots: noindex, nofollow`. Use for thank-you/confirmation pages you don't want indexed. |
-| `jsonLd` | object \| object[] | — | One or more JSON-LD blocks. Stringified into `<script type="application/ld+json">`. |
+| `image` | string | - | Path or absolute URL to the social image. Defaults to `/og-image.png`. Relative paths are absolute-ized against `SITE_URL`. |
+| `type` | `'website' \| 'article'` | - | Defaults to `website`. |
+| `noindex` | boolean | - | `true` emits `robots: noindex, nofollow`. Use for thank-you/confirmation pages you don't want indexed. |
+| `jsonLd` | object \| object[] | - | One or more JSON-LD blocks. Stringified into `<script type="application/ld+json">`. |
 
 ### What it renders
 `<title>`, `meta name="title"`, `meta description`, `meta robots`, `link canonical`, full Open Graph set (`og:type/site_name/url/title/description/image` + `og:image:width 1200` / `og:image:height 630` / `og:locale en_US`), Twitter `summary_large_image` set (`twitter:card/url/title/description/image`), and any `jsonLd` blocks.
@@ -79,7 +79,7 @@ const DownloadPage = () => (
   <PageLayout activePage="download">
     <Seo
       path="/download"
-      title="Download Erudi Desktop — Free & Open Source"
+      title="Download Erudi Desktop - Free & Open Source"
       description="Download Erudi Desktop for macOS, Windows and Linux. No-code local LLM fine-tuning, 100% on your machine. Free forever, fully open source."
       jsonLd={{
         '@context': 'https://schema.org',
@@ -101,13 +101,13 @@ const DownloadPage = () => (
 
 | Route | Page | Title | JSON-LD |
 |-------|------|-------|---------|
-| `/` | HomePage | Erudi — Bespoke, Turnkey AI Solutions for Your Business | Organization + WebSite |
-| `/desktop` | LandingPage | Erudi Desktop — No-Code Local LLM Fine-Tuning | SoftwareApplication |
-| `/download` | DownloadPage | Download Erudi Desktop — Free & Open Source | SoftwareApplication |
-| `/team` | TeamPage | The Erudi Team — AI Engineers & Researchers | — |
-| `/contact` | ContactPage | Contact Erudi — Talk to Our AI Team | ContactPage |
-| `/waitlist` | WaitlistPage | Join the Erudi Waitlist | — |
-| `/about` | → redirects to `/desktop` | (not prerendered, excluded) | — |
+| `/` | HomePage | Erudi - Bespoke, Turnkey AI Solutions for Your Business | Organization + WebSite |
+| `/desktop` | LandingPage | Erudi Desktop - No-Code Local LLM Fine-Tuning | SoftwareApplication |
+| `/download` | DownloadPage | Download Erudi Desktop - Free & Open Source | SoftwareApplication |
+| `/team` | TeamPage | The Erudi Team - AI Engineers & Researchers | - |
+| `/contact` | ContactPage | Contact Erudi - Talk to Our AI Team | ContactPage |
+| `/waitlist` | WaitlistPage | Join the Erudi Waitlist | - |
+| `/about` | → redirects to `/desktop` | (not prerendered, excluded) | - |
 
 > When you change a page's purpose or copy, update its `<Seo>` title/description to match. Stale or generic descriptions are the most common SEO regression.
 
@@ -121,17 +121,17 @@ const DownloadPage = () => (
 - Launches headless Puppeteer (`--no-sandbox`), visits each route in `ROUTES`, waits for `networkidle0` + 400 ms so `react-helmet-async` can flush its head tags, then snapshots `document.documentElement.outerHTML` and writes it to `dist/<route>/index.html`.
 - `ROUTES` (line ~13): `['/', '/desktop', '/download', '/team', '/contact', '/waitlist']`. `/about` is intentionally excluded because it's a redirect.
 
-**Why Puppeteer instead of SSG/react-snap:** the site uses WebGL (`FluidShader`), framer-motion and Swiper. Running components in Node (true SSG) would crash on missing `window`/WebGL. A real headless browser renders the actual DOM, so everything works and we just snapshot the result. (react-snap was rejected — it pins an ancient Puppeteer that fails on Apple Silicon.)
+**Why Puppeteer instead of SSG/react-snap:** the site uses WebGL (`FluidShader`), framer-motion and Swiper. Running components in Node (true SSG) would crash on missing `window`/WebGL. A real headless browser renders the actual DOM, so everything works and we just snapshot the result. (react-snap was rejected - it pins an ancient Puppeteer that fails on Apple Silicon.)
 
 ---
 
 ## 7. Static SEO assets
 
-- **`public/robots.txt`** — `Allow: /` for all agents + `Sitemap: https://www.erudi.app/sitemap.xml`.
-- **`public/sitemap.xml`** — one `<url>` per indexable route. **Maintenance:** when you add/remove a route, update this file; bump `<lastmod>` (YYYY-MM-DD) when a page's content meaningfully changes.
-- **`public/site.webmanifest`** — PWA manifest; `theme_color`/`background_color` = `#050a0f`.
-- **`public/og-image.png`** — 1200×630 default social card. Override per page via the `image` prop if a page warrants a custom card.
-- **`public/icon.png`** — favicon + apple-touch-icon, 512×512 square (a multiple-of-48 size Google is happy with). Everything references `/icon.png`.
+- **`public/robots.txt`** - `Allow: /` for all agents + `Sitemap: https://www.erudi.app/sitemap.xml`.
+- **`public/sitemap.xml`** - one `<url>` per indexable route. **Maintenance:** when you add/remove a route, update this file; bump `<lastmod>` (YYYY-MM-DD) when a page's content meaningfully changes.
+- **`public/site.webmanifest`** - PWA manifest; `theme_color`/`background_color` = `#050a0f`.
+- **`public/og-image.png`** - 1200×630 default social card. Override per page via the `image` prop if a page warrants a custom card.
+- **`public/icon.png`** - favicon + apple-touch-icon, 512×512 square (a multiple-of-48 size Google is happy with). Everything references `/icon.png`.
 
 ---
 
@@ -141,9 +141,9 @@ const DownloadPage = () => (
 npm run build      # tsc + vite build (base "/") + postbuild prerender
 ```
 
-**Deploy is automated.** Pushing to `main` triggers `.github/workflows/deploy.yml`, which runs `npm run build` on a CI runner and FTP-uploads `dist/` to the Hostinger web root. You normally don't deploy by hand — just push to `main`.
+**Deploy is automated.** Pushing to `main` triggers `.github/workflows/deploy.yml`, which runs `npm run build` on a CI runner and FTP-uploads `dist/` to the Hostinger web root. You normally don't deploy by hand - just push to `main`.
 
-> ⚠️ Because the prerender runs headless on CI, `scripts/prerender.mjs` must not depend on third-party network. It uses `waitUntil: 'domcontentloaded'`, waits for `#root` to mount, and aborts external (font) requests. Do **not** switch back to `networkidle0` — Google Fonts requests never settle on CI and the build hangs/fails.
+> ⚠️ Because the prerender runs headless on CI, `scripts/prerender.mjs` must not depend on third-party network. It uses `waitUntil: 'domcontentloaded'`, waits for `#root` to mount, and aborts external (font) requests. Do **not** switch back to `networkidle0` - Google Fonts requests never settle on CI and the build hangs/fails.
 
 - **Production = `npm run build`.** It uses Vite's default base `/`, which matches the Hostinger root deployment, and triggers the prerender via `postbuild`.
 - **Do NOT use `build:github` for erudi.app.** It builds with base `/Erudi/` (GitHub Pages subpath) and would break all root-absolute asset and SEO paths. The `gh-pages`/`build:github`/`homepage` entries in `package.json` are legacy/secondary.
@@ -157,7 +157,7 @@ After deploying SEO changes, in **Google Search Console**: submit/ping `sitemap.
 
 1. Add the route in `src/App.tsx`.
 2. Add a `<Seo …/>` at the top of the page component with a unique title + description (and JSON-LD if it represents an entity like software, an article, or an organization).
-3. **Add the path to `ROUTES` in `scripts/prerender.mjs`** — otherwise it won't be prerendered to static HTML.
+3. **Add the path to `ROUTES` in `scripts/prerender.mjs`** - otherwise it won't be prerendered to static HTML.
 4. Add a `<url>` entry to `public/sitemap.xml`.
 5. Run `npm run build` and confirm `dist/<route>/index.html` exists with the right `<title>`/description.
 
@@ -167,11 +167,11 @@ After deploying SEO changes, in **Google Search Console**: submit/ping `sitemap.
 
 ## 10. Conventions & copy guidelines
 
-- **Titles:** ~50–60 chars, `Page Topic — Erudi context`. Front-load the keyword.
-- **Descriptions:** ~150–160 chars, active voice, one concrete value prop. Match the page's actual content; don't reuse another page's text.
-- **Canonical:** always `SITE_URL + path`, no trailing slash except home (`/`). The component handles this — pass a clean `path`.
+- **Titles:** ~50-60 chars, `Page Topic - Erudi context`. Front-load the keyword.
+- **Descriptions:** ~150-160 chars, active voice, one concrete value prop. Match the page's actual content; don't reuse another page's text.
+- **Canonical:** always `SITE_URL + path`, no trailing slash except home (`/`). The component handles this - pass a clean `path`.
 - **Keep the two products distinct** in wording (see §1.5). Don't describe the B2B consulting offering on Desktop pages or vice-versa.
-- **Language:** SEO copy is in the site's default language (English). If/when full i18n SEO is needed, that's a future extension — the `<Seo>` component would take locale-aware copy.
+- **Language:** SEO copy is in the site's default language (English). If/when full i18n SEO is needed, that's a future extension - the `<Seo>` component would take locale-aware copy.
 
 ---
 
@@ -185,13 +185,13 @@ grep -o '<title>[^<]*</title>' dist/index.html dist/desktop/index.html dist/cont
 grep -oE 'rel="canonical"[^>]*|property="og:title"[^>]*' dist/desktop/index.html
 ```
 
-Each `dist/<route>/index.html` should contain exactly one head `<title>`, one `description`, one `og:title`, one canonical. (Note: a `<title` grep count above 1 can come from inline SVG `<title>` elements in the body — check it's the head one that's unique.)
+Each `dist/<route>/index.html` should contain exactly one head `<title>`, one `description`, one `og:title`, one canonical. (Note: a `<title` grep count above 1 can come from inline SVG `<title>` elements in the body - check it's the head one that's unique.)
 
 ---
 
 ## 12. Known gotchas
 
-- **Helmet needs `<HelmetProvider>`** in `src/main.tsx` — if it's removed, no tags render.
+- **Helmet needs `<HelmetProvider>`** in `src/main.tsx` - if it's removed, no tags render.
 - **New route not showing custom tags when shared on LinkedIn?** It was probably not added to `ROUTES` in `scripts/prerender.mjs`, so only the JS-rendered (Google-only) version has tags.
 - **`npm run lint`** currently reports pre-existing errors unrelated to SEO (generated `.vite/deps/*` files and one unused var in `src/utils/imageOptimization.ts`). Consider adding `.vite/` to ESLint ignores; don't let these mask new errors.
-- **Don't reintroduce per-page meta into `index.html`** — it causes duplicate/conflicting tags in the prerendered output.
+- **Don't reintroduce per-page meta into `index.html`** - it causes duplicate/conflicting tags in the prerendered output.

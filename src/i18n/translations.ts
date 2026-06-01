@@ -10,21 +10,21 @@ export const translations: Record<string, Record<string, string>> = {
     'footer.rights': '© 2026 Erudi. All rights reserved.',
     'footer.made': 'Made with ❤️ by the Erudi Team',
 
-    // ── HomePage — Hero ──────────────────────────────────────────────────────
+    // ── HomePage - Hero ──────────────────────────────────────────────────────
     'home.hero.badge': 'Specialized AI consulting · SME & mid-market',
     'home.hero.headline1': 'AI on',
     'home.hero.headline2': 'your terms.',
     'home.hero.subtitle':
-      'Erudi designs, builds and operates bespoke AI solutions for SMEs and mid-market companies. We handle the infrastructure, the maintenance and the R&D — you get a live solution in 2 to 6 weeks.',
+      'Erudi designs, builds and operates bespoke AI solutions for SMEs and mid-market companies. We handle the infrastructure, the maintenance and the R&D. You get a live solution in 2 to 6 weeks.',
     'home.hero.cta.expert': 'Book a free scoping call',
     'home.hero.cta.note': '30 min · No commitment · We map your AI project',
     'home.hero.cta.secondary': 'or see how we work',
     'home.hero.cta.desktop': 'Get Desktop free',
 
-    // ── HomePage — Logo bar ──────────────────────────────────────────────────
+    // ── HomePage - Logo bar ──────────────────────────────────────────────────
     'home.logobar.label': 'Trusted by teams at industry leaders',
 
-    // ── HomePage — Two products ──────────────────────────────────────────────
+    // ── HomePage - Two products ──────────────────────────────────────────────
     'home.split.eyebrow': 'Two products, one mission',
     'home.split.heading': 'Which one is for you?',
 
@@ -48,11 +48,11 @@ export const translations: Record<string, Record<string, string>> = {
     'home.split.desktop.feat.3': 'Works on Mac, Windows & Linux',
     'home.split.desktop.cta': 'Discover Erudi Desktop',
 
-    // ── HomePage — Problem ───────────────────────────────────────────────────
+    // ── HomePage - Problem ───────────────────────────────────────────────────
     'home.problem.eyebrow': 'The problem',
     'home.problem.heading': 'Generic AI is no longer enough.',
     'home.problem.p1':
-      'Your teams spend hours reformulating prompts, correcting hallucinations, adapting generic answers to your business context. ChatGPT, Copilot and the like are built for everyone — not for your expertise.',
+      'Your teams spend hours reformulating prompts, correcting hallucinations, adapting generic answers to your business context. ChatGPT, Copilot and the like are built for everyone, not for your expertise.',
     'home.problem.p2':
       'The result: marginal productivity gains, stalling adoption, and a widening gap between the promise of AI and the reality on the ground.',
 
@@ -63,11 +63,11 @@ export const translations: Record<string, Record<string, string>> = {
     'home.pain.2.title': 'Recurring hallucinations',
     'home.pain.2.desc': 'Plausible but wrong answers, impossible to detect without expertise',
 
-    // ── HomePage — Solution ──────────────────────────────────────────────────
+    // ── HomePage - Solution ──────────────────────────────────────────────────
     'home.solution.eyebrow': 'The solution',
     'home.solution.heading': 'AI that embraces your know-how.',
     'home.solution.sub':
-      'Erudi builds AI solutions rooted in your business reality — not off-the-shelf generalist gadgets.',
+      'Erudi builds AI solutions rooted in your business reality, not off-the-shelf generalist gadgets.',
 
     'home.sol.0.title': 'Bespoke',
     'home.sol.0.desc':
@@ -82,30 +82,30 @@ export const translations: Record<string, Record<string, string>> = {
     'home.sol.3.desc':
       'From proof of concept to production deployment. Monitoring, maintenance and continuous evolution included.',
 
-    // ── HomePage — Final CTA ─────────────────────────────────────────────────
-    'home.cta.heading': 'Get your bespoke AI live in 2–6 weeks.',
+    // ── HomePage - Final CTA ─────────────────────────────────────────────────
+    'home.cta.heading': 'Get your bespoke AI live in 2-6 weeks.',
     'home.cta.sub':
-      'Designed around your data and processes. Hosted, maintained and continuously updated by Erudi. All-inclusive monthly fee — no surprises, no internal complexity to absorb.',
+      'Designed around your data and processes. Hosted, maintained and continuously updated by Erudi. All-inclusive monthly fee. No surprises, no internal complexity to absorb.',
     'home.cta.expert': 'Book your free scoping call',
     'home.cta.note': '30 min · No commitment · We map your AI project',
     'home.cta.desktop': 'Get Desktop free',
 
-    // ── HomePage — Chat scenarios ────────────────────────────────────────────
+    // ── HomePage - Chat scenarios ────────────────────────────────────────────
     'home.chat.0.user': 'We lose 3h/day reformulating prompts for our audit reports.',
     'home.chat.0.ai':
-      "We'll build a specialized model trained on your audit methodology. It generates reports in your format, with your terminology — zero prompt engineering needed.",
+      "We'll build a specialized model trained on your audit methodology. It generates reports in your format, with your terminology. Zero prompt engineering needed.",
     'home.chat.1.user': "Our client data can't leave our infrastructure.",
     'home.chat.1.ai':
       'All Erudi solutions deploy on-premise or on your private cloud. Your data never leaves your environment. GDPR-compliant by design.',
     'home.chat.2.user': 'How do we integrate AI into our existing SAP workflow?',
     'home.chat.2.ai':
-      'We plug directly into your existing stack — SAP, Salesforce, custom ERPs. Our solutions are built to fit your processes, not the other way around.',
+      'We plug directly into your existing stack: SAP, Salesforce, custom ERPs. Our solutions are built to fit your processes, not the other way around.',
     'home.chat.3.user': 'We need AI that speaks our industry terminology.',
     'home.chat.3.ai':
-      'Every model we deliver is trained on your domain vocabulary and validated by your experts. No generic answers — only responses that match your standards.',
+      'Every model we deliver is trained on your domain vocabulary and validated by your experts. No generic answers, only responses that match your standards.',
     'home.chat.footer': 'Ask anything about your business...',
 
-    // ── HomePage — current page strings ─────────────────────────────────────
+    // ── HomePage - current page strings ─────────────────────────────────────
     'home.hero.h1.main': 'AI works better when it knows your business.',
     'home.hero.h1.em': 'We build it that way.',
     'home.hero.sub': 'Custom AI operated end to end. Live in 2 to 6 weeks.',
@@ -141,7 +141,11 @@ export const translations: Record<string, Record<string, string>> = {
     'home.pillars.2.body': 'A dedicated R&D team updates your system as the field evolves. Your solution gets better over time.',
 
     'home.situations.heading': 'Do you recognise yourself?',
-    'home.situations.sub': 'Click a situation to see what we build for it.',
+    'home.situations.sub': 'One challenge at a time. Reveal what we’d build for it.',
+    'home.situations.label.challenge': 'The challenge',
+    'home.situations.label.solution': 'What we build',
+    'home.situations.btn.problem': 'Back to challenge',
+    'home.situations.btn.next': 'Next',
     'home.situations.0.problem': 'Your team spends hours digging through emails, files and tools to answer questions that should take seconds.',
     'home.situations.0.solution': 'A conversational assistant trained on your data and processes. It answers like a colleague who has read everything.',
     'home.situations.0.tag': 'Assistant',
@@ -152,7 +156,7 @@ export const translations: Record<string, Record<string, string>> = {
     'home.situations.2.solution': 'A search engine built on your internal base. It answers in plain language and cites exactly where it found the information.',
     'home.situations.2.tag': 'Search / RAG',
     'home.situations.3.problem': 'Your team uses five different tools that never talk to each other. Copying data between them is a full-time job.',
-    'home.situations.3.solution': 'An agent that connects your CRM, ERP, emails and databases — and acts across them on instruction.',
+    'home.situations.3.solution': 'An agent that connects your CRM, ERP, emails and databases, and acts across them on instruction.',
     'home.situations.3.tag': 'Connected agent',
     'home.situations.4.problem': 'Every week, the same task. Same steps. Three hours minimum. No one questions it because it has always been done that way.',
     'home.situations.4.solution': 'We automate the process end to end, with a human review step where judgement actually matters.',
@@ -288,7 +292,7 @@ export const translations: Record<string, Record<string, string>> = {
     'desktop.sysreq.ready.sub': 'Download Erudi Desktop and start fine-tuning your first model today.',
     'desktop.sysreq.ready.cta': 'Download',
 
-    // ── ChatSimulation — default scenarios ───────────────────────────────────
+    // ── ChatSimulation - default scenarios ───────────────────────────────────
     'chat.default.0.user': 'Help me train a model on my customer support emails',
     'chat.default.0.ai':
       "I'll help you create a custom support AI! First, let me analyze your email data and clean it automatically. Then we'll fine-tune a model that understands your company's support style and common issues.",
@@ -383,7 +387,7 @@ export const translations: Record<string, Record<string, string>> = {
       "We're six engineers passionate about making AI technology more accessible. United by our shared vision of democratizing powerful AI training for everyone.",
     'team.dna.quote':
       '"We believe that the future of AI should be accessible, secure, and empowering for everyone. Our mission is to break down the barriers between cutting-edge AI technology and the people who need it most."',
-    'team.dna.attribution': '— The Erudi Team',
+    'team.dna.attribution': 'The Erudi Team',
 
     // ── DownloadPage ─────────────────────────────────────────────────────────
     'download.badge': 'Early Access Beta',
@@ -445,21 +449,21 @@ export const translations: Record<string, Record<string, string>> = {
     'footer.rights': '© 2026 Erudi. Tous droits réservés.',
     'footer.made': "Fait avec ❤️ par l'équipe Erudi",
 
-    // ── HomePage — Hero ──────────────────────────────────────────────────────
+    // ── HomePage - Hero ──────────────────────────────────────────────────────
     'home.hero.badge': "Cabinet de conseil IA spécialisé · TPE, PME, ETI",
     'home.hero.headline1': "L'IA selon",
     'home.hero.headline2': 'vos règles.',
     'home.hero.subtitle':
-      "Erudi conçoit, développe et opère des solutions IA sur mesure pour les TPE, PME et ETI. Nous gérons l'infrastructure, la maintenance et la R&D — vous obtenez une solution en production en 2 à 6 semaines.",
+      "Erudi conçoit, développe et opère des solutions IA sur mesure pour les TPE, PME et ETI. Nous gérons l'infrastructure, la maintenance et la R&D. Vous obtenez une solution en production en 2 à 6 semaines.",
     'home.hero.cta.expert': 'Réserver un appel de cadrage gratuit',
     'home.hero.cta.note': '30 min · Sans engagement · On cadre votre projet IA',
     'home.hero.cta.secondary': 'ou voir comment on travaille',
     'home.hero.cta.desktop': 'Obtenir Desktop gratuitement',
 
-    // ── HomePage — Logo bar ──────────────────────────────────────────────────
+    // ── HomePage - Logo bar ──────────────────────────────────────────────────
     'home.logobar.label': "Reconnus par des équipes de leaders industriels",
 
-    // ── HomePage — Two products ──────────────────────────────────────────────
+    // ── HomePage - Two products ──────────────────────────────────────────────
     'home.split.eyebrow': 'Deux produits, une mission',
     'home.split.heading': 'Lequel est fait pour vous ?',
 
@@ -483,11 +487,11 @@ export const translations: Record<string, Record<string, string>> = {
     'home.split.desktop.feat.3': 'Compatible Mac, Windows et Linux',
     'home.split.desktop.cta': 'Découvrir Erudi Desktop',
 
-    // ── HomePage — Problem ───────────────────────────────────────────────────
+    // ── HomePage - Problem ───────────────────────────────────────────────────
     'home.problem.eyebrow': 'Le problème',
     'home.problem.heading': "L'IA générique ne suffit plus.",
     'home.problem.p1':
-      "Vos équipes passent des heures à reformuler des prompts, corriger des hallucinations, adapter des réponses génériques à votre contexte métier. ChatGPT, Copilot et leurs semblables sont conçus pour tout le monde — pas pour votre expertise.",
+      "Vos équipes passent des heures à reformuler des prompts, corriger des hallucinations, adapter des réponses génériques à votre contexte métier. ChatGPT, Copilot et leurs semblables sont conçus pour tout le monde, pas pour votre expertise.",
     'home.problem.p2':
       "Résultat : des gains de productivité marginaux, une adoption qui stagne et un fossé grandissant entre la promesse de l'IA et la réalité sur le terrain.",
 
@@ -498,11 +502,11 @@ export const translations: Record<string, Record<string, string>> = {
     'home.pain.2.title': 'Hallucinations récurrentes',
     'home.pain.2.desc': 'Des réponses plausibles mais fausses, impossibles à détecter sans expertise',
 
-    // ── HomePage — Solution ──────────────────────────────────────────────────
+    // ── HomePage - Solution ──────────────────────────────────────────────────
     'home.solution.eyebrow': 'La solution',
     'home.solution.heading': 'Une IA qui épouse votre savoir-faire.',
     'home.solution.sub':
-      "Erudi conçoit des solutions IA ancrées dans votre réalité métier — pas des gadgets généralistes prêts à l'emploi.",
+      "Erudi conçoit des solutions IA ancrées dans votre réalité métier, pas des gadgets généralistes prêts à l'emploi.",
 
     'home.sol.0.title': 'Sur mesure',
     'home.sol.0.desc':
@@ -517,30 +521,30 @@ export const translations: Record<string, Record<string, string>> = {
     'home.sol.3.desc':
       "Du proof of concept au déploiement en production. Monitoring, maintenance et évolution continue inclus.",
 
-    // ── HomePage — Final CTA ─────────────────────────────────────────────────
+    // ── HomePage - Final CTA ─────────────────────────────────────────────────
     'home.cta.heading': 'Votre IA sur mesure en 2 à 6 semaines.',
     'home.cta.sub':
-      "Construite autour de vos données et processus. Hébergée, maintenue et mise à jour en continu par Erudi. Forfait mensuel tout inclus — sans surprise, sans complexité à internaliser.",
+      "Construite autour de vos données et processus. Hébergée, maintenue et mise à jour en continu par Erudi. Forfait mensuel tout inclus. Sans surprise, sans complexité à internaliser.",
     'home.cta.expert': 'Réserver un appel de cadrage gratuit',
     'home.cta.note': '30 min · Sans engagement · On cadre votre projet IA',
     'home.cta.desktop': 'Obtenir Desktop gratuitement',
 
-    // ── HomePage — Chat scenarios ────────────────────────────────────────────
+    // ── HomePage - Chat scenarios ────────────────────────────────────────────
     'home.chat.0.user': 'Nous perdons 3h/jour à reformuler des prompts pour nos rapports d\'audit.',
     'home.chat.0.ai':
-      "Nous allons construire un modèle spécialisé entraîné sur votre méthodologie d'audit. Il génère des rapports dans votre format, avec votre terminologie — zéro prompt engineering nécessaire.",
+      "Nous allons construire un modèle spécialisé entraîné sur votre méthodologie d'audit. Il génère des rapports dans votre format, avec votre terminologie. Zéro prompt engineering nécessaire.",
     'home.chat.1.user': "Les données de nos clients ne peuvent pas quitter notre infrastructure.",
     'home.chat.1.ai':
       'Toutes les solutions Erudi se déploient on-premise ou sur votre cloud privé. Vos données ne quittent jamais votre environnement. Conforme RGPD par conception.',
     'home.chat.2.user': 'Comment intégrer l\'IA dans notre workflow SAP existant ?',
     'home.chat.2.ai':
-      'Nous nous branchons directement sur votre stack existant — SAP, Salesforce, ERP personnalisés. Nos solutions sont conçues pour s\'adapter à vos processus, pas l\'inverse.',
+      'Nous nous branchons directement sur votre stack existant : SAP, Salesforce, ERP personnalisés. Nos solutions sont conçues pour s\'adapter à vos processus, pas l\'inverse.',
     'home.chat.3.user': 'Nous avons besoin d\'une IA qui parle notre terminologie métier.',
     'home.chat.3.ai':
-      'Chaque modèle que nous livrons est entraîné sur votre vocabulaire de domaine et validé par vos experts. Pas de réponses génériques — uniquement des réponses conformes à vos standards.',
+      'Chaque modèle que nous livrons est entraîné sur votre vocabulaire de domaine et validé par vos experts. Pas de réponses génériques, uniquement des réponses conformes à vos standards.',
     'home.chat.footer': 'Posez n\'importe quelle question sur votre activité...',
 
-    // ── HomePage — strings page courante ────────────────────────────────────
+    // ── HomePage - strings page courante ────────────────────────────────────
     'home.hero.h1.main': "L'IA est plus efficace quand elle connaît votre métier.",
     'home.hero.h1.em': 'On la construit pour vous.',
     'home.hero.sub': 'IA sur mesure, opérée de bout en bout. En production en 2 à 6 semaines.',
@@ -557,11 +561,11 @@ export const translations: Record<string, Record<string, string>> = {
     'home.scenario.0.user': 'Que dit notre politique de remboursement pour les commandes de plus de 30 jours ?',
     'home.scenario.0.ai': "Les demandes au-delà de 30 jours sont traitées au cas par cas. Vous pouvez proposer un avoir ou transmettre au responsable de compte. Aucun remboursement automatique ne s'applique au-delà de ce délai. Source : politique commerciale, section 3.",
     'home.scenario.1.user': 'Je viens de déposer 8 contrats clients dans le dossier partagé.',
-    'home.scenario.1.ai': "Tous lus. Extraction effectuée : nom client, date de début, préavis et clause de renouvellement pour chacun. Un contrat n'a pas de clause de résiliation — signalé. Tableau récapitulatif disponible dans votre drive.",
+    'home.scenario.1.ai': "Tous lus. Extraction effectuée : nom client, date de début, préavis et clause de renouvellement pour chacun. Un contrat n'a pas de clause de résiliation, signalé. Tableau récapitulatif disponible dans votre drive.",
     'home.scenario.2.user': 'Un nouveau prospect vient de remplir notre formulaire. Prends en charge.',
     'home.scenario.2.ai': "Contact créé dans votre CRM. Email d'introduction envoyé. Tâche de relance assignée dans 3 jours. Lead tagué entrant et ajouté à votre pipeline actif.",
     'home.scenario.3.user': "J'ai un appel avec Sophie du Groupe Bertrand dans 5 minutes.",
-    'home.scenario.3.ai': "Dernier contact il y a 2 semaines, une question sur leur calendrier d'onboarding. On attend toujours leur avenant signé. Elle a mentionné une revue budgétaire en T3 — bon moment pour en parler.",
+    'home.scenario.3.ai': "Dernier contact il y a 2 semaines, une question sur leur calendrier d'onboarding. On attend toujours leur avenant signé. Elle a mentionné une revue budgétaire en T3. Bon moment pour en parler.",
 
     'home.pillars.heading.main': 'Trois engagements.',
     'home.pillars.heading.em': 'Indissociables',
@@ -576,7 +580,11 @@ export const translations: Record<string, Record<string, string>> = {
     'home.pillars.2.body': "Une équipe R&D dédiée fait évoluer votre système au rythme du secteur. Votre solution s'améliore dans le temps.",
 
     'home.situations.heading': 'Vous vous reconnaissez ?',
-    'home.situations.sub': "Cliquez sur une situation pour voir ce qu'on construit.",
+    'home.situations.sub': "Un défi à la fois. Révélez ce qu'on construirait pour vous.",
+    'home.situations.label.challenge': 'Le défi',
+    'home.situations.label.solution': "Ce qu'on construit",
+    'home.situations.btn.problem': 'Revoir le défi',
+    'home.situations.btn.next': 'Suivant',
     'home.situations.0.problem': "Votre équipe passe des heures à fouiller emails, fichiers et outils pour répondre à des questions qui devraient prendre quelques secondes.",
     'home.situations.0.solution': "Un assistant conversationnel formé sur vos données et vos processus. Il répond comme un collègue qui a tout lu.",
     'home.situations.0.tag': 'Assistant',
@@ -587,7 +595,7 @@ export const translations: Record<string, Record<string, string>> = {
     'home.situations.2.solution': "Un moteur de recherche construit sur votre base interne. Il répond en langage clair et cite exactement où il a trouvé l'information.",
     'home.situations.2.tag': 'Recherche / RAG',
     'home.situations.3.problem': "Votre équipe utilise cinq outils différents qui ne se parlent jamais. Copier des données entre eux, c'est un travail à plein temps.",
-    'home.situations.3.solution': "Un agent qui connecte votre CRM, ERP, emails et bases de données — et agit sur instruction entre eux.",
+    'home.situations.3.solution': "Un agent qui connecte votre CRM, ERP, emails et bases de données, et agit sur instruction entre eux.",
     'home.situations.3.tag': 'Agent connecté',
     'home.situations.4.problem': "Chaque semaine, la même tâche. Mêmes étapes. Trois heures minimum. Personne ne la remet en question parce qu'on a toujours fait comme ça.",
     'home.situations.4.solution': "On automatise le processus de bout en bout, avec une étape de validation humaine là où le jugement compte vraiment.",
@@ -723,7 +731,7 @@ export const translations: Record<string, Record<string, string>> = {
     'desktop.sysreq.ready.sub': 'Téléchargez Erudi Desktop et commencez à affiner votre premier modèle dès aujourd\'hui.',
     'desktop.sysreq.ready.cta': 'Télécharger',
 
-    // ── ChatSimulation — default scenarios ───────────────────────────────────
+    // ── ChatSimulation - default scenarios ───────────────────────────────────
     'chat.default.0.user': 'Aidez-moi à entraîner un modèle sur mes emails de support client',
     'chat.default.0.ai':
       "Je vais vous aider à créer une IA de support personnalisée ! D'abord, laissez-moi analyser vos données d'email et les nettoyer automatiquement. Ensuite nous allons affiner un modèle qui comprend le style de support de votre entreprise et les problèmes courants.",
@@ -819,7 +827,7 @@ export const translations: Record<string, Record<string, string>> = {
       "Nous sommes six ingénieurs passionnés par l'accessibilité de la technologie IA. Unis par notre vision commune de démocratiser l'entraînement IA puissant pour tous.",
     'team.dna.quote':
       '"Nous croyons que l\'avenir de l\'IA doit être accessible, sécurisé et valorisant pour tous. Notre mission est de lever les barrières entre la technologie IA de pointe et les personnes qui en ont le plus besoin."',
-    'team.dna.attribution': "— L'équipe Erudi",
+    'team.dna.attribution': "L'équipe Erudi",
 
     // ── DownloadPage ─────────────────────────────────────────────────────────
     'download.badge': 'Accès anticipé bêta',

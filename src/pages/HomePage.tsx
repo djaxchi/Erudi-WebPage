@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import FluidShader from '../components/FluidShader';
 import ScrollProgress from '../components/ScrollProgress';
+import SituationsCarousel from '../components/SituationsCarousel';
 import { ChatSimulation, ChatScenario } from '../components/ChatSimulation';
 import { getAssetPath } from '../utils/assetPath';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -19,7 +20,7 @@ const HOME_JSON_LD = [
     url: `${SITE_URL}/`,
     logo: `${SITE_URL}/icon.png`,
     description:
-      'Erudi is a specialized AI consulting firm building bespoke, turnkey AI solutions for SMEs and mid-market companies — designed, deployed, hosted and maintained for each client.',
+      'Erudi is a specialized AI consulting firm building bespoke, turnkey AI solutions for SMEs and mid-market companies, designed, deployed, hosted and maintained for each client.',
     slogan: 'Bespoke AI, built and operated for your business.',
     knowsAbout: [
       'Bespoke AI solutions',
@@ -67,8 +68,6 @@ const fadeUp = (delay = 0) => ({
 const HomePage: React.FC = () => {
   const { t } = useLanguage();
   const heroInnerRef = useRef<HTMLDivElement | null>(null);
-  const [activeCard, setActiveCard] = useState<number | null>(null);
-  const [activeMobileCard, setActiveMobileCard] = useState<number | null>(null);
 
   useEffect(() => {
     if (window.matchMedia('(max-width: 768px)').matches) return;
@@ -113,8 +112,8 @@ const HomePage: React.FC = () => {
     >
       <Seo
         path="/"
-        title="Erudi — Bespoke, Turnkey AI Solutions for Your Business"
-        description="Erudi is a specialized AI consulting firm. We design, build, host and maintain bespoke, turnkey AI solutions for SMEs and mid-market companies — GDPR & AI Act compliant, live in 2–6 weeks."
+        title="Erudi: Bespoke, Turnkey AI Solutions for Your Business"
+        description="Erudi is a specialized AI consulting firm. We design, build, host and maintain bespoke, turnkey AI solutions for SMEs and mid-market companies. GDPR & AI Act compliant, live in 2-6 weeks."
         jsonLd={HOME_JSON_LD}
       />
       <ScrollProgress />
@@ -126,12 +125,12 @@ const HomePage: React.FC = () => {
       <div className="relative z-10 md:hidden">
         <Navbar activePage="/" />
 
-        {/* Hero — full viewport, content + CTA in thumb zone */}
+        {/* Hero - full viewport, content + CTA in thumb zone */}
         <section
           className="relative overflow-hidden flex flex-col px-6"
           style={{ minHeight: '100svh', paddingTop: '88px', paddingBottom: '36px' }}
         >
-          {/* Ambient orb — transform-only keyframe, GPU composited */}
+          {/* Ambient orb - transform-only keyframe, GPU composited */}
           <div className="mob-orb" style={{
             position: 'absolute', top: '-110px', right: '-130px',
             width: '440px', height: '440px', borderRadius: '50%',
@@ -158,7 +157,7 @@ const HomePage: React.FC = () => {
             </p>
           </div>
 
-          {/* CTA — anchored in thumb zone */}
+          {/* CTA - anchored in thumb zone */}
           <div style={{ paddingTop: '32px' }}>
             <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(52,211,153,0.35) 50%, transparent)', marginBottom: '16px' }} />
             <Link
@@ -185,7 +184,7 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Logo bar — compact scrolling strip */}
+        {/* Logo bar - compact scrolling strip */}
         <section style={{ padding: '28px 0 30px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <p style={{ textAlign: 'center', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#3d434b', margin: '0 0 16px' }}>
             {t('home.logobar.trusted')}
@@ -201,7 +200,7 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Chat demo — widget full width, minimal header */}
+        {/* Chat demo - widget full width, minimal header */}
         <section style={{ padding: '44px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <p style={{ fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#34d399', margin: '0 0 18px' }}>
             See it in action
@@ -213,7 +212,7 @@ const HomePage: React.FC = () => {
           />
         </section>
 
-        {/* Pillars — horizontal rows, number + content side by side */}
+        {/* Pillars - horizontal rows, number + content side by side */}
         <section id="m-pillars" style={{ padding: '44px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <h2 style={{
             fontFamily: FONT, fontWeight: 400, margin: '0 0 32px',
@@ -234,7 +233,7 @@ const HomePage: React.FC = () => {
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
         </section>
 
-        {/* Situations — 4 cards, tap to reveal */}
+        {/* Situations - 4 cards, tap to reveal */}
         <section style={{ padding: '44px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <h2 style={{
             fontFamily: FONT, fontWeight: 400, margin: '0 0 6px',
@@ -246,37 +245,10 @@ const HomePage: React.FC = () => {
           <p style={{ fontSize: '13px', color: '#555d66', margin: '0 0 22px', letterSpacing: '-0.003em' }}>
             {t('home.situations.sub')}
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {SITUATIONS.slice(0, 4).map((s, i) => {
-              const isOpen = activeMobileCard === i;
-              return (
-                <div
-                  key={s.n}
-                  onClick={() => setActiveMobileCard(isOpen ? null : i)}
-                  style={{
-                    padding: '18px 20px', borderRadius: '12px', cursor: 'pointer',
-                    background: isOpen ? 'rgba(16,40,30,0.92)' : 'rgba(255,255,255,0.03)',
-                    border: isOpen ? '1px solid rgba(52,211,153,0.25)' : '1px solid rgba(255,255,255,0.07)',
-                    transition: 'border-color .25s, background .25s',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                    <span style={{ fontSize: '10px', color: '#34d399', letterSpacing: '0.1em', fontWeight: 500 }}>{s.n}</span>
-                    <span style={{ fontSize: '10px', color: isOpen ? '#34d399' : '#555d66', letterSpacing: '0.1em', textTransform: 'uppercase', transition: 'color .25s', fontWeight: 500 }}>{s.tag}</span>
-                  </div>
-                  <p style={{ fontSize: '14px', lineHeight: 1.56, margin: 0, letterSpacing: '-0.003em', color: isOpen ? '#a7f3d0' : '#c0c5cb', transition: 'color .3s' }}>
-                    {isOpen ? s.solution : s.problem}
-                  </p>
-                  <div style={{ marginTop: '11px', fontSize: '11px', fontWeight: 500, color: isOpen ? '#34d399' : '#3d434b', letterSpacing: '0.02em', transition: 'color .3s' }}>
-                    {isOpen ? `${t('home.situations.cta.open')} →` : t('home.situations.cta.closed')}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <SituationsCarousel situations={SITUATIONS} />
         </section>
 
-        {/* Final CTA — editorial large type, solid button */}
+        {/* Final CTA - editorial large type, solid button */}
         <section style={{ padding: '60px 24px 88px', borderTop: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
           <div style={{
             position: 'absolute', bottom: '-110px', left: '50%', transform: 'translateX(-50%)',
@@ -425,7 +397,12 @@ const HomePage: React.FC = () => {
               <div key={p.n} className="pillar-col group py-10 pr-10" style={{ borderTop: '1px solid rgba(255,255,255,0.10)', borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.10)' : 'none', paddingLeft: i > 0 ? '2.5rem' : '0', transition: 'background .3s ease' }}>
                 <span className="block mb-6 text-[11px] font-medium tabular-nums" style={{ color: '#34d399', letterSpacing: '0.12em' }}>{p.n}</span>
                 <h3 className="m-0 mb-4 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(22px, 2.2vw, 32px)', lineHeight: 1.1, letterSpacing: '-0.025em', fontVariationSettings: '"opsz" 48', transition: 'color .3s ease' }}>{p.title}</h3>
-                <p className="m-0 text-[#7a828c] group-hover:text-[#c0c5cb]" style={{ fontSize: '15px', lineHeight: 1.65, letterSpacing: '-0.003em', transition: 'color .3s ease' }}>{p.body}</p>
+                <div
+                  className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-[260px] group-hover:opacity-100"
+                  style={{ transition: 'max-height .45s ease, opacity .35s ease' }}
+                >
+                  <p className="m-0 text-[#c0c5cb]" style={{ fontSize: '15px', lineHeight: 1.65, letterSpacing: '-0.003em' }}>{p.body}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -435,49 +412,24 @@ const HomePage: React.FC = () => {
         </div>{/* end solid background */}
 
         {/* Situations */}
-        <section className="px-6 sm:px-10 lg:px-14 pt-32 pb-40" style={{ background: '#050a0f' }}>
-          <div className="max-w-[1440px] mx-auto w-full">
-          <h2 className="m-0 mb-3 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(28px, 3.5vw, 48px)', lineHeight: 1.0, letterSpacing: '-0.030em', fontVariationSettings: '"opsz" 72' }}>
-            {t('home.situations.heading')}
-          </h2>
-          <p className="mb-12 text-[#555d66] text-[15px]" style={{ letterSpacing: '-0.003em' }}>
-            {t('home.situations.sub')}
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {SITUATIONS.map((s, i) => {
-              const isOpen = activeCard === i;
-              return (
-                <div
-                  key={s.n}
-                  onClick={() => setActiveCard(isOpen ? null : i)}
-                  className="relative flex flex-col p-7 rounded-2xl cursor-pointer"
-                  style={{ height: '240px', background: isOpen ? 'rgba(16,40,30,0.80)' : 'rgba(5,10,15,0.55)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: isOpen ? '1px solid rgba(52,211,153,0.30)' : '1px solid rgba(255,255,255,0.07)', transition: 'border-color .3s ease, background .3s ease' }}
-                >
-                  <div className="flex items-start justify-between mb-5 flex-shrink-0">
-                    <span className="text-[11px] font-medium text-emerald-400 tabular-nums" style={{ letterSpacing: '0.1em' }}>{s.n}</span>
-                    <span className="text-[10.5px] font-medium uppercase" style={{ letterSpacing: '0.1em', color: isOpen ? '#34d399' : '#555d66', transition: 'color .3s ease' }}>{s.tag}</span>
-                  </div>
-                  <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
-                    <p className="m-0 text-[#c0c5cb]" style={{ fontSize: '15px', lineHeight: 1.6, letterSpacing: '-0.003em', opacity: isOpen ? 0 : 1, transform: isOpen ? 'translateY(-6px)' : 'translateY(0)', transition: 'opacity .22s ease, transform .22s ease', position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-                      {s.problem}
-                    </p>
-                    <p className="m-0" style={{ fontSize: '15px', lineHeight: 1.6, letterSpacing: '-0.003em', color: '#a7f3d0', opacity: isOpen ? 1 : 0, transform: isOpen ? 'translateY(0)' : 'translateY(8px)', transition: 'opacity .28s ease .12s, transform .28s ease .12s', position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-                      {s.solution}
-                    </p>
-                  </div>
-                  <div className="mt-5 flex items-center gap-2 text-[12px] font-medium" style={{ color: isOpen ? '#34d399' : '#3d434b', transition: 'color .3s ease', letterSpacing: '0.02em' }}>
-                    <span style={{ display: 'inline-block', width: '14px', height: '1px', background: 'currentColor' }} />
-                    {isOpen ? t('home.situations.cta.open') : t('home.situations.cta.closed')}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        <section className="px-6 sm:px-10 lg:px-14 pt-32 pb-28" style={{ background: '#050a0f' }}>
+          <div className="max-w-[1440px] mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="max-w-[460px]">
+              <h2 className="m-0 mb-4 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(28px, 3.5vw, 48px)', lineHeight: 1.0, letterSpacing: '-0.030em', fontVariationSettings: '"opsz" 72' }}>
+                {t('home.situations.heading')}
+              </h2>
+              <p className="text-[#555d66] text-[15px]" style={{ letterSpacing: '-0.003em' }}>
+                {t('home.situations.sub')}
+              </p>
+            </div>
+            <div className="flex lg:justify-end">
+              <SituationsCarousel situations={SITUATIONS} />
+            </div>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="px-6 sm:px-10 lg:px-14 py-40">
+        <section className="px-6 sm:px-10 lg:px-14 pt-40 pb-24">
           <div className="max-w-[1440px] mx-auto w-full">
           <div className="max-w-[900px]">
             <h2 className="m-0 mb-8 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(40px, 6vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.040em', fontVariationSettings: '"opsz" 96' }}>

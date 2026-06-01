@@ -15,7 +15,7 @@ const DOWNLOAD_JSON_LD = {
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'macOS, Windows, Linux',
   description:
-    'Download Erudi Desktop — a free, open-source desktop app to fine-tune local LLMs with no code, 100% on your own machine.',
+    'Download Erudi Desktop, a free, open-source desktop app to fine-tune local LLMs with no code, 100% on your own machine.',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -79,8 +79,8 @@ const sendGoogleSheetLog = (platform: string) => {
     <PageLayout activePage="/download">
         <Seo
           path="/download"
-          title="Download Erudi Desktop — Free & Open Source"
-          description="Download Erudi Desktop free for Mac (Apple Silicon), with Windows coming soon. Train custom local LLMs with no code — open source and 100% private."
+          title="Download Erudi Desktop: Free & Open Source"
+          description="Download Erudi Desktop free for Mac (Apple Silicon), with Windows coming soon. Train custom local LLMs with no code. Open source and 100% private."
           jsonLd={DOWNLOAD_JSON_LD}
         />
         <div className="max-w-7xl mx-auto">

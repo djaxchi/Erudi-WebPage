@@ -165,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
             );
           })}
 
-          {/* Language selector — desktop */}
+          {/* Language selector - desktop */}
           <div className="relative" ref={langRef}>
             <button
               onClick={() => setLangOpen((o) => !o)}
@@ -243,7 +243,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
             );
           })}
 
-          {/* Language toggle — mobile */}
+          {/* Language toggle - mobile */}
           <li>
             <div className="flex items-center gap-2 pt-1">
               <button

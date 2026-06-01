@@ -29,7 +29,7 @@ const DEFAULT_SCENARIOS: readonly ChatScenario[] = [
     label: 'Contract scan',
     userMessage: 'Extract all penalty clauses from our 23 supplier contracts.',
     aiResponse:
-      'Done. Penalty clauses found in 19 of 23 contracts. Six include automatic late-payment penalties above 1.5% — flagged for legal review. Results structured by supplier, clause type and trigger condition. Exporting to your shared drive now.',
+      'Done. Penalty clauses found in 19 of 23 contracts. Six include automatic late-payment penalties above 1.5%, flagged for legal review. Results structured by supplier, clause type and trigger condition. Exporting to your shared drive now.',
   },
   {
     label: 'HR policy',
@@ -62,7 +62,7 @@ export const ChatSimulation: React.FC<ChatSimulationProps> = ({
   const [streamedText, setStreamedText] = useState('');
   const [contentVisible, setContentVisible] = useState(true);
   const [progressKey, setProgressKey] = useState(0);
-  // When true: user has clicked a tab — stay on that scenario, no auto-advance
+  // When true: user has clicked a tab - stay on that scenario, no auto-advance
   const [pinned, setPinned] = useState(false);
   const aliveRef = useRef(true);
 
@@ -118,7 +118,7 @@ export const ChatSimulation: React.FC<ChatSimulationProps> = ({
     if (next === idx && pinned) return;
     aliveRef.current = false;
     setPinned(true);
-    // Instant switch — no fade, content appears immediately
+    // Instant switch - no fade, content appears immediately
     setStreamedText('');
     setPhase('query');
     setContentVisible(true);
@@ -321,7 +321,7 @@ export const ChatSimulation: React.FC<ChatSimulationProps> = ({
                 {tabLabel}
               </span>
 
-              {/* Top progress fill — only on active tab */}
+              {/* Top progress fill - only on active tab */}
               {isActive && (
                 <span
                   key={progressKey}
