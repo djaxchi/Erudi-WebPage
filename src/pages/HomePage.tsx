@@ -31,6 +31,9 @@ const HOME_JSON_LD = [
       'GDPR and AI Act compliance',
     ],
     areaServed: 'EU',
+    sameAs: [
+      'https://www.linkedin.com/company/erudi-app',
+    ],
   },
   {
     '@context': 'https://schema.org',

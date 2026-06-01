@@ -238,7 +238,7 @@ const sendGoogleSheetLog = (platform: string) => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
-                    to="/about"
+                    to="/desktop"
                     className="inline-block bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-bold transition-all duration-300 shadow-[0_0_30px_rgba(0,193,124,0.3)] hover:shadow-[0_0_50px_rgba(0,193,124,0.5)] hover:-translate-y-0.5"
                   >
                     Learn More

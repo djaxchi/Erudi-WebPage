@@ -71,7 +71,7 @@ const TeamPage: React.FC = () => {
     {
       name: 'Selyane Cheklat',
       role: 'COO',
-      img: getAssetPath('/Erudi/images/ChatGPT Image 1 avr. 2026, 11_53_09.png'),
+      img: getAssetPath('/Erudi/images/selyane.png'),
       imgPosition: 'center top',
       bio: t('team.member.2.bio'),
       skills: [t('team.member.2.skill.0'), t('team.member.2.skill.1')],

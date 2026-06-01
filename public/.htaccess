@@ -32,8 +32,14 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    # Handle Angular and React Router
     RewriteBase /
+
+    # Canonical host: force HTTPS + non-www -> www  (apex erudi.app -> www.erudi.app)
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
+    RewriteRule ^ https://www.erudi.app%{REQUEST_URI} [L,R=301]
+
+    # Handle Angular and React Router
     RewriteRule ^index\.html$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -47,12 +53,7 @@
     Header always set X-XSS-Protection "1; mode=block"
 </IfModule>
 
-# Force HTTPS (if SSL is enabled on Hostinger)
-# Uncomment the following lines if you have SSL enabled
-# <IfModule mod_rewrite.c>
-#     RewriteCond %{HTTPS} off
-#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# </IfModule>
+# (HTTPS + www canonicalization is handled in the mod_rewrite block above.)
 
 # Custom error pages
 ErrorDocument 404 /index.html
