@@ -1,5 +1,5 @@
-import React, { useState, useEffect, memo } from 'react';
-import { Menu, X } from 'lucide-react';
+import React, { useState, useEffect, useRef, memo } from 'react';
+import { Menu, X, Globe, ChevronDown, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { preloadImages } from '../utils/imageOptimization';
 import { getAssetPath } from '../utils/assetPath';
@@ -52,8 +52,15 @@ const getNavItems = (t: (key: string) => string): NavItem[] => {
 
 const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement | null>(null);
   const { lang, setLang, t } = useLanguage();
   const navItems = getNavItems(t);
+
+  const LANGUAGES: { code: 'fr' | 'en'; label: string }[] = [
+    { code: 'fr', label: 'Français' },
+    { code: 'en', label: 'English' },
+  ];
 
   // Preload logo for instant loading
   useEffect(() => {
@@ -105,6 +112,25 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
     };
   }, [isOpen]);
 
+  // Close the language dropdown on outside click or Escape
+  useEffect(() => {
+    if (!langOpen) return;
+    const onDown = (event: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setLangOpen(false);
+    };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [langOpen]);
+
   return (
     <nav className="fixed top-7 left-4 right-4 mx-10 rounded-2xl bg-[#041915]/800 backdrop-blur-xl border border-white/10 shadow-lg z-50">
       <div className="relative z-10 px-6 py-3 flex items-center justify-between h-[4.5rem]">
@@ -139,29 +165,41 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
             );
           })}
 
-          {/* Language toggle — desktop */}
-          <div className="flex items-center gap-1 border border-white/15 rounded-xl px-1 py-1">
+          {/* Language selector — desktop */}
+          <div className="relative" ref={langRef}>
             <button
-              onClick={() => setLang('fr')}
-              className={`text-sm font-semibold px-2.5 py-1 rounded-lg transition-all duration-200 ${
-                lang === 'fr'
-                  ? 'text-emerald-400 bg-emerald-400/15'
-                  : 'text-white/50 hover:text-white/80'
-              }`}
+              onClick={() => setLangOpen((o) => !o)}
+              aria-label="Select language"
+              aria-haspopup="true"
+              aria-expanded={langOpen}
+              className="flex items-center gap-1.5 text-white/70 hover:text-white border border-white/15 hover:border-white/25 rounded-xl px-3 py-2 transition-all duration-200"
             >
-              FR
+              <Globe size={18} />
+              <span className="text-sm font-semibold uppercase">{lang}</span>
+              <ChevronDown
+                size={14}
+                className={`transition-transform duration-200 ${langOpen ? 'rotate-180' : ''}`}
+              />
             </button>
-            <span className="text-white/20 text-xs">|</span>
-            <button
-              onClick={() => setLang('en')}
-              className={`text-sm font-semibold px-2.5 py-1 rounded-lg transition-all duration-200 ${
-                lang === 'en'
-                  ? 'text-emerald-400 bg-emerald-400/15'
-                  : 'text-white/50 hover:text-white/80'
-              }`}
-            >
-              EN
-            </button>
+
+            {langOpen && (
+              <div className="absolute right-0 mt-2 w-40 rounded-xl bg-[#041915]/95 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden py-1">
+                {LANGUAGES.map(({ code, label }) => (
+                  <button
+                    key={code}
+                    onClick={() => { setLang(code); setLangOpen(false); }}
+                    className={`flex items-center justify-between w-full text-left text-sm px-4 py-2 transition-colors duration-150 ${
+                      lang === code
+                        ? 'text-emerald-400 bg-emerald-400/10'
+                        : 'text-white/70 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    <span>{label}</span>
+                    {lang === code && <Check size={15} />}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
