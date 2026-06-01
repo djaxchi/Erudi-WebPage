@@ -6,7 +6,7 @@ Marketing/product website for **Erudi**, a company with two offerings:
 1. **Erudi (B2B)** — Bespoke enterprise AI solutions (on-premise, sovereign, GDPR-compliant). Main landing page at `/`.
 2. **Erudi Desktop** — A no-code local LLM fine-tuning desktop app. Landing page at `/desktop`.
 
-Deployed to GitHub Pages at `https://djaxchi.github.io/Erudi`.
+**Deployed to Hostinger** at `https://www.erudi.app` — automatically via GitHub Actions (`.github/workflows/deploy.yml`): on every push to `main` it runs `npm run build` and FTP-uploads `dist/` to the Hostinger web root. (The legacy `gh-pages` / `build:github` / `homepage` config remains in the repo but is **not** the live deploy path.)
 
 ## Tech Stack
 
@@ -103,4 +103,4 @@ npm run lint         # ESLint
 - **index.html** holds only static head (charset, viewport, theme-color, favicon, manifest, fonts) plus a fallback `<title>`. All variable/social tags are Helmet-owned to avoid duplicates in prerendered output.
 - **JSON-LD**: Home = Organization + WebSite; `/desktop` & `/download` = SoftwareApplication (free, macOS/Windows/Linux); `/contact` = ContactPage.
 - **Prerendering**: `npm run build` runs a `postbuild` step (`scripts/prerender.mjs`) that serves `dist/` with `sirv`, drives Puppeteer (headless Chromium, Apple-Silicon safe) over each route in `ROUTES` (`/`, `/desktop`, `/download`, `/team`, `/contact`, `/waitlist` — `/about` excluded as it redirects), and writes per-route static HTML (`dist/<route>/index.html`) with the correct Helmet head baked in. This is what gives non-JS crawlers (LinkedIn/Facebook/X) correct per-page link previews.
-- `build:github` (base `/Erudi/`) intentionally does NOT prerender. **Hostinger deploy = upload `dist/`** (built via `npm run build`, base `/`).
+- `build:github` (base `/Erudi/`) intentionally does NOT prerender. **Deploy is automated**: pushing to `main` triggers `.github/workflows/deploy.yml`, which runs `npm run build` (base `/`, incl. prerender) and FTP-uploads `dist/` to Hostinger. The prerender (`scripts/prerender.mjs`) runs headless in CI, so it must not depend on third-party network (it uses `domcontentloaded` + waits for `#root` to mount, and aborts external font requests — do not reintroduce `networkidle0`).

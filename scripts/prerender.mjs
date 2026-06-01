@@ -50,11 +50,35 @@ async function main() {
   try {
     for (const route of ROUTES) {
       const page = await browser.newPage();
+
+      // Don't let third-party resources (e.g. Google Fonts) gate the render —
+      // on CI they can hang and stall `networkidle0` forever. We only need the
+      // rendered DOM + Helmet head; the font <link> tags live in the static
+      // shell and survive into the output regardless.
+      await page.setRequestInterception(true);
+      page.on('request', (req) => {
+        if (req.url().startsWith(`http://localhost:${PORT}`)) {
+          req.continue().catch(() => {});
+        } else {
+          req.abort().catch(() => {});
+        }
+      });
+
       await page.goto(`http://localhost:${PORT}${route}`, {
-        waitUntil: 'networkidle0',
+        waitUntil: 'domcontentloaded',
         timeout: 60000,
       });
-      // Give react-helmet-async a moment to flush head tags.
+
+      // Wait for the SPA to actually mount before snapshotting.
+      await page.waitForFunction(
+        () => {
+          const root = document.getElementById('root');
+          return !!root && root.childElementCount > 0;
+        },
+        { timeout: 30000 }
+      );
+
+      // Give react-helmet-async a tick to flush head tags.
       await new Promise((r) => setTimeout(r, 400));
       const html =
         '<!doctype html>\n' +

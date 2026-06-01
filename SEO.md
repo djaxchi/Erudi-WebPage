@@ -139,8 +139,11 @@ const DownloadPage = () => (
 
 ```bash
 npm run build      # tsc + vite build (base "/") + postbuild prerender
-# → upload the resulting dist/ to Hostinger
 ```
+
+**Deploy is automated.** Pushing to `main` triggers `.github/workflows/deploy.yml`, which runs `npm run build` on a CI runner and FTP-uploads `dist/` to the Hostinger web root. You normally don't deploy by hand — just push to `main`.
+
+> ⚠️ Because the prerender runs headless on CI, `scripts/prerender.mjs` must not depend on third-party network. It uses `waitUntil: 'domcontentloaded'`, waits for `#root` to mount, and aborts external (font) requests. Do **not** switch back to `networkidle0` — Google Fonts requests never settle on CI and the build hangs/fails.
 
 - **Production = `npm run build`.** It uses Vite's default base `/`, which matches the Hostinger root deployment, and triggers the prerender via `postbuild`.
 - **Do NOT use `build:github` for erudi.app.** It builds with base `/Erudi/` (GitHub Pages subpath) and would break all root-absolute asset and SEO paths. The `gh-pages`/`build:github`/`homepage` entries in `package.json` are legacy/secondary.
