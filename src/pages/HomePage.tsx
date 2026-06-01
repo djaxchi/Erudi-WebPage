@@ -108,7 +108,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div
-      className="relative min-h-screen bg-[#050a0f] text-white overflow-x-hidden"
+      className="relative min-h-screen bg-[#050a0f] text-white overflow-x-clip"
       style={{ fontFamily: FONT }}
     >
       <Seo
