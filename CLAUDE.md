@@ -15,7 +15,7 @@ Deployed to GitHub Pages at `https://djaxchi.github.io/Erudi`.
 - **Styling**: Tailwind CSS v3 + custom CSS (`src/styles/`)
 - **Animations**: Framer Motion v12
 - **Icons**: Lucide React
-- **Carousel**: Swiper
+- **Carousel**: framer-motion (custom deck in `ScreenshotCarousel`; Swiper is not used)
 - **Deploy**: `gh-pages` via `npm run deploy`
 
 ## Project Structure
@@ -38,7 +38,7 @@ src/
     AnimatedOrb.tsx          # Global animated orb (fixed, z-index 1, pointer-events-none)
     ChatSimulation.tsx       # Animated chat demo widget used on Home and Desktop pages
     GradientBox.tsx          # Reusable gradient card
-    ScreenshotCarousel.tsx   # Swiper carousel for screenshots
+    ScreenshotCarousel.tsx   # framer-motion deck carousel for screenshots
   assets/
     animatedSection.tsx      # AnimatedSection wrapper (intersection-observer fade-in)
     useIntersectionObserver.tsx
@@ -95,6 +95,8 @@ npm run lint         # ESLint
 | `tailwind.config.js` | Tailwind config — custom animations (`animate-scroll`) defined here |
 
 ## SEO
+
+> Full reference: **[SEO.md](./SEO.md)** — component API, prerender pipeline, per-page metadata, sitemap/robots, and the checklist for adding SEO to a new route.
 
 - **Canonical domain**: `https://www.erudi.app` (constant `SITE_URL` in `src/components/Seo.tsx`).
 - **Per-page meta**: each page renders `<Seo .../>` (via `react-helmet-async`, provider wired in `src/main.tsx`). It owns `<title>`, meta description, canonical, Open Graph, Twitter Card and optional JSON-LD. Props: `{ title, description, path, image?, type?, noindex?, jsonLd? }`. `path` is the route (e.g. `/desktop`); canonical/og:url are derived as `SITE_URL + path`.
