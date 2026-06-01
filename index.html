@@ -2,10 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Erudi</title>
+
+    <!--
+      Static head only. Per-page <title>, description, canonical, Open Graph,
+      Twitter and JSON-LD are owned by react-helmet-async (see src/components/Seo.tsx)
+      and baked into static HTML per route at build time (see scripts/prerender.mjs).
+      The default <title> below is a fallback for any non-prerendered shell load.
+    -->
+    <title>Erudi — Bespoke, Turnkey AI Solutions for Your Business</title>
+    <meta name="author" content="Erudi" />
+    <meta name="theme-color" content="#050a0f" />
+
+    <!-- Favicons & PWA -->
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>

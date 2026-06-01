@@ -93,3 +93,12 @@ npm run lint         # ESLint
 | `src/pages/LandingPage.tsx` | Desktop app hero, features grid, CTA |
 | `src/utils/assetPath.ts` | Must use for all `/public` asset references |
 | `tailwind.config.js` | Tailwind config — custom animations (`animate-scroll`) defined here |
+
+## SEO
+
+- **Canonical domain**: `https://www.erudi.app` (constant `SITE_URL` in `src/components/Seo.tsx`).
+- **Per-page meta**: each page renders `<Seo .../>` (via `react-helmet-async`, provider wired in `src/main.tsx`). It owns `<title>`, meta description, canonical, Open Graph, Twitter Card and optional JSON-LD. Props: `{ title, description, path, image?, type?, noindex?, jsonLd? }`. `path` is the route (e.g. `/desktop`); canonical/og:url are derived as `SITE_URL + path`.
+- **index.html** holds only static head (charset, viewport, theme-color, favicon, manifest, fonts) plus a fallback `<title>`. All variable/social tags are Helmet-owned to avoid duplicates in prerendered output.
+- **JSON-LD**: Home = Organization + WebSite; `/desktop` & `/download` = SoftwareApplication (free, macOS/Windows/Linux); `/contact` = ContactPage.
+- **Prerendering**: `npm run build` runs a `postbuild` step (`scripts/prerender.mjs`) that serves `dist/` with `sirv`, drives Puppeteer (headless Chromium, Apple-Silicon safe) over each route in `ROUTES` (`/`, `/desktop`, `/download`, `/team`, `/contact`, `/waitlist` — `/about` excluded as it redirects), and writes per-route static HTML (`dist/<route>/index.html`) with the correct Helmet head baked in. This is what gives non-JS crawlers (LinkedIn/Facebook/X) correct per-page link previews.
+- `build:github` (base `/Erudi/`) intentionally does NOT prerender. **Hostinger deploy = upload `dist/`** (built via `npm run build`, base `/`).

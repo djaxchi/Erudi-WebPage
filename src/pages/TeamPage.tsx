@@ -7,6 +7,7 @@ import { preloadImages } from '../utils/imageOptimization';
 import { getAssetPath } from '../utils/assetPath';
 import '../styles/performance.css';
 import { useLanguage } from '../i18n/LanguageContext';
+import Seo from '../components/Seo';
 
 const OptimizedImage: React.FC<{
   src: string;
@@ -105,6 +106,11 @@ const TeamPage: React.FC = () => {
 
   return (
     <PageLayout activePage="/team" mainClassName="pt-20">
+      <Seo
+        path="/team"
+        title="The Erudi Team — AI Engineers & Researchers"
+        description="Meet the Erudi team — the AI engineers, researchers and builders designing, deploying and operating bespoke, turnkey AI solutions for businesses."
+      />
       <div className="max-w-7xl mx-auto">
 
         {/* Hero Section */}

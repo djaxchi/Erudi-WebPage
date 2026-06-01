@@ -1,0 +1,17 @@
+{
+  "name": "Erudi",
+  "short_name": "Erudi",
+  "description": "Bespoke, turnkey AI solutions for SMEs and mid-market companies — designed, deployed, hosted and maintained by Erudi.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050a0f",
+  "theme_color": "#050a0f",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

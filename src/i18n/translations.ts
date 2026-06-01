@@ -11,16 +11,18 @@ export const translations: Record<string, Record<string, string>> = {
     'footer.made': 'Made with ❤️ by the Erudi Team',
 
     // ── HomePage — Hero ──────────────────────────────────────────────────────
-    'home.hero.badge': 'Enterprise solutions · Free desktop app',
+    'home.hero.badge': 'Specialized AI consulting · SME & mid-market',
     'home.hero.headline1': 'AI on',
     'home.hero.headline2': 'your terms.',
     'home.hero.subtitle':
-      'Erudi builds bespoke AI solutions for enterprises and ships a free, open-source desktop app so anyone can run powerful LLMs privately on their own machine.',
-    'home.hero.cta.expert': 'Talk to an expert',
+      'Erudi designs, builds and operates bespoke AI solutions for SMEs and mid-market companies. We handle the infrastructure, the maintenance and the R&D — you get a live solution in 2 to 6 weeks.',
+    'home.hero.cta.expert': 'Book a free scoping call',
+    'home.hero.cta.note': '30 min · No commitment · We map your AI project',
+    'home.hero.cta.secondary': 'or see how we work',
     'home.hero.cta.desktop': 'Get Desktop free',
 
     // ── HomePage — Logo bar ──────────────────────────────────────────────────
-    'home.logobar.label': 'Work with a team trusted by industry leaders',
+    'home.logobar.label': 'Trusted by teams at industry leaders',
 
     // ── HomePage — Two products ──────────────────────────────────────────────
     'home.split.eyebrow': 'Two products, one mission',
@@ -81,10 +83,11 @@ export const translations: Record<string, Record<string, string>> = {
       'From proof of concept to production deployment. Monitoring, maintenance and continuous evolution included.',
 
     // ── HomePage — Final CTA ─────────────────────────────────────────────────
-    'home.cta.heading': 'Ready to get started?',
+    'home.cta.heading': 'Get your bespoke AI live in 2–6 weeks.',
     'home.cta.sub':
-      "Whether you're looking for a bespoke enterprise solution or just want to run AI privately on your machine — we've got you covered.",
-    'home.cta.expert': 'Talk to an expert',
+      'Designed around your data and processes. Hosted, maintained and continuously updated by Erudi. All-inclusive monthly fee — no surprises, no internal complexity to absorb.',
+    'home.cta.expert': 'Book your free scoping call',
+    'home.cta.note': '30 min · No commitment · We map your AI project',
     'home.cta.desktop': 'Get Desktop free',
 
     // ── HomePage — Chat scenarios ────────────────────────────────────────────
@@ -101,6 +104,68 @@ export const translations: Record<string, Record<string, string>> = {
     'home.chat.3.ai':
       'Every model we deliver is trained on your domain vocabulary and validated by your experts. No generic answers — only responses that match your standards.',
     'home.chat.footer': 'Ask anything about your business...',
+
+    // ── HomePage — current page strings ─────────────────────────────────────
+    'home.hero.h1.main': 'AI works better when it knows your business.',
+    'home.hero.h1.em': 'We build it that way.',
+    'home.hero.sub': 'Custom AI operated end to end. Live in 2 to 6 weeks.',
+    'home.hero.cta': 'Book a call',
+    'home.hero.see': 'or see how we work',
+
+    'home.logobar.trusted': 'Trusted by',
+
+    'home.chat.h2.main': 'AI that knows',
+    'home.chat.h2.em': 'your business',
+    'home.chat.desc': 'Not a generic chatbot. An assistant trained on your processes, your data and your rules.',
+    'home.chat.footertext': 'Your AI assistant, built for your team',
+
+    'home.scenario.0.user': 'What does our refund policy say for orders over 30 days old?',
+    'home.scenario.0.ai': 'Requests after 30 days are reviewed case by case. You can offer a credit note or pass it to the account manager. No automatic refund applies beyond that window. Source: commercial policy, section 3.',
+    'home.scenario.1.user': 'I just dropped 8 client contracts in the shared folder.',
+    'home.scenario.1.ai': 'Read all 8. Extracted client name, start date, notice period and renewal clause for each. One contract has no termination clause, flagged. Summary table ready in your drive.',
+    'home.scenario.2.user': 'A new lead just filled our contact form. Handle it.',
+    'home.scenario.2.ai': 'Contact created in your CRM. Intro email sent. Follow-up task assigned to you in 3 days. Lead tagged as inbound and added to your active pipeline.',
+    'home.scenario.3.user': 'I have a call with Sophie from Bertrand Group in 5 minutes.',
+    'home.scenario.3.ai': 'Last touchpoint was 2 weeks ago, a question about their onboarding timeline. Still waiting on their signed addendum. She mentioned budget review in Q3, worth bringing up.',
+
+    'home.pillars.heading.main': 'Three commitments.',
+    'home.pillars.heading.em': 'Indivisible',
+    'home.pillars.0.title.main': 'Built for',
+    'home.pillars.0.title.em': 'your business',
+    'home.pillars.0.body': 'Every project starts from your real processes, your data and your existing tools. The AI adapts to your trade, not the other way around.',
+    'home.pillars.1.title.main': 'Operated',
+    'home.pillars.1.title.em': 'end to end',
+    'home.pillars.1.body': 'We host it, maintain it and support it. You pay for a working solution, not a codebase to take over.',
+    'home.pillars.2.title.main': 'Always',
+    'home.pillars.2.title.em': 'at the state of the art',
+    'home.pillars.2.body': 'A dedicated R&D team updates your system as the field evolves. Your solution gets better over time.',
+
+    'home.situations.heading': 'Do you recognise yourself?',
+    'home.situations.sub': 'Click a situation to see what we build for it.',
+    'home.situations.0.problem': 'Your team spends hours digging through emails, files and tools to answer questions that should take seconds.',
+    'home.situations.0.solution': 'A conversational assistant trained on your data and processes. It answers like a colleague who has read everything.',
+    'home.situations.0.tag': 'Assistant',
+    'home.situations.1.problem': 'You receive hundreds of contracts, reports or forms. Someone has to read them all. That someone is a person.',
+    'home.situations.1.solution': 'An AI that reads, extracts and structures your documents automatically. No more manual processing.',
+    'home.situations.1.tag': 'Doc analysis',
+    'home.situations.2.problem': 'Years of internal knowledge, but nobody can find anything. Every search returns ten results and zero answers.',
+    'home.situations.2.solution': 'A search engine built on your internal base. It answers in plain language and cites exactly where it found the information.',
+    'home.situations.2.tag': 'Search / RAG',
+    'home.situations.3.problem': 'Your team uses five different tools that never talk to each other. Copying data between them is a full-time job.',
+    'home.situations.3.solution': 'An agent that connects your CRM, ERP, emails and databases — and acts across them on instruction.',
+    'home.situations.3.tag': 'Connected agent',
+    'home.situations.4.problem': 'Every week, the same task. Same steps. Three hours minimum. No one questions it because it has always been done that way.',
+    'home.situations.4.solution': 'We automate the process end to end, with a human review step where judgement actually matters.',
+    'home.situations.4.tag': 'Workflow',
+    'home.situations.5.problem': 'Drafting proposals, qualifying leads, summarizing meetings. Your team does it, but it takes most of their day.',
+    'home.situations.5.solution': 'An interface that handles the heavy lifting. Your team reviews and validates. Time to value cuts in half.',
+    'home.situations.5.tag': 'Acceleration',
+    'home.situations.cta.open': 'Sound familiar? Book a call',
+    'home.situations.cta.closed': 'See the solution',
+
+    'home.cta.h2': 'Ready to talk?',
+    'home.cta.body': 'Tell us what you need. We will tell you what is possible.',
+    'home.cta.btn': 'Book a call',
 
     // ── LandingPage (Desktop) ────────────────────────────────────────────────
     'desktop.hero.badge': 'Revolutionary AI Training Platform',
@@ -381,16 +446,18 @@ export const translations: Record<string, Record<string, string>> = {
     'footer.made': "Fait avec ❤️ par l'équipe Erudi",
 
     // ── HomePage — Hero ──────────────────────────────────────────────────────
-    'home.hero.badge': "Solutions entreprise · Application desktop gratuite",
+    'home.hero.badge': "Cabinet de conseil IA spécialisé · TPE, PME, ETI",
     'home.hero.headline1': "L'IA selon",
     'home.hero.headline2': 'vos règles.',
     'home.hero.subtitle':
-      "Erudi conçoit des solutions IA sur mesure pour les entreprises et distribue une application desktop gratuite et open-source pour que chacun puisse faire tourner des LLM puissants en toute confidentialité sur sa propre machine.",
-    'home.hero.cta.expert': 'Parler à un expert',
+      "Erudi conçoit, développe et opère des solutions IA sur mesure pour les TPE, PME et ETI. Nous gérons l'infrastructure, la maintenance et la R&D — vous obtenez une solution en production en 2 à 6 semaines.",
+    'home.hero.cta.expert': 'Réserver un appel de cadrage gratuit',
+    'home.hero.cta.note': '30 min · Sans engagement · On cadre votre projet IA',
+    'home.hero.cta.secondary': 'ou voir comment on travaille',
     'home.hero.cta.desktop': 'Obtenir Desktop gratuitement',
 
     // ── HomePage — Logo bar ──────────────────────────────────────────────────
-    'home.logobar.label': 'Une équipe de confiance pour les leaders de l\'industrie',
+    'home.logobar.label': "Reconnus par des équipes de leaders industriels",
 
     // ── HomePage — Two products ──────────────────────────────────────────────
     'home.split.eyebrow': 'Deux produits, une mission',
@@ -451,10 +518,11 @@ export const translations: Record<string, Record<string, string>> = {
       "Du proof of concept au déploiement en production. Monitoring, maintenance et évolution continue inclus.",
 
     // ── HomePage — Final CTA ─────────────────────────────────────────────────
-    'home.cta.heading': 'Prêt à vous lancer ?',
+    'home.cta.heading': 'Votre IA sur mesure en 2 à 6 semaines.',
     'home.cta.sub':
-      "Que vous cherchiez une solution entreprise sur mesure ou souhaitiez simplement faire tourner l'IA en privé sur votre machine — nous avons ce qu'il vous faut.",
-    'home.cta.expert': 'Parler à un expert',
+      "Construite autour de vos données et processus. Hébergée, maintenue et mise à jour en continu par Erudi. Forfait mensuel tout inclus — sans surprise, sans complexité à internaliser.",
+    'home.cta.expert': 'Réserver un appel de cadrage gratuit',
+    'home.cta.note': '30 min · Sans engagement · On cadre votre projet IA',
     'home.cta.desktop': 'Obtenir Desktop gratuitement',
 
     // ── HomePage — Chat scenarios ────────────────────────────────────────────
@@ -471,6 +539,68 @@ export const translations: Record<string, Record<string, string>> = {
     'home.chat.3.ai':
       'Chaque modèle que nous livrons est entraîné sur votre vocabulaire de domaine et validé par vos experts. Pas de réponses génériques — uniquement des réponses conformes à vos standards.',
     'home.chat.footer': 'Posez n\'importe quelle question sur votre activité...',
+
+    // ── HomePage — strings page courante ────────────────────────────────────
+    'home.hero.h1.main': "L'IA est plus efficace quand elle connaît votre métier.",
+    'home.hero.h1.em': 'On la construit pour vous.',
+    'home.hero.sub': 'IA sur mesure, opérée de bout en bout. En production en 2 à 6 semaines.',
+    'home.hero.cta': 'Réserver un appel',
+    'home.hero.see': 'ou voir comment on travaille',
+
+    'home.logobar.trusted': 'Ils nous font confiance',
+
+    'home.chat.h2.main': 'Une IA qui connaît',
+    'home.chat.h2.em': 'votre métier',
+    'home.chat.desc': 'Pas un chatbot généraliste. Un assistant formé sur vos processus, vos données et vos règles.',
+    'home.chat.footertext': 'Votre assistant IA, fait pour votre équipe',
+
+    'home.scenario.0.user': 'Que dit notre politique de remboursement pour les commandes de plus de 30 jours ?',
+    'home.scenario.0.ai': "Les demandes au-delà de 30 jours sont traitées au cas par cas. Vous pouvez proposer un avoir ou transmettre au responsable de compte. Aucun remboursement automatique ne s'applique au-delà de ce délai. Source : politique commerciale, section 3.",
+    'home.scenario.1.user': 'Je viens de déposer 8 contrats clients dans le dossier partagé.',
+    'home.scenario.1.ai': "Tous lus. Extraction effectuée : nom client, date de début, préavis et clause de renouvellement pour chacun. Un contrat n'a pas de clause de résiliation — signalé. Tableau récapitulatif disponible dans votre drive.",
+    'home.scenario.2.user': 'Un nouveau prospect vient de remplir notre formulaire. Prends en charge.',
+    'home.scenario.2.ai': "Contact créé dans votre CRM. Email d'introduction envoyé. Tâche de relance assignée dans 3 jours. Lead tagué entrant et ajouté à votre pipeline actif.",
+    'home.scenario.3.user': "J'ai un appel avec Sophie du Groupe Bertrand dans 5 minutes.",
+    'home.scenario.3.ai': "Dernier contact il y a 2 semaines, une question sur leur calendrier d'onboarding. On attend toujours leur avenant signé. Elle a mentionné une revue budgétaire en T3 — bon moment pour en parler.",
+
+    'home.pillars.heading.main': 'Trois engagements.',
+    'home.pillars.heading.em': 'Indissociables',
+    'home.pillars.0.title.main': 'Conçu pour',
+    'home.pillars.0.title.em': 'votre métier',
+    'home.pillars.0.body': "Chaque projet part de vos vrais processus, vos données et vos outils existants. L'IA s'adapte à votre métier, jamais l'inverse.",
+    'home.pillars.1.title.main': 'Opéré',
+    'home.pillars.1.title.em': 'de bout en bout',
+    'home.pillars.1.body': "On l'héberge, on le maintient, on le supporte. Vous payez pour une solution qui fonctionne, pas pour du code à reprendre en main.",
+    'home.pillars.2.title.main': 'Toujours',
+    'home.pillars.2.title.em': 'à la pointe',
+    'home.pillars.2.body': "Une équipe R&D dédiée fait évoluer votre système au rythme du secteur. Votre solution s'améliore dans le temps.",
+
+    'home.situations.heading': 'Vous vous reconnaissez ?',
+    'home.situations.sub': "Cliquez sur une situation pour voir ce qu'on construit.",
+    'home.situations.0.problem': "Votre équipe passe des heures à fouiller emails, fichiers et outils pour répondre à des questions qui devraient prendre quelques secondes.",
+    'home.situations.0.solution': "Un assistant conversationnel formé sur vos données et vos processus. Il répond comme un collègue qui a tout lu.",
+    'home.situations.0.tag': 'Assistant',
+    'home.situations.1.problem': "Vous recevez des centaines de contrats, rapports ou formulaires. Quelqu'un doit tout lire. Ce quelqu'un, c'est une personne.",
+    'home.situations.1.solution': "Une IA qui lit, extrait et structure vos documents automatiquement. Fini le traitement manuel.",
+    'home.situations.1.tag': 'Analyse docs',
+    'home.situations.2.problem': "Des années de savoir interne, mais personne ne trouve rien. Chaque recherche renvoie dix résultats et zéro réponse.",
+    'home.situations.2.solution': "Un moteur de recherche construit sur votre base interne. Il répond en langage clair et cite exactement où il a trouvé l'information.",
+    'home.situations.2.tag': 'Recherche / RAG',
+    'home.situations.3.problem': "Votre équipe utilise cinq outils différents qui ne se parlent jamais. Copier des données entre eux, c'est un travail à plein temps.",
+    'home.situations.3.solution': "Un agent qui connecte votre CRM, ERP, emails et bases de données — et agit sur instruction entre eux.",
+    'home.situations.3.tag': 'Agent connecté',
+    'home.situations.4.problem': "Chaque semaine, la même tâche. Mêmes étapes. Trois heures minimum. Personne ne la remet en question parce qu'on a toujours fait comme ça.",
+    'home.situations.4.solution': "On automatise le processus de bout en bout, avec une étape de validation humaine là où le jugement compte vraiment.",
+    'home.situations.4.tag': 'Workflow',
+    'home.situations.5.problem': "Rédiger des propositions, qualifier des leads, résumer des réunions. Votre équipe le fait, mais ça prend la majeure partie de leur journée.",
+    'home.situations.5.solution': "Une interface qui fait le gros du travail. Votre équipe relit et valide. Le temps de traitement est divisé par deux.",
+    'home.situations.5.tag': 'Accélération',
+    'home.situations.cta.open': 'Ça vous parle ? Réservez un appel',
+    'home.situations.cta.closed': 'Voir la solution',
+
+    'home.cta.h2': 'Prêts à en parler ?',
+    'home.cta.body': 'Dites-nous ce dont vous avez besoin. On vous dit ce qui est possible.',
+    'home.cta.btn': 'Réserver un appel',
 
     // ── LandingPage (Desktop) ────────────────────────────────────────────────
     'desktop.hero.badge': "Plateforme d'entraînement IA révolutionnaire",

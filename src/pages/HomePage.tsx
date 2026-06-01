@@ -1,460 +1,523 @@
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Sparkles,
-  ArrowRight,
-  AlertTriangle,
-  ShieldAlert,
-  BrainCircuit,
-  Scan,
-  ShieldCheck,
-  Zap,
-  Blocks,
-  Building2,
-  Monitor,
-} from 'lucide-react';
-import { ChatSimulation, ChatScenario } from '../components/ChatSimulation';
-import PageLayout from '../components/PageLayout';
+import { motion } from 'framer-motion';
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { AnimatedSection } from '../assets/animatedSection';
+import FluidShader from '../components/FluidShader';
+import ScrollProgress from '../components/ScrollProgress';
+import { ChatSimulation, ChatScenario } from '../components/ChatSimulation';
 import { getAssetPath } from '../utils/assetPath';
 import { useLanguage } from '../i18n/LanguageContext';
+import Seo, { SITE_URL } from '../components/Seo';
 
-// ── Shared Animation Variants ───────────────────────────────────────────────
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-100px' as const },
-  transition: { duration: 0.6, delay, ease: 'easeOut' as const },
-});
-
-const fadeLeft = (delay = 0) => ({
-  initial: { opacity: 0, x: -40 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: '-100px' as const },
-  transition: { duration: 0.6, delay, ease: 'easeOut' as const },
-});
-
-const fadeRight = (delay = 0) => ({
-  initial: { opacity: 0, x: 60 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: '-80px' as const },
-  transition: { duration: 0.6, delay, ease: 'easeOut' as const },
-});
-
-const popUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 40, scale: 0.95 as const },
-  whileInView: { opacity: 1, y: 0, scale: 1 as const },
-  viewport: { once: true, margin: '-80px' as const },
-  transition: { duration: 0.6, delay, ease: 'easeOut' as const },
-});
-
-// ── Partner Logos ───────────────────────────────────────────────────────────
-
-const PARTNER_LOGOS = [
-  { src: 'images/orange-logo.png',                                     alt: 'Orange' },
-  { src: 'images/EDF.png',                                             alt: 'EDF' },
-  { src: 'images/Logo_Onepoint_clair.png',                             alt: 'Onepoint' },
-  { src: 'images/LEMO%20LOGOS_edited.avif',                            alt: 'LEMO' },
-  { src: 'images/65ef9d74ce6b09a400ce0543_carre_couleur_rvb.png',      alt: 'ETIC INSA' },
-  { src: 'images/logo.webp',                                           alt: 'RTE' },
+const HOME_JSON_LD = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
+    name: 'Erudi',
+    url: `${SITE_URL}/`,
+    logo: `${SITE_URL}/icon.png`,
+    description:
+      'Erudi is a specialized AI consulting firm building bespoke, turnkey AI solutions for SMEs and mid-market companies — designed, deployed, hosted and maintained for each client.',
+    slogan: 'Bespoke AI, built and operated for your business.',
+    knowsAbout: [
+      'Bespoke AI solutions',
+      'AI consulting',
+      'Retrieval-augmented generation (RAG)',
+      'AI agents',
+      'Document analysis',
+      'Workflow automation',
+      'GDPR and AI Act compliance',
+    ],
+    areaServed: 'EU',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    url: `${SITE_URL}/`,
+    name: 'Erudi',
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: 'en',
+  },
 ];
 
-// ── Component ───────────────────────────────────────────────────────────────
+const FONT = '"Bricolage Grotesque", system-ui, sans-serif';
+
+const PARTNER_LOGOS = [
+  { src: 'images/orange-logo.png',                                alt: 'Orange' },
+  { src: 'images/EDF.png',                                        alt: 'EDF' },
+  { src: 'images/Logo_Onepoint_clair.png',                        alt: 'Onepoint' },
+  { src: 'images/LEMO%20LOGOS_edited.avif',                       alt: 'LEMO' },
+  { src: 'images/65ef9d74ce6b09a400ce0543_carre_couleur_rvb.png', alt: 'ETIC INSA' },
+  { src: 'images/logo.webp',                                      alt: 'RTE' },
+];
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' as const },
+  transition: { duration: 0.9, delay, ease: [0.2, 0.65, 0.25, 1] as [number, number, number, number] },
+});
 
 const HomePage: React.FC = () => {
   const { t } = useLanguage();
+  const heroInnerRef = useRef<HTMLDivElement | null>(null);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [activeMobileCard, setActiveMobileCard] = useState<number | null>(null);
 
-  // ── B2B Chat Scenarios (translated) ────────────────────────────────────
-  const homeScenarios = useMemo<readonly ChatScenario[]>(() => [
-    { userMessage: t('home.chat.0.user'), aiResponse: t('home.chat.0.ai') },
-    { userMessage: t('home.chat.1.user'), aiResponse: t('home.chat.1.ai') },
-    { userMessage: t('home.chat.2.user'), aiResponse: t('home.chat.2.ai') },
-    { userMessage: t('home.chat.3.user'), aiResponse: t('home.chat.3.ai') },
-  ], [t]);
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 768px)').matches) return;
+    const onScroll = () => {
+      const el = heroInnerRef.current;
+      if (!el) return;
+      const y = Math.min(window.scrollY, 800);
+      el.style.transform = `translateY(${y * -0.18}px)`;
+      el.style.opacity = String(Math.max(0, 1 - y / 700));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  // ── Pain Points ─────────────────────────────────────────────────────────
-  const painPoints = useMemo(() => [
-    { icon: AlertTriangle, color: '#F59E0B', title: t('home.pain.0.title'), desc: t('home.pain.0.desc') },
-    { icon: ShieldAlert,   color: '#EF4444', title: t('home.pain.1.title'), desc: t('home.pain.1.desc') },
-    { icon: BrainCircuit,  color: '#8B5CF6', title: t('home.pain.2.title'), desc: t('home.pain.2.desc') },
-  ], [t]);
+  const B2B_SCENARIOS: readonly ChatScenario[] = [
+    { userMessage: t('home.scenario.0.user'), aiResponse: t('home.scenario.0.ai') },
+    { userMessage: t('home.scenario.1.user'), aiResponse: t('home.scenario.1.ai') },
+    { userMessage: t('home.scenario.2.user'), aiResponse: t('home.scenario.2.ai') },
+    { userMessage: t('home.scenario.3.user'), aiResponse: t('home.scenario.3.ai') },
+  ];
 
-  // ── Solution Cards ──────────────────────────────────────────────────────
-  const solutionCards = useMemo(() => [
-    { icon: Scan,       title: t('home.sol.0.title'), desc: t('home.sol.0.desc') },
-    { icon: ShieldCheck, title: t('home.sol.1.title'), desc: t('home.sol.1.desc') },
-    { icon: Zap,        title: t('home.sol.2.title'), desc: t('home.sol.2.desc') },
-    { icon: Blocks,     title: t('home.sol.3.title'), desc: t('home.sol.3.desc') },
-  ], [t]);
+  const PILLARS = [
+    { n: '01', title: <>{t('home.pillars.0.title.main')} <em>{t('home.pillars.0.title.em')}</em></>, body: t('home.pillars.0.body') },
+    { n: '02', title: <>{t('home.pillars.1.title.main')} <em>{t('home.pillars.1.title.em')}</em></>, body: t('home.pillars.1.body') },
+    { n: '03', title: <>{t('home.pillars.2.title.main')} <em>{t('home.pillars.2.title.em')}</em></>, body: t('home.pillars.2.body') },
+  ];
 
-  // ── B2B features ────────────────────────────────────────────────────────
-  const b2bFeatures = useMemo(() => [
-    t('home.split.b2b.feat.0'),
-    t('home.split.b2b.feat.1'),
-    t('home.split.b2b.feat.2'),
-    t('home.split.b2b.feat.3'),
-  ], [t]);
-
-  // ── Desktop features ────────────────────────────────────────────────────
-  const desktopFeatures = useMemo(() => [
-    t('home.split.desktop.feat.0'),
-    t('home.split.desktop.feat.1'),
-    t('home.split.desktop.feat.2'),
-    t('home.split.desktop.feat.3'),
-  ], [t]);
+  const SITUATIONS = [
+    { n: '01', problem: t('home.situations.0.problem'), solution: t('home.situations.0.solution'), tag: t('home.situations.0.tag') },
+    { n: '02', problem: t('home.situations.1.problem'), solution: t('home.situations.1.solution'), tag: t('home.situations.1.tag') },
+    { n: '03', problem: t('home.situations.2.problem'), solution: t('home.situations.2.solution'), tag: t('home.situations.2.tag') },
+    { n: '04', problem: t('home.situations.3.problem'), solution: t('home.situations.3.solution'), tag: t('home.situations.3.tag') },
+    { n: '05', problem: t('home.situations.4.problem'), solution: t('home.situations.4.solution'), tag: t('home.situations.4.tag') },
+    { n: '06', problem: t('home.situations.5.problem'), solution: t('home.situations.5.solution'), tag: t('home.situations.5.tag') },
+  ];
 
   return (
-    <PageLayout activePage="/">
-      <div className="max-w-screen-2xl mx-auto px-5 sm:px-8 lg:px-12">
+    <div
+      className="relative min-h-screen bg-[#050a0f] text-white overflow-x-hidden"
+      style={{ fontFamily: FONT }}
+    >
+      <Seo
+        path="/"
+        title="Erudi — Bespoke, Turnkey AI Solutions for Your Business"
+        description="Erudi is a specialized AI consulting firm. We design, build, host and maintain bespoke, turnkey AI solutions for SMEs and mid-market companies — GDPR & AI Act compliant, live in 2–6 weeks."
+        jsonLd={HOME_JSON_LD}
+      />
+      <ScrollProgress />
+      <FluidShader />
 
-        {/* ─── Hero Section + Logo Bar ─── */}
-        <div className="min-h-[calc(100vh-80px)] flex flex-col mt-32 sm:mt-10 md:mt-10 pb-4 sm:pb-6">
-          <div className="flex-1 flex flex-col justify-center space-y-10 sm:space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-12 xl:gap-16 lg:items-center">
-            {/* Left Column */}
-            <AnimatedSection delay={100}>
-              <div className="space-y-7">
-                {/* Eyebrow Badge */}
-                <motion.div {...fadeLeft(0)}>
-                  <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 backdrop-blur-sm">
-                    <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
-                    <span className="text-xs sm:text-sm text-emerald-300 font-medium">
-                      {t('home.hero.badge')}
-                    </span>
-                  </div>
-                </motion.div>
+      {/* ═══════════════════════════════════════
+          MOBILE  (hidden on md+)
+      ═══════════════════════════════════════ */}
+      <div className="relative z-10 md:hidden">
+        <Navbar activePage="/" />
 
-                {/* Headline */}
-                <motion.h1
-                  {...fadeLeft(0.1)}
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.08]"
-                >
-                  {t('home.hero.headline1')}{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
-                    {t('home.hero.headline2')}
-                  </span>
-                </motion.h1>
+        {/* Hero — full viewport, content + CTA in thumb zone */}
+        <section
+          className="relative overflow-hidden flex flex-col px-6"
+          style={{ minHeight: '100svh', paddingTop: '88px', paddingBottom: '36px' }}
+        >
+          {/* Ambient orb — transform-only keyframe, GPU composited */}
+          <div className="mob-orb" style={{
+            position: 'absolute', top: '-110px', right: '-130px',
+            width: '440px', height: '440px', borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(52,211,153,0.15) 0%, rgba(52,211,153,0.04) 45%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
 
-                {/* Subtitle */}
-                <motion.p
-                  {...fadeLeft(0.2)}
-                  className="text-white/70 text-base sm:text-lg md:text-xl max-w-xl leading-relaxed"
-                >
-                  {t('home.hero.subtitle')}
-                </motion.p>
-
-                {/* CTA Row */}
-                <motion.div
-                  {...fadeLeft(0.3)}
-                  className="flex flex-col sm:flex-row gap-4 pt-2"
-                >
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_0_40px_rgba(0,193,124,0.4)] hover:shadow-[0_0_60px_rgba(0,193,124,0.6)] hover:-translate-y-0.5"
-                  >
-                    {t('home.hero.cta.expert')}
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
-                  <Link
-                    to="/desktop"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-lg font-semibold text-gray-400 hover:text-white border border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.04] transition-all duration-300"
-                  >
-                    {t('home.hero.cta.desktop')}
-                  </Link>
-                </motion.div>
-              </div>
-            </AnimatedSection>
-
-            {/* Right Column — Chat Simulation */}
-            <motion.div {...fadeRight(0.2)} className="mt-8 sm:mt-10 lg:mt-0">
-              <ChatSimulation
-                scenarios={homeScenarios}
-                footerText={t('home.chat.footer')}
-                footerLink="/contact"
-              />
-            </motion.div>
+          {/* Headline centred vertically */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <h1 style={{
+              fontFamily: FONT, fontWeight: 500, margin: 0, color: '#fff',
+              fontSize: 'clamp(40px, 12.5vw, 58px)',
+              lineHeight: 0.97, letterSpacing: '-0.042em',
+              fontVariationSettings: '"opsz" 96',
+            }}>
+              {t('home.hero.h1.main')}
+              <br />
+              <em style={{ fontStyle: 'italic', color: '#6ee7b7', fontWeight: 400 }}>
+                {t('home.hero.h1.em')}
+              </em>
+            </h1>
+            <p style={{ marginTop: '20px', fontSize: '15px', lineHeight: 1.52, color: '#7a828c', letterSpacing: '-0.005em' }}>
+              {t('home.hero.sub')}
+            </p>
           </div>
 
-          {/* ─── Logo Bar ─── */}
-          <div className="pt-6 sm:pt-8 border-t border-white/[0.06] mt-6 sm:mt-8">
-            <p className="text-center text-xs sm:text-sm text-gray-500 font-medium tracking-[0.2em] uppercase mb-8">
-              {t('home.logobar.label')}
-            </p>
-            <div
-              className="relative overflow-hidden"
+          {/* CTA — anchored in thumb zone */}
+          <div style={{ paddingTop: '32px' }}>
+            <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(52,211,153,0.35) 50%, transparent)', marginBottom: '16px' }} />
+            <Link
+              to="/contact"
               style={{
-                maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '17px 22px', borderRadius: '14px', width: '100%',
+                background: 'rgba(52,211,153,0.09)', border: '1px solid rgba(52,211,153,0.24)',
+                color: '#fff', fontSize: '16px', fontWeight: 500,
+                letterSpacing: '-0.01em', textDecoration: 'none', fontFamily: FONT,
               }}
             >
-              <div className="flex animate-scroll w-max items-center">
-                {[...PARTNER_LOGOS, ...PARTNER_LOGOS].map((logo, index) => (
-                  <div
-                    key={index}
-                    className="flex-shrink-0 mx-10 sm:mx-14 flex items-center justify-center group"
-                  >
-                    <img
-                      src={getAssetPath(logo.src)}
-                      alt={logo.alt}
-                      className="h-10 w-auto object-contain opacity-35 transition-all duration-300 group-hover:opacity-100"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+              {t('home.hero.cta')} <span style={{ color: '#34d399' }}>→</span>
+            </Link>
+            <a
+              href="#m-pillars"
+              style={{
+                display: 'block', textAlign: 'center', marginTop: '14px',
+                fontSize: '13px', color: '#555d66', letterSpacing: '-0.003em', textDecoration: 'none',
+              }}
+            >
+              {t('home.hero.see')}
+            </a>
           </div>
-        </div>
+        </section>
 
-        {/* ─── Two Products Split ─── */}
-        <AnimatedSection delay={100}>
-          <div className="py-16 sm:py-20">
-            <motion.div {...fadeUp(0)} className="text-center mb-12">
-              <p className="text-xs sm:text-sm text-emerald-400 font-semibold tracking-[0.2em] uppercase mb-4">
-                {t('home.split.eyebrow')}
-              </p>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                {t('home.split.heading')}
-              </h2>
-            </motion.div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-              {/* ── Business Solutions Card ── */}
-              <motion.div {...popUp(0.1)} className="group relative">
-                <div className="h-full flex flex-col p-8 sm:p-10 bg-gradient-to-br from-emerald-950/60 to-[#050a0f] border border-emerald-600/25 hover:border-emerald-500/50 rounded-3xl transition-all duration-300 hover:shadow-[0_0_60px_rgba(0,193,124,0.12)]">
-                  {/* Label */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 w-fit mb-6">
-                    <span className="text-xs text-emerald-300 font-semibold tracking-wide uppercase">{t('home.split.b2b.badge')}</span>
-                  </div>
-
-                  {/* Icon + Title */}
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center flex-shrink-0">
-                      <Building2 className="w-6 h-6 text-emerald-400" />
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white">{t('home.split.b2b.title')}</h3>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-gray-400 text-base sm:text-lg leading-relaxed mb-8">
-                    {t('home.split.b2b.desc')}
-                  </p>
-
-                  {/* Features */}
-                  <ul className="space-y-3 mb-10 flex-1">
-                    {b2bFeatures.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-gray-300 text-sm sm:text-base">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.6)]" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 shadow-[0_0_30px_rgba(0,193,124,0.3)] hover:shadow-[0_0_50px_rgba(0,193,124,0.5)] hover:-translate-y-0.5"
-                  >
-                    {t('home.split.b2b.cta')}
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+        {/* Logo bar — compact scrolling strip */}
+        <section style={{ padding: '28px 0 30px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <p style={{ textAlign: 'center', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#3d434b', margin: '0 0 16px' }}>
+            {t('home.logobar.trusted')}
+          </p>
+          <div style={{ overflow: 'hidden', maskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)' }}>
+            <div className="flex animate-scroll w-max items-center">
+              {[...PARTNER_LOGOS, ...PARTNER_LOGOS].map((logo, i) => (
+                <div key={i} style={{ flexShrink: 0, margin: '0 26px' }}>
+                  <img src={getAssetPath(logo.src)} alt={logo.alt} style={{ height: '24px', width: 'auto', objectFit: 'contain' }} />
                 </div>
-              </motion.div>
-
-              {/* ── Desktop App Card ── */}
-              <motion.div {...popUp(0.2)} className="group relative">
-                <div className="h-full flex flex-col p-8 sm:p-10 bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.08] hover:border-white/[0.15] rounded-3xl transition-all duration-300">
-                  {/* Label */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.1] w-fit mb-6">
-                    <span className="text-xs text-gray-300 font-semibold tracking-wide uppercase">{t('home.split.desktop.badge')}</span>
-                  </div>
-
-                  {/* Icon + Title */}
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center flex-shrink-0">
-                      <Monitor className="w-6 h-6 text-gray-300" />
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white">{t('home.split.desktop.title')}</h3>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-gray-400 text-base sm:text-lg leading-relaxed mb-8">
-                    {t('home.split.desktop.desc')}
-                  </p>
-
-                  {/* Features */}
-                  <ul className="space-y-3 mb-10 flex-1">
-                    {desktopFeatures.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-gray-300 text-sm sm:text-base">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  <Link
-                    to="/desktop"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-bold text-white border border-white/20 hover:border-white/40 hover:bg-white/[0.06] transition-all duration-300 hover:-translate-y-0.5"
-                  >
-                    {t('home.split.desktop.cta')}
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </motion.div>
-
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* ─── The Problem ─── */}
-        <div className="py-20 sm:py-28">
-          <AnimatedSection delay={100}>
-            <div className="mb-12 sm:mb-16">
-              <motion.p
-                {...fadeUp(0)}
-                className="text-xs sm:text-sm text-emerald-400 font-semibold tracking-[0.2em] uppercase mb-4"
-              >
-                {t('home.problem.eyebrow')}
-              </motion.p>
-              <motion.h2
-                {...fadeUp(0.1)}
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl"
-              >
-                {t('home.problem.heading')}
-              </motion.h2>
-            </div>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-16">
-            {/* Left — Narrative */}
-            <AnimatedSection delay={200}>
-              <div className="space-y-6">
-                <motion.p
-                  {...fadeLeft(0)}
-                  className="text-gray-400 text-base sm:text-lg leading-relaxed"
-                >
-                  {t('home.problem.p1')}
-                </motion.p>
-                <motion.p
-                  {...fadeLeft(0.1)}
-                  className="text-white/80 text-base sm:text-lg leading-relaxed font-medium"
-                >
-                  {t('home.problem.p2')}
-                </motion.p>
-              </div>
-            </AnimatedSection>
-
-            {/* Right — Pain Point Cards */}
-            <div className="space-y-4">
-              {painPoints.map(({ icon: Icon, color, title, desc }, index) => (
-                <motion.div
-                  key={title}
-                  {...popUp(0.15 + index * 0.12)}
-                  className="group"
-                >
-                  <div className="flex items-center gap-4 sm:gap-5 p-5 bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.06] hover:border-white/[0.1] rounded-2xl transition-all duration-300">
-                    <div
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: `${color}15` }}
-                    >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color }} />
-                    </div>
-                    <div>
-                      <h3 className="text-white font-semibold text-sm sm:text-base mb-1">{title}</h3>
-                      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{desc}</p>
-                    </div>
-                  </div>
-                </motion.div>
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* ─── The Solution ─── */}
-        <div className="py-20 sm:py-28 border-t border-white/[0.06]">
-          <AnimatedSection delay={100}>
-            <div className="mb-12 sm:mb-16">
-              <motion.p
-                {...fadeUp(0)}
-                className="text-xs sm:text-sm text-emerald-400 font-semibold tracking-[0.2em] uppercase mb-4"
-              >
-                {t('home.solution.eyebrow')}
-              </motion.p>
-              <motion.h2
-                {...fadeUp(0.1)}
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl"
-              >
-                {t('home.solution.heading')}
-              </motion.h2>
-              <motion.p
-                {...fadeUp(0.2)}
-                className="text-gray-400 text-base sm:text-lg mt-4 max-w-2xl leading-relaxed"
-              >
-                {t('home.solution.sub')}
-              </motion.p>
-            </div>
-          </AnimatedSection>
+        {/* Chat demo — widget full width, minimal header */}
+        <section style={{ padding: '44px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <p style={{ fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#34d399', margin: '0 0 18px' }}>
+            See it in action
+          </p>
+          <ChatSimulation
+            scenarios={B2B_SCENARIOS}
+            footerLink="/contact"
+            footerText={t('home.chat.footertext')}
+          />
+        </section>
 
-          <div className="space-y-4">
-            {solutionCards.map(({ icon: Icon, title, desc }, index) => (
-              <motion.div key={title} {...popUp(0.1 + index * 0.1)} className="group">
-                <div className="flex items-center gap-5 sm:gap-7 p-6 sm:p-8 bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] hover:border-emerald-500/20 rounded-2xl sm:rounded-3xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,193,124,0.08)]">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center flex-shrink-0 group-hover:border-emerald-400/40 transition-colors">
-                    <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">{title}</h3>
-                    <p className="text-gray-400 text-sm sm:text-base leading-relaxed">{desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* ─── CTA Final ─── */}
-        <AnimatedSection delay={200}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="my-20 sm:my-28"
-          >
-            <div className="bg-gradient-to-br from-[#0f261f]/90 to-[#0a1410]/90 backdrop-blur-md border-2 border-emerald-600/30 rounded-3xl p-10 sm:p-16 text-center shadow-[0_0_80px_rgba(0,193,124,0.15)]">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5">
-                {t('home.cta.heading')}
-              </h2>
-              <p className="text-gray-300 text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-                {t('home.cta.sub')}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-10 sm:px-12 py-4 sm:py-5 rounded-xl sm:rounded-2xl text-lg sm:text-xl font-bold transition-all duration-300 shadow-[0_0_40px_rgba(0,193,124,0.4)] hover:shadow-[0_0_60px_rgba(0,193,124,0.6)] hover:-translate-y-0.5"
-                >
-                  {t('home.cta.expert')}
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                </Link>
-                <Link
-                  to="/desktop"
-                  className="inline-flex items-center justify-center gap-2 px-10 sm:px-12 py-4 sm:py-5 rounded-xl sm:rounded-2xl text-lg sm:text-xl font-bold text-white border border-white/20 hover:border-white/40 hover:bg-white/[0.06] transition-all duration-300 hover:-translate-y-0.5"
-                >
-                  {t('home.cta.desktop')}
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                </Link>
+        {/* Pillars — horizontal rows, number + content side by side */}
+        <section id="m-pillars" style={{ padding: '44px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <h2 style={{
+            fontFamily: FONT, fontWeight: 400, margin: '0 0 32px',
+            fontSize: 'clamp(26px, 8.5vw, 38px)',
+            letterSpacing: '-0.032em', lineHeight: 1.0, fontVariationSettings: '"opsz" 72',
+          }}>
+            {t('home.pillars.heading.main')} <em>{t('home.pillars.heading.em')}</em>
+          </h2>
+          {PILLARS.map((p) => (
+            <div key={p.n} style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '22px 0', display: 'flex', gap: '18px' }}>
+              <span style={{ fontSize: '11px', color: '#34d399', letterSpacing: '0.1em', paddingTop: '2px', flexShrink: 0, fontWeight: 500 }}>{p.n}</span>
+              <div>
+                <h3 style={{ fontFamily: FONT, fontWeight: 400, fontSize: '21px', letterSpacing: '-0.022em', lineHeight: 1.1, margin: '0 0 8px', fontVariationSettings: '"opsz" 48' }}>{p.title}</h3>
+                <p style={{ fontSize: '14px', lineHeight: 1.62, color: '#7a828c', margin: 0, letterSpacing: '-0.003em' }}>{p.body}</p>
               </div>
             </div>
-          </motion.div>
-        </AnimatedSection>
+          ))}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
+        </section>
 
-        {/* ─── Footer ─── */}
+        {/* Situations — 4 cards, tap to reveal */}
+        <section style={{ padding: '44px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <h2 style={{
+            fontFamily: FONT, fontWeight: 400, margin: '0 0 6px',
+            fontSize: 'clamp(26px, 8.5vw, 38px)',
+            letterSpacing: '-0.032em', lineHeight: 1.0, fontVariationSettings: '"opsz" 72',
+          }}>
+            {t('home.situations.heading')}
+          </h2>
+          <p style={{ fontSize: '13px', color: '#555d66', margin: '0 0 22px', letterSpacing: '-0.003em' }}>
+            {t('home.situations.sub')}
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {SITUATIONS.slice(0, 4).map((s, i) => {
+              const isOpen = activeMobileCard === i;
+              return (
+                <div
+                  key={s.n}
+                  onClick={() => setActiveMobileCard(isOpen ? null : i)}
+                  style={{
+                    padding: '18px 20px', borderRadius: '12px', cursor: 'pointer',
+                    background: isOpen ? 'rgba(16,40,30,0.92)' : 'rgba(255,255,255,0.03)',
+                    border: isOpen ? '1px solid rgba(52,211,153,0.25)' : '1px solid rgba(255,255,255,0.07)',
+                    transition: 'border-color .25s, background .25s',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '10px', color: '#34d399', letterSpacing: '0.1em', fontWeight: 500 }}>{s.n}</span>
+                    <span style={{ fontSize: '10px', color: isOpen ? '#34d399' : '#555d66', letterSpacing: '0.1em', textTransform: 'uppercase', transition: 'color .25s', fontWeight: 500 }}>{s.tag}</span>
+                  </div>
+                  <p style={{ fontSize: '14px', lineHeight: 1.56, margin: 0, letterSpacing: '-0.003em', color: isOpen ? '#a7f3d0' : '#c0c5cb', transition: 'color .3s' }}>
+                    {isOpen ? s.solution : s.problem}
+                  </p>
+                  <div style={{ marginTop: '11px', fontSize: '11px', fontWeight: 500, color: isOpen ? '#34d399' : '#3d434b', letterSpacing: '0.02em', transition: 'color .3s' }}>
+                    {isOpen ? `${t('home.situations.cta.open')} →` : t('home.situations.cta.closed')}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Final CTA — editorial large type, solid button */}
+        <section style={{ padding: '60px 24px 88px', borderTop: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+          <div style={{
+            position: 'absolute', bottom: '-110px', left: '50%', transform: 'translateX(-50%)',
+            width: '340px', height: '340px', borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+          <h2 style={{
+            fontFamily: FONT, fontWeight: 400, margin: '0 0 16px',
+            fontSize: 'clamp(54px, 18vw, 82px)',
+            letterSpacing: '-0.048em', lineHeight: 0.93, fontVariationSettings: '"opsz" 96',
+          }}>
+            {t('home.cta.h2')}
+          </h2>
+          <p style={{ fontSize: '15px', color: '#7a828c', margin: '0 0 30px', lineHeight: 1.5 }}>
+            {t('home.cta.body')}
+          </p>
+          <Link
+            to="/contact"
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '18px 24px', borderRadius: '14px', width: '100%',
+              background: '#34d399', color: '#03130E',
+              fontSize: '16px', fontWeight: 600,
+              letterSpacing: '-0.01em', textDecoration: 'none', fontFamily: FONT,
+            }}
+          >
+            {t('home.cta.btn')} <span>→</span>
+          </Link>
+        </section>
+
         <Footer />
       </div>
-    </PageLayout>
+
+      {/* ═══════════════════════════════════════
+          DESKTOP  (hidden on mobile)
+      ═══════════════════════════════════════ */}
+      <div className="relative z-10 hidden md:block">
+        <Navbar activePage="/" />
+
+        {/* Hero */}
+        <section className="relative px-6 sm:px-10 lg:px-14 pt-10 pb-24 lg:pb-32 min-h-[calc(100vh-80px)] flex flex-col justify-center mt-16 lg:mt-24">
+          <div className="max-w-[1440px] mx-auto w-full">
+          <div ref={heroInnerRef} className="max-w-[1280px] will-change-transform">
+            <motion.h1
+              {...fadeUp(0)}
+              className="m-0 text-white"
+              style={{ fontFamily: FONT, fontWeight: 500, fontSize: 'clamp(38px, 7.5vw, 112px)', lineHeight: 0.96, letterSpacing: '-0.046em', fontVariationSettings: '"opsz" 96' }}
+            >
+              {t('home.hero.h1.main')}
+              <br />
+              <em style={{ fontWeight: 400, fontStyle: 'italic', color: '#6ee7b7', textShadow: '0 0 90px rgba(52,211,153,0.28), 0 0 32px rgba(52,211,153,0.14)' }}>
+                {t('home.hero.h1.em')}
+              </em>
+            </motion.h1>
+
+            <motion.p
+              {...fadeUp(0.28)}
+              className="mt-12 max-w-[48ch] text-[#c0c5cb]"
+              style={{ fontSize: '21px', lineHeight: 1.48, letterSpacing: '-0.005em' }}
+            >
+              {t('home.hero.sub')}
+            </motion.p>
+
+            <motion.div {...fadeUp(0.62)} className="mt-14 flex items-center gap-7">
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-3 px-[26px] py-4 rounded-full font-medium text-[15px]"
+                style={{ color: '#ffffff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.18)', letterSpacing: '-0.005em', transition: 'background .25s ease, border-color .25s ease, color .25s ease' }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#34d399'; e.currentTarget.style.borderColor = '#34d399'; e.currentTarget.style.color = '#03130E'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = '#ffffff'; }}
+              >
+                {t('home.hero.cta')}
+                <span className="transition-transform duration-[250ms] group-hover:translate-x-1">→</span>
+              </Link>
+              <a
+                href="#pillars"
+                className="text-[15px] font-medium text-[#c0c5cb] hover:text-emerald-300 border-b border-[#3d434b] hover:border-emerald-400 pb-1 transition-colors"
+                style={{ letterSpacing: '-0.005em' }}
+              >
+                {t('home.hero.see')}
+              </a>
+            </motion.div>
+          </div>
+          </div>
+
+          <motion.div {...fadeUp(0.88)} className="absolute left-1/2 -translate-x-1/2 bottom-9 flex flex-col items-center">
+            <span className="relative block w-px h-11 overflow-hidden" style={{ background: 'linear-gradient(to bottom, transparent, #34d399)' }}>
+              <span className="absolute left-0 w-full h-3" style={{ top: '-12px', background: '#a7f3d0', boxShadow: '0 0 12px rgba(52,211,153,0.22)', animation: 'erudi-travel 2.8s ease-in-out infinite' }} />
+            </span>
+          </motion.div>
+        </section>
+
+        {/* Logo bar */}
+        <section className="px-6 sm:px-10 lg:px-14 pb-20 pt-4 border-t border-white/[0.06]">
+          <div className="max-w-[1440px] mx-auto w-full">
+          <p className="text-center text-xs text-gray-600 font-medium tracking-[0.2em] uppercase mb-10 mt-10">
+            {t('home.logobar.trusted')}
+          </p>
+          <div className="relative overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}>
+            <div className="flex animate-scroll w-max items-center">
+              {[...PARTNER_LOGOS, ...PARTNER_LOGOS].map((logo, i) => (
+                <div key={i} className="flex-shrink-0 mx-10 sm:mx-14 flex items-center justify-center">
+                  <img src={getAssetPath(logo.src)} alt={logo.alt} className="h-10 w-auto object-contain" />
+                </div>
+              ))}
+            </div>
+          </div>
+          </div>
+        </section>
+
+        {/* Solid background */}
+        <div style={{ background: '#050a0f', position: 'relative', zIndex: 10 }}>
+
+        {/* Chat demo */}
+        <section className="px-6 sm:px-10 lg:px-14 py-32 border-t border-white/[0.06]">
+          <div className="max-w-[1440px] mx-auto w-full">
+          <div className="max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 xl:gap-48 items-center">
+            <div>
+              <h2 className="m-0 mb-6 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(36px, 5vw, 72px)', lineHeight: 1.0, letterSpacing: '-0.036em', fontVariationSettings: '"opsz" 96' }}>
+                {t('home.chat.h2.main')}{' '}
+                <em className="italic font-normal text-emerald-300">{t('home.chat.h2.em')}</em>
+              </h2>
+              <p className="text-[#c0c5cb] max-w-[44ch]" style={{ fontSize: '18px', lineHeight: 1.55, letterSpacing: '-0.005em' }}>
+                {t('home.chat.desc')}
+              </p>
+            </div>
+            <div>
+              <ChatSimulation scenarios={B2B_SCENARIOS} footerLink="/contact" footerText={t('home.chat.footertext')} />
+            </div>
+          </div>
+          </div>
+        </section>
+
+        {/* Pillars */}
+        <section id="pillars" className="px-6 sm:px-10 lg:px-14 py-24 border-t border-white/[0.10]">
+          <div className="max-w-[1440px] mx-auto w-full">
+          <div className="flex items-baseline justify-between mb-14">
+            <h2 className="m-0 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(28px, 3.5vw, 48px)', lineHeight: 1.0, letterSpacing: '-0.030em', fontVariationSettings: '"opsz" 72' }}>
+              {t('home.pillars.heading.main')}{' '}
+              <em style={{ fontStyle: 'italic', color: '#6ee7b7', fontWeight: 400 }}>{t('home.pillars.heading.em')}</em>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {PILLARS.map((p, i) => (
+              <div key={p.n} className="pillar-col group py-10 pr-10" style={{ borderTop: '1px solid rgba(255,255,255,0.10)', borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.10)' : 'none', paddingLeft: i > 0 ? '2.5rem' : '0', transition: 'background .3s ease' }}>
+                <span className="block mb-6 text-[11px] font-medium tabular-nums" style={{ color: '#34d399', letterSpacing: '0.12em' }}>{p.n}</span>
+                <h3 className="m-0 mb-4 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(22px, 2.2vw, 32px)', lineHeight: 1.1, letterSpacing: '-0.025em', fontVariationSettings: '"opsz" 48', transition: 'color .3s ease' }}>{p.title}</h3>
+                <p className="m-0 text-[#7a828c] group-hover:text-[#c0c5cb]" style={{ fontSize: '15px', lineHeight: 1.65, letterSpacing: '-0.003em', transition: 'color .3s ease' }}>{p.body}</p>
+              </div>
+            ))}
+          </div>
+          </div>
+        </section>
+
+        </div>{/* end solid background */}
+
+        {/* Situations */}
+        <section className="px-6 sm:px-10 lg:px-14 pt-32 pb-40" style={{ background: '#050a0f' }}>
+          <div className="max-w-[1440px] mx-auto w-full">
+          <h2 className="m-0 mb-3 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(28px, 3.5vw, 48px)', lineHeight: 1.0, letterSpacing: '-0.030em', fontVariationSettings: '"opsz" 72' }}>
+            {t('home.situations.heading')}
+          </h2>
+          <p className="mb-12 text-[#555d66] text-[15px]" style={{ letterSpacing: '-0.003em' }}>
+            {t('home.situations.sub')}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {SITUATIONS.map((s, i) => {
+              const isOpen = activeCard === i;
+              return (
+                <div
+                  key={s.n}
+                  onClick={() => setActiveCard(isOpen ? null : i)}
+                  className="relative flex flex-col p-7 rounded-2xl cursor-pointer"
+                  style={{ height: '240px', background: isOpen ? 'rgba(16,40,30,0.80)' : 'rgba(5,10,15,0.55)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: isOpen ? '1px solid rgba(52,211,153,0.30)' : '1px solid rgba(255,255,255,0.07)', transition: 'border-color .3s ease, background .3s ease' }}
+                >
+                  <div className="flex items-start justify-between mb-5 flex-shrink-0">
+                    <span className="text-[11px] font-medium text-emerald-400 tabular-nums" style={{ letterSpacing: '0.1em' }}>{s.n}</span>
+                    <span className="text-[10.5px] font-medium uppercase" style={{ letterSpacing: '0.1em', color: isOpen ? '#34d399' : '#555d66', transition: 'color .3s ease' }}>{s.tag}</span>
+                  </div>
+                  <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
+                    <p className="m-0 text-[#c0c5cb]" style={{ fontSize: '15px', lineHeight: 1.6, letterSpacing: '-0.003em', opacity: isOpen ? 0 : 1, transform: isOpen ? 'translateY(-6px)' : 'translateY(0)', transition: 'opacity .22s ease, transform .22s ease', position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+                      {s.problem}
+                    </p>
+                    <p className="m-0" style={{ fontSize: '15px', lineHeight: 1.6, letterSpacing: '-0.003em', color: '#a7f3d0', opacity: isOpen ? 1 : 0, transform: isOpen ? 'translateY(0)' : 'translateY(8px)', transition: 'opacity .28s ease .12s, transform .28s ease .12s', position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+                      {s.solution}
+                    </p>
+                  </div>
+                  <div className="mt-5 flex items-center gap-2 text-[12px] font-medium" style={{ color: isOpen ? '#34d399' : '#3d434b', transition: 'color .3s ease', letterSpacing: '0.02em' }}>
+                    <span style={{ display: 'inline-block', width: '14px', height: '1px', background: 'currentColor' }} />
+                    {isOpen ? t('home.situations.cta.open') : t('home.situations.cta.closed')}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="px-6 sm:px-10 lg:px-14 py-40">
+          <div className="max-w-[1440px] mx-auto w-full">
+          <div className="max-w-[900px]">
+            <h2 className="m-0 mb-8 text-white" style={{ fontFamily: FONT, fontWeight: 400, fontSize: 'clamp(40px, 6vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.040em', fontVariationSettings: '"opsz" 96' }}>
+              {t('home.cta.h2')}
+            </h2>
+            <p className="mb-12 text-[#c0c5cb] max-w-[42ch]" style={{ fontSize: '20px', lineHeight: 1.5, letterSpacing: '-0.005em' }}>
+              {t('home.cta.body')}
+            </p>
+            <Link
+              to="/contact"
+              className="group inline-flex items-center gap-3 px-[26px] py-4 rounded-full font-medium text-[15px]"
+              style={{ color: '#ffffff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.18)', letterSpacing: '-0.005em', transition: 'background .25s ease, border-color .25s ease, color .25s ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = '#34d399'; e.currentTarget.style.borderColor = '#34d399'; e.currentTarget.style.color = '#03130E'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = '#ffffff'; }}
+            >
+              {t('home.cta.btn')}
+              <span className="transition-transform duration-[250ms] group-hover:translate-x-1">→</span>
+            </Link>
+          </div>
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+
+      <style>{`
+        @keyframes erudi-travel {
+          0%   { top: -12px; opacity: 0; }
+          20%  { opacity: 1; }
+          80%  { opacity: 1; }
+          100% { top: 100%; opacity: 0; }
+        }
+        @keyframes mob-orb {
+          0%, 100% { transform: translate(0, 0); }
+          50%       { transform: translate(-22px, 26px); }
+        }
+        .mob-orb { animation: mob-orb 9s ease-in-out infinite; will-change: transform; }
+        em { font-style: italic; color: #6ee7b7; font-weight: 400; }
+        @media (prefers-reduced-motion: reduce) {
+          .mob-orb { animation: none !important; }
+        }
+      `}</style>
+    </div>
   );
 };
 

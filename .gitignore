@@ -29,3 +29,6 @@ erudi-Installer.dmg
 *.sln
 *.sw?
 .venv
+
+# Internal docs — kept local, not for publication
+erudi-company-brief.md

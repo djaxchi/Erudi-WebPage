@@ -10,6 +10,23 @@ import { preloadImages } from '../utils/imageOptimization';
 import { getAssetPath } from '../utils/assetPath';
 import '../styles/performance.css';
 import { useLanguage } from '../i18n/LanguageContext';
+import Seo, { SITE_URL } from '../components/Seo';
+
+const DESKTOP_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Erudi Desktop',
+  url: `${SITE_URL}/desktop`,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS, Windows, Linux',
+  description:
+    'Erudi Desktop is a free, open-source desktop app to fine-tune local LLMs with no code — 100% local and private, on your own machine.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+};
 
 const OptimizedImage: React.FC<{
   src: string;
@@ -99,6 +116,12 @@ const LandingPage: React.FC = () => {
 
   return (
     <PageLayout activePage="/desktop">
+      <Seo
+        path="/desktop"
+        title="Erudi Desktop — No-Code Local LLM Fine-Tuning"
+        description="Fine-tune local LLMs with no code. Erudi Desktop is free, open-source and 100% local — your data never leaves your machine. Runs on macOS, Windows & Linux."
+        jsonLd={DESKTOP_JSON_LD}
+      />
       <div className="max-w-7xl mx-auto">
 
         {/* ─── Hero Section ─── */}

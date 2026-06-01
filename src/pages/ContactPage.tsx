@@ -5,6 +5,16 @@ import PageLayout from '../components/PageLayout';
 import Footer from '../components/Footer';
 import { AnimatedSection } from '../assets/animatedSection';
 import { useLanguage } from '../i18n/LanguageContext';
+import Seo, { SITE_URL } from '../components/Seo';
+
+const CONTACT_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  url: `${SITE_URL}/contact`,
+  name: 'Contact Erudi',
+  description:
+    'Get in touch with the Erudi team to discuss your bespoke AI project, partnership or support request.',
+};
 
 interface ContactFormData {
   name: string;
@@ -100,6 +110,12 @@ const ContactPage: React.FC = () => {
 
   return (
     <PageLayout activePage="/contact">
+        <Seo
+          path="/contact"
+          title="Contact Erudi — Talk to Our AI Team"
+          description="Talk to the Erudi team about a bespoke AI project, partnership or support. Tell us your need and we'll get back to you — solutions live in 2–6 weeks."
+          jsonLd={CONTACT_JSON_LD}
+        />
         <div className="max-w-5xl mx-auto">
 
           {/* Header */}

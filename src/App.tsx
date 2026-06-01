@@ -8,7 +8,6 @@ import ContactPage from './pages/ContactPage';
 import WaitlistPage from './pages/WaitlistPage';
 import DownloadPage from './pages/DownloadPage';
 import { preloadImages, CRITICAL_IMAGES } from './utils/imageOptimization';
-import { AnimatedOrb } from './components/AnimatedOrb';
 import { LanguageProvider } from './i18n/LanguageContext';
 
 const ScrollToTop: React.FC = () => {
@@ -35,12 +34,7 @@ const App: React.FC = () => {
   <BrowserRouter basename={base}>
     <ScrollToTop />
 
-    {/* Global animated orb that appears on all pages */}
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
-      <AnimatedOrb />
-    </div>
-
-    <Routes>
+<Routes>
       <Route
         path="/"
         element={<HomePage />}

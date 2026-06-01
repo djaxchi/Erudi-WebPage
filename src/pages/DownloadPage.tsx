@@ -5,6 +5,23 @@ import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import Footer from '../components/Footer';
 import { AnimatedSection } from '../assets/animatedSection';
+import Seo, { SITE_URL } from '../components/Seo';
+
+const DOWNLOAD_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Erudi Desktop',
+  url: `${SITE_URL}/download`,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS, Windows, Linux',
+  description:
+    'Download Erudi Desktop — a free, open-source desktop app to fine-tune local LLMs with no code, 100% on your own machine.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+};
 
 const DownloadPage: React.FC = () => {
   // Scroll to top when component mounts
@@ -60,6 +77,12 @@ const sendGoogleSheetLog = (platform: string) => {
 
   return (
     <PageLayout activePage="/download">
+        <Seo
+          path="/download"
+          title="Download Erudi Desktop — Free & Open Source"
+          description="Download Erudi Desktop free for Mac (Apple Silicon), with Windows coming soon. Train custom local LLMs with no code — open source and 100% private."
+          jsonLd={DOWNLOAD_JSON_LD}
+        />
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <div className="mt-32 sm:mt-20 md:mt-20 mb-12 sm:mb-16 md:mb-20">

@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/prerender.mjs",
     "build:prod": "tsc -b && vite build",
     "build:github": "tsc -b && vite build --mode github",
     "lint": "eslint .",
@@ -19,6 +20,7 @@
     "lucide-react": "^0.519.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.6.2",
     "swiper": "^11.2.8"
   },
@@ -34,6 +36,8 @@
     "gh-pages": "^6.3.0",
     "globals": "^15.14.0",
     "postcss": "^8.4.49",
+    "puppeteer": "^25.1.0",
+    "sirv": "^3.0.2",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",

@@ -4,6 +4,15 @@ import { Mail, CheckCircle, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+
+const WAITLIST_SEO = (
+  <Seo
+    path="/waitlist"
+    title="Join the Erudi Waitlist"
+    description="Join the Erudi Desktop waitlist to get early access and be the first to know when new platforms launch. Turn your data into custom local LLMs."
+  />
+);
 
 interface FormData {
   email: string;
@@ -73,6 +82,7 @@ const WaitlistPage: React.FC = () => {
   if (isSubmitted) {
     return (
       <PageLayout activePage="/waitlist">
+        {WAITLIST_SEO}
         <div className="flex items-center justify-center min-h-[70vh] px-4">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -100,6 +110,7 @@ const WaitlistPage: React.FC = () => {
 
   return (
     <PageLayout activePage="/waitlist">
+      {WAITLIST_SEO}
       <div className="mt-16 w-full flex items-center justify-center min-h-[70vh] px-4 py-12">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
