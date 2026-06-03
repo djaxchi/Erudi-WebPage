@@ -12,7 +12,7 @@ This document is the single source of truth for how SEO works on the Erudi site.
 4. **`index.html` is static-only.** It holds invariant head elements (charset, viewport, favicon, manifest, fonts, theme-color) plus a fallback `<title>`. All variable, per-page SEO is owned by the `<Seo>` component via `react-helmet-async`. Do **not** put page-specific meta back into `index.html`.
 5. **Two distinct products - keep their SEO separate.**
    - **Erudi (B2B)** - bespoke, turnkey AI consulting for SMEs/mid-market. Home `/`.
-   - **Erudi Desktop** - free, open-source, no-code *local* LLM fine-tuning desktop app. `/desktop`, `/download`.
+   - **Erudi Desktop** - free, open-source, no-code *local* LLM fine-tuning desktop app. `/opensource`, `/download`.
 
 ---
 
@@ -61,7 +61,7 @@ Upload dist/ to Hostinger (Apache, domain root https://www.erudi.app/)
 |------|------|----------|-------|
 | `title` | string | ✅ | Aim ~50-60 chars. Shown in tab + search result + OG/Twitter title. |
 | `description` | string | ✅ | Aim ~150-160 chars. Used for meta description + OG/Twitter description. |
-| `path` | string | ✅ | Route path with leading slash, e.g. `"/desktop"`. Use `"/"` for home. Builds canonical + `og:url`. |
+| `path` | string | ✅ | Route path with leading slash, e.g. `"/opensource"`. Use `"/"` for home. Builds canonical + `og:url`. |
 | `image` | string | - | Path or absolute URL to the social image. Defaults to `/og-image.png`. Relative paths are absolute-ized against `SITE_URL`. |
 | `type` | `'website' \| 'article'` | - | Defaults to `website`. |
 | `noindex` | boolean | - | `true` emits `robots: noindex, nofollow`. Use for thank-you/confirmation pages you don't want indexed. |
@@ -102,12 +102,12 @@ const DownloadPage = () => (
 | Route | Page | Title | JSON-LD |
 |-------|------|-------|---------|
 | `/` | HomePage | Erudi - Bespoke, Turnkey AI Solutions for Your Business | Organization + WebSite |
-| `/desktop` | LandingPage | Erudi Desktop - No-Code Local LLM Fine-Tuning | SoftwareApplication |
+| `/opensource` | OpenSourcePage | Erudi Desktop - No-Code Local LLM Fine-Tuning | SoftwareApplication |
 | `/download` | DownloadPage | Download Erudi Desktop - Free & Open Source | SoftwareApplication |
 | `/team` | TeamPage | The Erudi Team - AI Engineers & Researchers | - |
 | `/contact` | ContactPage | Contact Erudi - Talk to Our AI Team | ContactPage |
 | `/waitlist` | WaitlistPage | Join the Erudi Waitlist | - |
-| `/about` | → redirects to `/desktop` | (not prerendered, excluded) | - |
+| `/about` | → redirects to `/opensource` | (not prerendered, excluded) | - |
 
 > When you change a page's purpose or copy, update its `<Seo>` title/description to match. Stale or generic descriptions are the most common SEO regression.
 
@@ -119,7 +119,7 @@ const DownloadPage = () => (
 
 - Serves the freshly built `dist/` over a local HTTP server. Static assets are served by `sirv`; every *navigation* request returns the **pristine build shell** (the un-rendered `index.html`) so React mounts cleanly with `createRoot`.
 - Launches headless Puppeteer (`--no-sandbox`), visits each route in `ROUTES`, waits for `networkidle0` + 400 ms so `react-helmet-async` can flush its head tags, then snapshots `document.documentElement.outerHTML` and writes it to `dist/<route>/index.html`.
-- `ROUTES` (line ~13): `['/', '/desktop', '/download', '/team', '/contact', '/waitlist']`. `/about` is intentionally excluded because it's a redirect.
+- `ROUTES` (line ~13): `['/', '/opensource', '/download', '/team', '/contact', '/waitlist']`. `/about` is intentionally excluded because it's a redirect.
 
 **Why Puppeteer instead of SSG/react-snap:** the site uses WebGL (`FluidShader`), framer-motion and Swiper. Running components in Node (true SSG) would crash on missing `window`/WebGL. A real headless browser renders the actual DOM, so everything works and we just snapshot the result. (react-snap was rejected - it pins an ancient Puppeteer that fails on Apple Silicon.)
 
@@ -180,9 +180,9 @@ After deploying SEO changes, in **Google Search Console**: submit/ping `sitemap.
 ```bash
 npm run build
 # titles per route:
-grep -o '<title>[^<]*</title>' dist/index.html dist/desktop/index.html dist/contact/index.html
+grep -o '<title>[^<]*</title>' dist/index.html dist/opensource/index.html dist/contact/index.html
 # canonical / og for one route:
-grep -oE 'rel="canonical"[^>]*|property="og:title"[^>]*' dist/desktop/index.html
+grep -oE 'rel="canonical"[^>]*|property="og:title"[^>]*' dist/opensource/index.html
 ```
 
 Each `dist/<route>/index.html` should contain exactly one head `<title>`, one `description`, one `og:title`, one canonical. (Note: a `<title` grep count above 1 can come from inline SVG `<title>` elements in the body - check it's the head one that's unique.)

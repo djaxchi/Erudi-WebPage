@@ -10,7 +10,7 @@ type JsonLd = Record<string, unknown>;
 interface SeoProps {
   title: string;
   description: string;
-  /** Route path, e.g. "/desktop" (leading slash). Use "/" for home. */
+  /** Route path, e.g. "/opensource" (leading slash). Use "/" for home. */
   path: string;
   /** Path or absolute URL to the social image. Defaults to /og-image.png */
   image?: string;

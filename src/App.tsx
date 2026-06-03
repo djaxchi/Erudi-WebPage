@@ -2,7 +2,7 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import LandingPage from './pages/LandingPage';
+import OpenSourcePage from './pages/OpenSourcePage';
 import TeamPage from './pages/TeamPage';
 import ContactPage from './pages/ContactPage';
 import WaitlistPage from './pages/WaitlistPage';
@@ -40,8 +40,8 @@ const App: React.FC = () => {
         element={<HomePage />}
       />
       <Route
-        path="/desktop"
-        element={<LandingPage />}
+        path="/opensource"
+        element={<OpenSourcePage />}
       />
       <Route
         path="/download"
@@ -49,7 +49,7 @@ const App: React.FC = () => {
       />
       <Route
         path="/about"
-        element={<Navigate to="/desktop" replace />}
+        element={<Navigate to="/opensource" replace />}
       />
       <Route
         path="/team"
@@ -62,6 +62,16 @@ const App: React.FC = () => {
       <Route
         path="/waitlist"
         element={<WaitlistPage />}
+      />
+      {/* Legacy route: /desktop was renamed to /opensource. */}
+      <Route
+        path="/desktop"
+        element={<Navigate to="/opensource" replace />}
+      />
+      {/* Catch-all: never render a blank page for an unknown path. */}
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
       />
     </Routes>
   </BrowserRouter>

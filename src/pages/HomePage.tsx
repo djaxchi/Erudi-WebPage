@@ -112,7 +112,7 @@ const HomePage: React.FC = () => {
     >
       <Seo
         path="/"
-        title="Erudi: Bespoke, Turnkey AI Solutions for Your Business"
+        title="Erudi"
         description="Erudi is a specialized AI consulting firm. We design, build, host and maintain bespoke, turnkey AI solutions for SMEs and mid-market companies. GDPR & AI Act compliant, live in 2-6 weeks."
         jsonLd={HOME_JSON_LD}
       />

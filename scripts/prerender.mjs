@@ -10,7 +10,7 @@ const DIST = join(__dirname, '..', 'dist');
 const PORT = 4178;
 
 // Routes to prerender (exclude /about — it is a redirect).
-const ROUTES = ['/', '/desktop', '/download', '/team', '/contact', '/waitlist'];
+const ROUTES = ['/', '/opensource', '/download', '/team', '/contact', '/waitlist'];
 
 const routeToFile = (route) =>
   route === '/' ? join(DIST, 'index.html') : join(DIST, route, 'index.html');

@@ -44,7 +44,7 @@ interface NavbarProps {
 const getNavItems = (t: (key: string) => string): NavItem[] => {
   return [
     { label: t('nav.home'),    href: '/' },
-    { label: t('nav.desktop'), href: '/desktop' },
+    { label: t('nav.opensource'), href: '/opensource' },
     { label: t('nav.team'),    href: '/team' },
     { label: t('nav.contact'), href: '/contact' },
   ];
