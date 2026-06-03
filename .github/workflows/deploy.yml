@@ -30,6 +30,9 @@ jobs:
         with:
           server: 62.72.37.133
           port: 21
+          protocol: ftps
+          security: loose
+          timeout: 60000
           username: u160425656
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
