@@ -94,8 +94,8 @@ const OpenSourcePage: React.FC = () => {
     <div className="relative min-h-screen bg-[#050a0f] text-white overflow-x-clip" style={{ fontFamily: FONT }}>
       <Seo
         path="/opensource"
-        title="Erudi Desktop: Free, Open-Source Local AI You Run Offline"
-        description="Erudi Desktop is a free, open-source app to chat with your own documents using local LLMs, with no code. 100% private and fully offline. Your data never leaves your machine. Mac with Apple Silicon."
+        title={t('meta.os.title')}
+        description={t('meta.os.desc')}
         jsonLd={OS_JSON_LD}
       />
       <ScrollProgress />

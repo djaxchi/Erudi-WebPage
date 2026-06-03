@@ -112,8 +112,8 @@ const ContactPage: React.FC = () => {
     <PageLayout activePage="/contact">
         <Seo
           path="/contact"
-          title="Contact Erudi: Talk to Our AI Team"
-          description="Talk to the Erudi team about a bespoke AI project, partnership or support. Tell us your need and we'll get back to you. Solutions live in 2-6 weeks."
+          title={t('meta.contact.title')}
+          description={t('meta.contact.desc')}
           jsonLd={CONTACT_JSON_LD}
         />
         <div className="max-w-5xl mx-auto">

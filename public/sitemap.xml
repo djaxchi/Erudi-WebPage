@@ -1,38 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.erudi.app/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/"/>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.erudi.app/fr</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/"/>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.erudi.app/opensource</loc>
-    <lastmod>2026-06-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/opensource"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr/opensource"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/opensource"/>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.erudi.app/fr/opensource</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/opensource"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr/opensource"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/opensource"/>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.erudi.app/team</loc>
-    <lastmod>2026-06-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/team"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr/team"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/team"/>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.erudi.app/fr/team</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/team"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr/team"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/team"/>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.erudi.app/contact</loc>
-    <lastmod>2026-06-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/contact"/>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.erudi.app/fr/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.erudi.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.erudi.app/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.erudi.app/contact"/>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.erudi.app/download</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.erudi.app/waitlist</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

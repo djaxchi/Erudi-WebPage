@@ -79,8 +79,9 @@ const sendGoogleSheetLog = (platform: string) => {
     <PageLayout activePage="/download">
         <Seo
           path="/download"
+          langAlternates={false}
           title="Download Erudi Desktop: Free & Open Source"
-          description="Download Erudi Desktop free for Mac (Apple Silicon), with Windows coming soon. Train custom local LLMs with no code. Open source and 100% private."
+          description="Download Erudi Desktop free for Mac (Apple Silicon, M2 or later). Chat with your own documents using local LLMs, no code. Open source and 100% private. Windows and Linux coming soon."
           jsonLd={DOWNLOAD_JSON_LD}
         />
         <div className="max-w-7xl mx-auto">

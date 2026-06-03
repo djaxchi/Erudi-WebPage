@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { Menu, X, Globe, ChevronDown, Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { preloadImages } from '../utils/imageOptimization';
 import { getAssetPath } from '../utils/assetPath';
 import { useLanguage } from '../i18n/LanguageContext';
+import { withLang, parseLangPath, type Lang } from '../i18n/langPath';
 
 // Optimized Image Component for the logo
 const OptimizedImage: React.FC<{
@@ -54,8 +55,17 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement | null>(null);
-  const { lang, setLang, t } = useLanguage();
+  const { lang, setPreference, t } = useLanguage();
   const navItems = getNavItems(t);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  // Switch language by navigating to the counterpart URL (URL drives content).
+  const switchLang = (code: Lang) => {
+    setPreference(code);
+    const { base } = parseLangPath(pathname);
+    navigate(withLang(base, code));
+  };
 
   const LANGUAGES: { code: 'fr' | 'en'; label: string }[] = [
     { code: 'fr', label: 'Français' },
@@ -136,7 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
       <div className="relative z-10 px-6 py-3 flex items-center justify-between h-[4.5rem]">
         {/* Logo */}
         <div className="text-3xl font-semibold text-white cursor-pointer">
-          <Link to={navItems[0].href}>
+          <Link to={withLang(navItems[0].href, lang)}>
           <OptimizedImage
             src={getAssetPath('/Erudi/images/erudi-logo.png')}
             alt="Erudi Logo"
@@ -153,7 +163,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
             return (
               <Link
                 key={item.href}
-                to={item.href}
+                to={withLang(item.href, lang)}
                 className={`text-xl transition cursor-pointer ${
                   isActive
                     ? 'text-emerald-400 px-4 py-1 rounded-xl font-semibold shadow-sm hover:text-[#e6f2ed] hover:bg-emerald-400/60'
@@ -187,7 +197,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
                 {LANGUAGES.map(({ code, label }) => (
                   <button
                     key={code}
-                    onClick={() => { setLang(code); setLangOpen(false); }}
+                    onClick={() => { switchLang(code); setLangOpen(false); }}
                     className={`flex items-center justify-between w-full text-left text-sm px-4 py-2 transition-colors duration-150 ${
                       lang === code
                         ? 'text-emerald-400 bg-emerald-400/10'
@@ -226,7 +236,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
             return (
               <li key={item.href}>
                 <Link
-                  to={item.href}
+                  to={withLang(item.href, lang)}
                   onClick={() => setIsOpen(false)}
                   className={`
                     block w-full text-left text-lg py-2 px-2 rounded-lg
@@ -247,7 +257,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
           <li>
             <div className="flex items-center gap-2 pt-1">
               <button
-                onClick={() => { setLang('fr'); setIsOpen(false); }}
+                onClick={() => { switchLang('fr'); setIsOpen(false); }}
                 className={`text-sm font-semibold px-3 py-1.5 rounded-lg border transition-all duration-200 ${
                   lang === 'fr'
                     ? 'text-emerald-400 border-emerald-400/40 bg-emerald-400/10'
@@ -257,7 +267,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage = '/' }) => {
                 FR
               </button>
               <button
-                onClick={() => { setLang('en'); setIsOpen(false); }}
+                onClick={() => { switchLang('en'); setIsOpen(false); }}
                 className={`text-sm font-semibold px-3 py-1.5 rounded-lg border transition-all duration-200 ${
                   lang === 'en'
                     ? 'text-emerald-400 border-emerald-400/40 bg-emerald-400/10'

@@ -9,8 +9,9 @@ import Seo from '../components/Seo';
 const WAITLIST_SEO = (
   <Seo
     path="/waitlist"
+    langAlternates={false}
     title="Join the Erudi Waitlist"
-    description="Join the Erudi Desktop waitlist to get early access and be the first to know when new platforms launch. Turn your data into custom local LLMs."
+    description="Join the Erudi Desktop waitlist to get early access and be the first to know when new platforms launch. Run local AI on your own documents, fully private."
   />
 );
 

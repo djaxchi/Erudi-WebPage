@@ -1,5 +1,15 @@
 export const translations: Record<string, Record<string, string>> = {
   en: {
+    // ── SEO meta (titles & descriptions) ─────────────────────────────────────
+    'meta.home.title': 'Erudi - Custom AI for your business',
+    'meta.home.desc': 'Erudi is a specialized AI consulting firm. We design, build, host and maintain bespoke, turnkey AI solutions for SMEs and mid-market companies. GDPR & AI Act compliant, live in 2-6 weeks.',
+    'meta.os.title': 'Erudi Desktop: Free, Open-Source Local AI You Run Offline',
+    'meta.os.desc': 'Erudi Desktop is a free, open-source app to chat with your own documents using local LLMs, with no code. 100% private and fully offline. Your data never leaves your machine. Mac with Apple Silicon.',
+    'meta.team.title': 'The Erudi Team: AI Engineers & Researchers',
+    'meta.team.desc': 'Meet the Erudi team: the AI engineers, researchers and builders designing, deploying and operating bespoke, turnkey AI solutions for businesses.',
+    'meta.contact.title': 'Contact Erudi: Talk to Our AI Team',
+    'meta.contact.desc': "Talk to the Erudi team about a bespoke AI project, partnership or support. Tell us your need and we'll get back to you. Solutions live in 2-6 weeks.",
+
     // ── Navbar ──────────────────────────────────────────────────────────────
     'nav.home': 'Home',
     'nav.opensource': 'Open Source',
@@ -402,6 +412,16 @@ export const translations: Record<string, Record<string, string>> = {
   },
 
   fr: {
+    // ── SEO meta (titres & descriptions) ─────────────────────────────────────
+    'meta.home.title': 'Erudi - IA sur mesure pour votre entreprise',
+    'meta.home.desc': "Erudi est un cabinet de conseil spécialisé en IA. Nous concevons, déployons, hébergeons et maintenons des solutions d'IA sur mesure et clés en main pour les PME et ETI. Conforme RGPD et AI Act, en production en 2 à 6 semaines.",
+    'meta.os.title': 'Erudi Desktop : IA locale, libre et open source, hors ligne',
+    'meta.os.desc': "Erudi Desktop est une application gratuite et open source pour dialoguer avec vos propres documents grâce à des LLM locaux, sans code. 100% privé et hors ligne. Vos données ne quittent jamais votre machine. Mac avec puce Apple Silicon.",
+    'meta.team.title': "L'équipe Erudi : ingénieurs et chercheurs en IA",
+    'meta.team.desc': "Rencontrez l'équipe Erudi : les ingénieurs, chercheurs et bâtisseurs en IA qui conçoivent, déploient et exploitent des solutions d'IA sur mesure et clés en main pour les entreprises.",
+    'meta.contact.title': 'Contactez Erudi : parlez à notre équipe IA',
+    'meta.contact.desc': "Parlez à l'équipe Erudi de votre projet d'IA sur mesure, d'un partenariat ou d'un support. Dites-nous votre besoin et nous vous recontactons. Solutions en production en 2 à 6 semaines.",
+
     // ── Navbar ──────────────────────────────────────────────────────────────
     'nav.home': 'Accueil',
     'nav.opensource': 'Open Source',

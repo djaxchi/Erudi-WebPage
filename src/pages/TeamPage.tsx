@@ -108,8 +108,8 @@ const TeamPage: React.FC = () => {
     <PageLayout activePage="/team" mainClassName="pt-20">
       <Seo
         path="/team"
-        title="The Erudi Team: AI Engineers & Researchers"
-        description="Meet the Erudi team: the AI engineers, researchers and builders designing, deploying and operating bespoke, turnkey AI solutions for businesses."
+        title={t('meta.team.title')}
+        description={t('meta.team.desc')}
       />
       <div className="max-w-7xl mx-auto">
 

@@ -9,6 +9,7 @@ import SituationsCarousel from '../components/SituationsCarousel';
 import { ChatSimulation, ChatScenario } from '../components/ChatSimulation';
 import { getAssetPath } from '../utils/assetPath';
 import { useLanguage } from '../i18n/LanguageContext';
+import { withLang } from '../i18n/langPath';
 import Seo, { SITE_URL } from '../components/Seo';
 
 const HOME_JSON_LD = [
@@ -66,7 +67,7 @@ const fadeUp = (delay = 0) => ({
 });
 
 const HomePage: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const heroInnerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -112,8 +113,8 @@ const HomePage: React.FC = () => {
     >
       <Seo
         path="/"
-        title="Erudi"
-        description="Erudi is a specialized AI consulting firm. We design, build, host and maintain bespoke, turnkey AI solutions for SMEs and mid-market companies. GDPR & AI Act compliant, live in 2-6 weeks."
+        title={t('meta.home.title')}
+        description={t('meta.home.desc')}
         jsonLd={HOME_JSON_LD}
       />
       <ScrollProgress />
@@ -161,7 +162,7 @@ const HomePage: React.FC = () => {
           <div style={{ paddingTop: '32px' }}>
             <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(52,211,153,0.35) 50%, transparent)', marginBottom: '16px' }} />
             <Link
-              to="/contact"
+              to={withLang('/contact', lang)}
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '17px 22px', borderRadius: '14px', width: '100%',
@@ -207,7 +208,7 @@ const HomePage: React.FC = () => {
           </p>
           <ChatSimulation
             scenarios={B2B_SCENARIOS}
-            footerLink="/contact"
+            footerLink={withLang('/contact', lang)}
             footerText={t('home.chat.footertext')}
           />
         </section>
@@ -267,7 +268,7 @@ const HomePage: React.FC = () => {
             {t('home.cta.body')}
           </p>
           <Link
-            to="/contact"
+            to={withLang('/contact', lang)}
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '18px 24px', borderRadius: '14px', width: '100%',
@@ -315,7 +316,7 @@ const HomePage: React.FC = () => {
 
             <motion.div {...fadeUp(0.62)} className="mt-14 flex items-center gap-7">
               <Link
-                to="/contact"
+                to={withLang('/contact', lang)}
                 className="group inline-flex items-center gap-3 px-[26px] py-4 rounded-full font-medium text-[15px]"
                 style={{ color: '#ffffff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.18)', letterSpacing: '-0.005em', transition: 'background .25s ease, border-color .25s ease, color .25s ease' }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = '#34d399'; e.currentTarget.style.borderColor = '#34d399'; e.currentTarget.style.color = '#03130E'; }}
@@ -377,7 +378,7 @@ const HomePage: React.FC = () => {
               </p>
             </div>
             <div>
-              <ChatSimulation scenarios={B2B_SCENARIOS} footerLink="/contact" footerText={t('home.chat.footertext')} />
+              <ChatSimulation scenarios={B2B_SCENARIOS} footerLink={withLang('/contact', lang)} footerText={t('home.chat.footertext')} />
             </div>
           </div>
           </div>
@@ -439,7 +440,7 @@ const HomePage: React.FC = () => {
               {t('home.cta.body')}
             </p>
             <Link
-              to="/contact"
+              to={withLang('/contact', lang)}
               className="group inline-flex items-center gap-3 px-[26px] py-4 rounded-full font-medium text-[15px]"
               style={{ color: '#ffffff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.18)', letterSpacing: '-0.005em', transition: 'background .25s ease, border-color .25s ease, color .25s ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#34d399'; e.currentTarget.style.borderColor = '#34d399'; e.currentTarget.style.color = '#03130E'; }}

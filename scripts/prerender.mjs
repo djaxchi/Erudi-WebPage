@@ -10,7 +10,12 @@ const DIST = join(__dirname, '..', 'dist');
 const PORT = 4178;
 
 // Routes to prerender (exclude /about — it is a redirect).
-const ROUTES = ['/', '/opensource', '/download', '/team', '/contact', '/waitlist'];
+// English lives at the root; the four bilingual pages also render under /fr.
+const EN_ROUTES = ['/', '/opensource', '/download', '/team', '/contact', '/waitlist'];
+const FR_ROUTES = ['/', '/opensource', '/team', '/contact'].map((r) =>
+  r === '/' ? '/fr' : `/fr${r}`
+);
+const ROUTES = [...EN_ROUTES, ...FR_ROUTES];
 
 const routeToFile = (route) =>
   route === '/' ? join(DIST, 'index.html') : join(DIST, route, 'index.html');

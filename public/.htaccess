@@ -39,6 +39,10 @@
     RewriteCond %{HTTP_HOST} !^www\. [NC]
     RewriteRule ^ https://www.erudi.app%{REQUEST_URI} [L,R=301]
 
+    # Legacy: the Desktop page was renamed to Open Source (301 preserves link equity).
+    RewriteRule ^desktop/?$ /opensource [L,R=301]
+    RewriteRule ^fr/desktop/?$ /fr/opensource [L,R=301]
+
     # Handle Angular and React Router
     RewriteRule ^index\.html$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
