@@ -328,6 +328,9 @@ export const translations: Record<string, Record<string, string>> = {
     'team.hero.sub.accent': 'AI accessible to everyone',
     'team.hero.sub.2': '.',
 
+    'team.kicker': 'THE TEAM',
+    'team.count': 'Six engineers',
+
     'team.leadership.eyebrow': 'LEADERSHIP TEAM',
     'team.leadership.heading': 'Meet the Visionaries',
     'team.leadership.sub': 'A team of engineers building the future of AI accessibility',
@@ -361,6 +364,10 @@ export const translations: Record<string, Record<string, string>> = {
     'team.dna.quote':
       '"We believe that the future of AI should be accessible, secure, and empowering for everyone. Our mission is to break down the barriers between cutting-edge AI technology and the people who need it most."',
     'team.dna.attribution': 'The Erudi Team',
+
+    'team.cta.h2': "Let's build together.",
+    'team.cta.body': 'Have a project in mind, or want to know how we work? The whole team is one message away.',
+    'team.cta.btn': 'Get in touch',
 
     // ── DownloadPage ─────────────────────────────────────────────────────────
     'download.badge': 'Early Access Beta',
@@ -440,7 +447,7 @@ export const translations: Record<string, Record<string, string>> = {
       "Erudi conçoit, développe et opère des solutions IA sur mesure pour les TPE, PME et ETI. Nous gérons l'infrastructure, la maintenance et la R&D. Vous obtenez une solution en production en 2 à 6 semaines.",
     'home.hero.cta.expert': 'Réserver un appel de cadrage gratuit',
     'home.hero.cta.note': '30 min · Sans engagement · On cadre votre projet IA',
-    'home.hero.cta.secondary': 'ou voir comment on travaille',
+    'home.hero.cta.secondary': 'en savoir plus sur nous',
     'home.hero.cta.desktop': 'Obtenir Desktop gratuitement',
 
     // ── HomePage - Logo bar ──────────────────────────────────────────────────
@@ -532,7 +539,7 @@ export const translations: Record<string, Record<string, string>> = {
     'home.hero.h1.em': 'On la construit pour vous.',
     'home.hero.sub': 'IA sur mesure, opérée de bout en bout. En production en 2 à 6 semaines.',
     'home.hero.cta': 'Réserver un appel',
-    'home.hero.see': 'ou voir comment on travaille',
+    'home.hero.see': 'en savoir plus sur nous',
 
     'home.logobar.trusted': 'Ils nous font confiance',
 
@@ -741,6 +748,9 @@ export const translations: Record<string, Record<string, string>> = {
     'team.hero.sub.accent': "l'IA accessible à tous",
     'team.hero.sub.2': '.',
 
+    'team.kicker': "L'ÉQUIPE",
+    'team.count': 'Six ingénieurs',
+
     'team.leadership.eyebrow': "ÉQUIPE DIRIGEANTE",
     'team.leadership.heading': 'Rencontrez les visionnaires',
     'team.leadership.sub': "Une équipe d'ingénieurs qui construisent l'avenir de l'accessibilité IA",
@@ -774,6 +784,10 @@ export const translations: Record<string, Record<string, string>> = {
     'team.dna.quote':
       '"Nous croyons que l\'avenir de l\'IA doit être accessible, sécurisé et valorisant pour tous. Notre mission est de lever les barrières entre la technologie IA de pointe et les personnes qui en ont le plus besoin."',
     'team.dna.attribution': "L'équipe Erudi",
+
+    'team.cta.h2': 'Construisons ensemble.',
+    'team.cta.body': "Un projet en tête, ou envie de savoir comment nous travaillons ? Toute l'équipe est à un message près.",
+    'team.cta.btn': 'Nous contacter',
 
     // ── DownloadPage ─────────────────────────────────────────────────────────
     'download.badge': 'Accès anticipé bêta',

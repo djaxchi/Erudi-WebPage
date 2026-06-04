@@ -187,6 +187,7 @@ const HomePage: React.FC = () => {
 
         {/* Logo bar - compact scrolling strip */}
         <section style={{ padding: '28px 0 30px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ background: 'rgba(5,10,15,0.3)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',  padding: '20px 0' }}>
           <p style={{ textAlign: 'center', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#3d434b', margin: '0 0 16px' }}>
             {t('home.logobar.trusted')}
           </p>
@@ -198,6 +199,7 @@ const HomePage: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
           </div>
         </section>
 
@@ -344,9 +346,10 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Logo bar */}
-        <section className="px-6 sm:px-10 lg:px-14 pb-20 pt-4 border-t border-white/[0.06]">
+        <section className="px-6 sm:px-10 bg-[#050a0f]/30 backdrop-blur-lg lg:px-14 pb-20 pt-4 border-t border-white/[0.06]">
           <div className="max-w-[1440px] mx-auto w-full">
-          <p className="text-center text-xs text-gray-600 font-medium tracking-[0.2em] uppercase mb-10 mt-10">
+          <div className="rounded-3xl   py-10 px-6 sm:px-10">
+          <p className="text-center text-xs text-gray-600 font-medium tracking-[0.2em] uppercase mb-10">
             {t('home.logobar.trusted')}
           </p>
           <div className="relative overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}>
@@ -357,6 +360,7 @@ const HomePage: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
           </div>
           </div>
         </section>
