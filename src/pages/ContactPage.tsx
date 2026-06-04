@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MessageSquare, Briefcase, Send, CheckCircle, Sparkles } from 'lucide-react';
-import PageLayout from '../components/PageLayout';
+import { Mail, MessageSquare, Briefcase, Send, CheckCircle, ArrowUpRight } from 'lucide-react';
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { AnimatedSection } from '../assets/animatedSection';
+import AuroraField from '../components/AuroraField';
 import { useLanguage } from '../i18n/LanguageContext';
 import Seo, { SITE_URL } from '../components/Seo';
+
+const FONT = '"Bricolage Grotesque", system-ui, sans-serif';
+const MONO = 'ui-monospace, "SF Mono", "JetBrains Mono", "Roboto Mono", monospace';
 
 const CONTACT_JSON_LD = {
   '@context': 'https://schema.org',
@@ -32,8 +35,19 @@ const INITIAL_CONTACT_FORM_DATA: ContactFormData = {
   message: ''
 };
 
-// TODO: Replace with actual Google Apps Script URL for contact form
-const CONTACT_GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYoZEv3cOw6HWhKhFxaSY6TPnaKF72yr9WfJUxquroxW2J3elrJP-SGfAeiGcGQ4hizA/exec';
+const CONTACT_GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLs0ZihTwuPJ1FPHWni7YgYte0dLSH8tjEP0UFKizh6CV3sHm6EMVSgbLxSB-ng4jlGw/exec';
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 26 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' as const },
+  transition: { duration: 0.8, delay, ease: [0.2, 0.65, 0.25, 1] as [number, number, number, number] },
+});
+
+// Shared input styling — quiet glass with an emerald focus ring.
+const FIELD =
+  'w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder-white/30 ' +
+  'focus:outline-none focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/15 focus:bg-white/[0.05] transition';
 
 const ContactPage: React.FC = () => {
   const { t } = useLanguage();
@@ -55,22 +69,18 @@ const ContactPage: React.FC = () => {
   }, []);
 
   const handleReasonClick = (reasonValue: string) => {
-    setFormData(prev => ({
-      ...prev,
-      reason: reasonValue
-    }));
-    // Scroll to form smoothly
-    setTimeout(() => {
-      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 100);
+    setFormData(prev => ({ ...prev, reason: reasonValue }));
+    // On stacked (mobile) layouts the form sits below the picker — nudge to it.
+    if (window.matchMedia('(max-width: 1023px)').matches) {
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
   };
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   }, []);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
@@ -99,7 +109,6 @@ const ContactPage: React.FC = () => {
       } else {
         throw new Error('Failed to submit contact form');
       }
-
     } catch (err) {
       setError(t('contact.form.error'));
       console.error('Contact form submission error:', err);
@@ -109,169 +118,180 @@ const ContactPage: React.FC = () => {
   }, [formData, t]);
 
   return (
-    <PageLayout activePage="/contact">
-        <Seo
-          path="/contact"
-          title={t('meta.contact.title')}
-          description={t('meta.contact.desc')}
-          jsonLd={CONTACT_JSON_LD}
-        />
-        <div className="max-w-5xl mx-auto">
+    <div className="relative min-h-screen bg-[#02040a] text-white overflow-x-clip" style={{ fontFamily: FONT }}>
+      <Seo
+        path="/contact"
+        title={t('meta.contact.title')}
+        description={t('meta.contact.desc')}
+        jsonLd={CONTACT_JSON_LD}
+      />
 
-          {/* Header */}
-          <div className="mt-32 sm:mt-20 md:mt-20 mb-12 sm:mb-16 md:mb-20">
-            <AnimatedSection delay={100}>
-              <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center">
-                {/* Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 backdrop-blur-sm"
-                >
-                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
-                  <span className="text-xs sm:text-sm text-emerald-300 font-medium">{t('contact.badge')}</span>
-                </motion.div>
+      <Navbar activePage="/contact" />
 
-                {/* Main heading */}
-                <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight"
-                >
-                  {t('contact.heading1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">{t('contact.heading2')}</span>
-                </motion.h1>
-
-                {/* Description */}
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                  className="text-white/90 text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed"
-                >
-                  {t('contact.sub')} <span className="font-bold text-white">{t('contact.sub.bold')}</span>
-                </motion.p>
-              </div>
-            </AnimatedSection>
-          </div>
-
-          {/* Contact Reasons */}
-          <div className="mb-12 sm:mb-16 md:mb-20">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-              {contactReasons.map(({ icon: Icon, title, desc, value }, index) => (
-                <motion.button
-                  key={value}
-                  onClick={() => handleReasonClick(value)}
-                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, delay: 0.2 + index * 0.12, ease: "easeOut" }}
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative group cursor-pointer"
-                >
-                  <div className="h-full bg-gradient-to-br from-white/[0.08] to-white/[0.04] hover:from-white/[0.12] hover:to-white/[0.08] backdrop-blur-xl border border-white/10 hover:border-emerald-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-7 transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,193,124,0.15)] text-center">
-                    {/* Icon */}
-                    <div className="mb-4 sm:mb-5 flex justify-center">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center group-hover:border-emerald-400/50 group-hover:scale-110 transition-all duration-300">
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-emerald-400" />
-                      </div>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">{title}</h3>
-
-                    {/* Description */}
-                    <p className="text-gray-300 text-sm leading-relaxed">{desc}</p>
-
-                    {/* Click hint */}
-                    <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-xs text-emerald-400 font-semibold">{t('contact.reason.click')}</span>
-                    </div>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </div>
-
-          {/* Contact Form */}
-          <AnimatedSection delay={400}>
-            <div className="max-w-2xl mx-auto" ref={formRef}>
-              <motion.div
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-                className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 hover:border-emerald-500/30 transition-all duration-300"
+      <main>
+        {/* ── Hero — a compact band lit by the aurora, dissolving into black ── */}
+        <section className="relative overflow-hidden">
+          <AuroraField />
+          {/* dissolve the aurora into the page black toward the hero's foot */}
+          <div
+            aria-hidden
+            className="absolute inset-0 z-[1] pointer-events-none"
+            style={{ background: 'linear-gradient(180deg, transparent 0%, transparent 44%, rgba(2,4,10,0.6) 74%, #02040a 100%)' }}
+          />
+          <motion.div
+            {...fadeUp(0)}
+            className="relative z-[2] mx-auto max-w-6xl px-5 sm:px-6 md:px-8"
+            style={{ paddingTop: 'clamp(116px, 15vh, 152px)', paddingBottom: 'clamp(52px, 9vh, 96px)' }}
+          >
+            <div className="max-w-3xl">
+              <h1
+                className="text-white font-medium"
+                style={{
+                  fontSize: 'clamp(40px, 7vw, 76px)',
+                  lineHeight: 0.98,
+                  letterSpacing: '-0.04em',
+                  fontVariationSettings: '"opsz" 96',
+                }}
               >
+                {t('contact.heading1')}{' '}
+                <em className="not-italic">
+                  <span
+                    className="italic font-normal text-transparent bg-clip-text inline-block pr-[0.14em]"
+                    style={{ backgroundImage: 'linear-gradient(100deg, #6ee7b7, #34d399 45%, #5eead4)' }}
+                  >
+                    {t('contact.heading2')}
+                  </span>
+                </em>
+              </h1>
+
+              <p className="mt-5 text-base sm:text-lg md:text-xl text-white/60 leading-relaxed max-w-2xl">
+                {t('contact.sub')}{' '}
+                <span className="text-white/90 font-medium">{t('contact.sub.bold')}</span>
+              </p>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ── Form — directly beneath the hero, on solid black ── */}
+        <section className="relative mx-auto max-w-6xl px-5 sm:px-6 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+
+            {/* Left rail — reason picker + direct lines */}
+            <div className="lg:col-span-5 flex flex-col gap-4">
+              {/* Direct email — pinned to the top of the rail */}
+              <motion.a
+                href="mailto:contact@erudi.app"
+                className="group rounded-2xl p-4 sm:p-5 bg-white/[0.03] border border-white/10 hover:border-emerald-400/40 hover:bg-white/[0.05] transition-all duration-300 flex items-center gap-4"
+              >
+                <span className="shrink-0 w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-emerald-300" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[11px] uppercase tracking-wider text-white/35" style={{ fontFamily: MONO }}>
+                    {t('contact.email.label')}
+                  </span>
+                  <span className="block text-emerald-300 font-semibold group-hover:text-emerald-200 transition-colors truncate">
+                    contact@erudi.app
+                  </span>
+                </span>
+              </motion.a>
+
+              {contactReasons.map(({ icon: Icon, title, desc, value }, index) => {
+                const selected = formData.reason === value;
+                return (
+                  <motion.button
+                    key={value}
+                    type="button"
+                    onClick={() => handleReasonClick(value)}
+                    whileHover={{ x: 4 }}
+                    whileTap={{ scale: 0.99 }}
+                    aria-pressed={selected}
+                    className={`group relative text-left rounded-2xl p-4 sm:p-5 flex items-start gap-4 backdrop-blur-xl transition-all duration-300 border ${
+                      selected
+                        ? 'bg-emerald-500/[0.12] border-emerald-400/40 shadow-[0_0_44px_-8px_rgba(52,211,153,0.45)]'
+                        : 'bg-white/[0.03] border-white/10 hover:bg-white/[0.06] hover:border-white/20'
+                    }`}
+                  >
+                    {/* editorial index */}
+                    <span
+                      style={{ fontFamily: MONO }}
+                      className={`mt-0.5 text-[11px] tabular-nums transition-colors ${selected ? 'text-emerald-300' : 'text-white/30'}`}
+                    >
+                      0{index + 1}
+                    </span>
+
+                    <span
+                      className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center border transition-all duration-300 ${
+                        selected
+                          ? 'bg-emerald-500/20 border-emerald-400/50'
+                          : 'bg-white/[0.04] border-white/10 group-hover:border-white/25'
+                      }`}
+                    >
+                      <Icon className={`w-5 h-5 transition-colors ${selected ? 'text-emerald-300' : 'text-white/60 group-hover:text-white/80'}`} />
+                    </span>
+
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-[15px] font-semibold text-white">{title}</span>
+                      <span className="block mt-0.5 text-[13px] leading-snug text-white/45">{desc}</span>
+                    </span>
+
+                    <ArrowUpRight
+                      className={`w-4 h-4 mt-1 shrink-0 transition-all duration-300 ${
+                        selected ? 'text-emerald-300 opacity-100' : 'text-white/30 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0'
+                      }`}
+                    />
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* Right — the form card */}
+            <motion.div {...fadeUp(0.18)} className="lg:col-span-7" ref={formRef}>
+              <div className="relative rounded-3xl p-6 sm:p-8 md:p-10 bg-white/[0.04] border border-white/10 overflow-hidden">
                 {!isSubmitted ? (
-                  <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
-                    {/* Name and Email Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                  <form onSubmit={handleSubmit} className="relative space-y-5 sm:space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-white mb-2">
+                        <label htmlFor="name" className="block text-[13px] font-medium text-white/70 mb-2">
                           {t('contact.form.name')}
                         </label>
                         <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          required
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
-                          placeholder={t('contact.form.name.placeholder')}
+                          type="text" id="name" name="name" required
+                          value={formData.name} onChange={handleInputChange}
+                          className={FIELD} placeholder={t('contact.form.name.placeholder')}
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+                        <label htmlFor="email" className="block text-[13px] font-medium text-white/70 mb-2">
                           {t('contact.form.email')}
                         </label>
                         <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          required
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
-                          placeholder={t('contact.form.email.placeholder')}
+                          type="email" id="email" name="email" required
+                          value={formData.email} onChange={handleInputChange}
+                          className={FIELD} placeholder={t('contact.form.email.placeholder')}
                         />
                       </div>
                     </div>
 
-                    {/* Company */}
                     <div>
-                      <label htmlFor="company" className="block text-sm font-medium text-white mb-2">
+                      <label htmlFor="company" className="block text-[13px] font-medium text-white/70 mb-2">
                         {t('contact.form.company')}
                       </label>
                       <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
-                        placeholder={t('contact.form.company.placeholder')}
+                        type="text" id="company" name="company"
+                        value={formData.company} onChange={handleInputChange}
+                        className={FIELD} placeholder={t('contact.form.company.placeholder')}
                       />
                     </div>
 
-                    {/* Reason */}
                     <div>
-                      <label htmlFor="reason" className="block text-sm font-medium text-white mb-2">
+                      <label htmlFor="reason" className="block text-[13px] font-medium text-white/70 mb-2">
                         {t('contact.form.reason')}
                       </label>
                       <select
-                        id="reason"
-                        name="reason"
-                        required
-                        value={formData.reason}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition"
+                        id="reason" name="reason" required
+                        value={formData.reason} onChange={handleInputChange}
+                        className={`${FIELD} appearance-none cursor-pointer`}
                       >
                         <option value="" className="bg-[#050a0f]">{t('contact.form.reason.placeholder')}</option>
                         <option value="general" className="bg-[#050a0f]">{t('contact.form.reason.general')}</option>
@@ -280,103 +300,70 @@ const ContactPage: React.FC = () => {
                       </select>
                     </div>
 
-                    {/* Message */}
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-white mb-2">
+                      <label htmlFor="message" className="block text-[13px] font-medium text-white/70 mb-2">
                         {t('contact.form.message')}
                       </label>
                       <textarea
-                        id="message"
-                        name="message"
-                        rows={5}
-                        required
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition resize-none"
-                        placeholder={t('contact.form.message.placeholder')}
+                        id="message" name="message" rows={5} required
+                        value={formData.message} onChange={handleInputChange}
+                        className={`${FIELD} resize-none`} placeholder={t('contact.form.message.placeholder')}
                       />
                     </div>
 
-                    {/* Error Message */}
                     {error && (
-                      <div className="text-red-400 text-sm text-center bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3">
+                      <div className="text-red-300 text-sm bg-red-500/10 border border-red-400/20 rounded-xl px-4 py-3">
                         {error}
                       </div>
                     )}
 
-                    {/* Submit Button */}
-                    <div className="pt-2 sm:pt-4">
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 disabled:from-emerald-600/50 disabled:to-emerald-500/50 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_0_40px_rgba(0,193,124,0.4)] hover:shadow-[0_0_60px_rgba(0,193,124,0.6)] hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:hover:translate-y-0"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                            <span>{t('contact.form.sending')}</span>
-                          </>
-                        ) : (
-                          <>
-                            <Send className="h-5 w-5" />
-                            <span>{t('contact.form.send')}</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 disabled:opacity-60 text-[#02120c] px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 shadow-[0_8px_40px_-8px_rgba(52,211,153,0.6)] hover:shadow-[0_10px_50px_-6px_rgba(52,211,153,0.8)] hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:hover:translate-y-0"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#02120c]" />
+                          <span>{t('contact.form.sending')}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-5 w-5" />
+                          <span>{t('contact.form.send')}</span>
+                        </>
+                      )}
+                    </button>
                   </form>
                 ) : (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.94 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-8"
+                    className="relative text-center py-10"
                   >
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                      <CheckCircle className="h-8 w-8 sm:h-10 sm:w-10 text-emerald-400" />
+                    <div className="w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center mx-auto mb-6 shadow-[0_0_50px_-6px_rgba(52,211,153,0.55)]">
+                      <CheckCircle className="h-10 w-10 text-emerald-300" />
                     </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">{t('contact.success.heading')}</h3>
-                    <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed max-w-md mx-auto">
+                    <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-3">{t('contact.success.heading')}</h3>
+                    <p className="text-white/55 text-base sm:text-lg mb-8 leading-relaxed max-w-md mx-auto">
                       {t('contact.success.sub')}
                     </p>
                     <button
                       onClick={() => setIsSubmitted(false)}
-                      className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
+                      className="text-emerald-300 hover:text-emerald-200 font-semibold transition-colors"
                     >
                       {t('contact.success.again')}
                     </button>
                   </motion.div>
                 )}
-              </motion.div>
-            </div>
-          </AnimatedSection>
-
-          {/* Additional Info */}
-          <AnimatedSection delay={600}>
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-              className="mt-12 sm:mt-16 md:mt-20 text-center"
-            >
-              <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-2xl mx-auto hover:border-emerald-500/30 transition-all duration-300">
-                <p className="text-gray-300 text-base sm:text-lg mb-3 sm:mb-4">
-                  {t('contact.email.label')}
-                </p>
-                <a
-                  href="mailto:erudipro@gmail.com"
-                  className="text-emerald-400 hover:text-emerald-300 text-xl sm:text-2xl font-bold transition inline-flex items-center gap-2"
-                >
-                  <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
-                  erudipro@gmail.com
-                </a>
               </div>
             </motion.div>
-          </AnimatedSection>
+          </div>
 
           <Footer />
-        </div>
-    </PageLayout>
+        </section>
+      </main>
+    </div>
   );
 };
 
