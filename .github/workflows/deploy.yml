@@ -25,12 +25,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to Hostinger via SSH (rsync)
-        uses: easingthemes/ssh-deploy@v5.1.0
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: 62.72.37.133
-          REMOTE_PORT: 65002
-          REMOTE_USER: u160425656
-          SOURCE: dist/
-          TARGET: domains/erudi.app/public_html/
+          server: 62.72.37.133
+          port: 21
+          protocol: ftps
+          security: loose
+          timeout: 60000
+          username: u160425656
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /domains/erudi.app/public_html/
